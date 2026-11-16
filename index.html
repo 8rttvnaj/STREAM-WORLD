@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STREAM WORLD</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101010;color:white;font-family:Arial,sans-serif}
+header{background:#080808;padding:20px;position:sticky;top:0;z-index:5}
+.logo{font-size:27px;font-weight:900;color:#e50914;letter-spacing:1px}
+nav{display:flex;gap:18px;margin-top:15px;overflow:auto}
+nav button{background:none;border:0;color:white;font-size:14px;white-space:nowrap}
+.hero{padding:45px 22px;background:linear-gradient(90deg,#180000,#450000,#111)}
+.hero h1{font-size:34px;margin:0 0 12px}
+.hero p{color:#ddd;line-height:1.5}
+.search{width:100%;padding:15px;border-radius:7px;border:1px solid #555;background:#222;color:white;font-size:16px;margin-top:15px}
+main{padding:20px}
+h2{font-size:21px;margin-top:28px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{background:#202020;border-radius:9px;overflow:hidden}
+.poster{height:145px;display:flex;align-items:center;justify-content:center;font-size:45px;background:linear-gradient(135deg,#650000,#171717)}
+.info{padding:12px}
+.info h3{font-size:16px;margin:0 0 7px}
+.info p{font-size:12px;color:#bbb;min-height:30px}
+.watch{display:block;background:#e50914;color:white;text-align:center;text-decoration:none;padding:10px;border-radius:5px;font-weight:bold;font-size:13px}
+.tag{font-size:11px;color:#ff7777}
+.empty{color:#bbb;display:none}
+footer{text-align:center;padding:30px;color:#888;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">STREAM WORLD</div>
+<nav>
+<button onclick="filter('Alles')">Home</button>
+<button onclick="filter('Film')">Films</button>
+<button onclick="filter('Serie')">Series</button>
+<button onclick="filter('Anime')">Anime</button>
+<button onclick="filter('Docu')">Documentaires</button>
+</nav>
+</header>
+
+<section class="hero">
+<h1>Jouw wereld. Jouw entertainment.</h1>
+<p>Ontdek films, series, anime en documentaires.</p>
+<input class="search" id="search" placeholder="🔎 Zoek films, series..." oninput="render()">
+</section>
+
+<main>
+<h2 id="heading">Ontdek STREAM WORLD</h2>
+<div class="grid" id="catalog"></div>
+<p class="empty" id="empty">Geen resultaten gevonden.</p>
+<h2>Gratis kijkplatforms</h2>
+<div class="grid">
+<div class="card"><div class="poster">📺</div><div class="info"><h3>NPO Start</h3><p>Programma's en geselecteerd gratis aanbod.</p><a class="watch" href="https://npo.nl/start" target="_blank">BEKIJK</a></div></div>
+<div class="card"><div class="poster">▶️</div><div class="info"><h3>Het Klokhuis</h3><p>Gratis programma's voor nieuwsgierige kijkers.</p><a class="watch" href="https://hetklokhuis.nl" target="_blank">BEKIJK</a></div></div>
+<div class="card"><div class="poster">🎬</div><div class="info"><h3>Film in het Nederlands</h3><p>Ontdek gratis aanbod bij publieke omroepen.</p><a class="watch" href="https://npo.nl/start" target="_blank">BEKIJK</a></div></div>
+<div class="card"><div class="poster">🌍</div><div class="info"><h3>Internet Archive</h3><p>Collectie met onder andere rechtenvrije films.</p><a class="watch" href="https://archive.org/details/movies" target="_blank">BEKIJK</a></div></div>
+</div>
+</main>
+<footer>STREAM WORLD © 2026<br>Alleen links naar gratis en legaal aanbod.</footer>
+
+<script>
+const items=[
+{title:"NPO programma's",type:"Serie",emoji:"📺",desc:"Gratis aanbod van de publieke omroep.",url:"https://npo.nl/start"},
+{title:"Het Klokhuis",type:"Serie",emoji:"🍎",desc:"Ontdekken, leren en kijken.",url:"https://hetklokhuis.nl"},
+{title:"Zapp",type:"Serie",emoji:"⭐",desc:"Programma's voor kinderen.",url:"https://www.zapp.nl"},
+{title:"Gratis films",type:"Film",emoji:"🎬",desc:"Bekijk rechtenvrije films.",url:"https://archive.org/details/movies"},
+{title:"Openbare filmcollectie",type:"Film",emoji:"🍿",desc:"Zoek films in het publieke domein.",url:"https://archive.org/details/feature_films"},
+{title:"Anime",type:"Anime",emoji:"🌸",desc:"Ontdek officieel gratis anime-aanbod.",url:"https://www.youtube.com"},
+{title:"Documentaires",type:"Docu",emoji:"🌍",desc:"Ontdek documentaires bij NPO.",url:"https://npo.nl/start"}
+];
+let category="Alles";
+function filter(c){category=c;document.getElementById("heading").textContent=c==="Alles"?"Ontdek STREAM WORLD":c+" op STREAM WORLD";render()}
+function render(){
+let q=document.getElementById("search").value.toLowerCase();
+let found=items.filter(x=>(category==="Alles"||x.type===category)&&(x.title+" "+x.desc+" "+x.type).toLowerCase().includes(q));
+document.getElementById("catalog").innerHTML=found.map(x=>`<div class="card"><div class="poster">${x.emoji}</div><div class="info"><span class="tag">${x.type}</span><h3>${x.title}</h3><p>${x.desc}</p><a class="watch" href="${x.url}" target="_blank" rel="noopener">BEKIJK AANBOD</a></div></div>`).join("");
+document.getElementById("empty").style.display=found.length?"none":"block";
+}
+render();
+</script>
+</body>
+</html>
