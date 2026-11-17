@@ -24,6 +24,10 @@ a{color:#ff5555;text-decoration:none;font-weight:bold}
 <main>
 <h2>Ontdek films, series en meer</h2>
 <input id="search" placeholder="Zoek een film of serie..." oninput="searchItems()">
+<div style="display:flex;gap:10px;margin:10px 0">
+<button onclick="searchOnline()">ZOEK ONLINE</button>
+<button onclick="searchYouTube()">ZOEK YOUTUBE</button>
+</div>
 <div class="grid" id="catalog">
 <div class="card"><h3>NPO Start</h3><p>Series en programma's</p><a href="https://npo.nl/start" target="_blank">Bekijk aanbod</a></div>
 <div class="card"><h3>Pluto TV</h3><p>Gratis films en series</p><a href="https://pluto.tv" target="_blank">Bekijk aanbod</a></div>
@@ -43,6 +47,15 @@ const q=document.getElementById('search').value.toLowerCase();
 document.querySelectorAll('.card').forEach(card=>{
 card.style.display=card.innerText.toLowerCase().includes(q)?'block':'none';
 });
+}
+function searchOnline(){
+const q=document.getElementById('search').value;
+if(q.trim()) window.open('https://www.google.com/search?q='+encodeURIComponent(q+' films series'),'_blank');
+}
+
+function searchYouTube(){
+const q=document.getElementById('search').value;
+if(q.trim()) window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q),'_blank');
 }
 </script>
 </body>
