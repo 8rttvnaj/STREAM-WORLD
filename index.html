@@ -3,59 +3,154 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>STREAM WORLD</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#101010;color:white;font-family:Arial,sans-serif}
-header{background:#080808;padding:22px;color:#e50914;font-size:30px;font-weight:bold}
-main{padding:20px}
-input{width:100%;padding:14px;border:0;border-radius:6px;font-size:16px}
-h2{margin-top:28px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.card{background:#242424;border-radius:9px;padding:18px;min-height:115px}
-.card h3{margin:0 0 9px}
-.card p{color:#bbb;font-size:13px}
-a{color:#ff5555;text-decoration:none;font-weight:bold}
+header{background:#080808;padding:22px 18px;position:sticky;top:0;z-index:5;border-bottom:2px solid #e50914}
+.logo{font-size:29px;font-weight:900;color:#e50914;letter-spacing:1px}
+.tagline{color:#aaa;font-size:12px;margin-top:5px}
+main{padding:18px;max-width:1100px;margin:auto}
+h2{font-size:21px;margin:28px 0 14px}
+.searchbox{display:flex;gap:8px;margin-top:20px}
+input{width:100%;min-width:0;padding:14px;border-radius:7px;border:1px solid #444;background:#242424;color:white;font-size:16px}
+button{background:#e50914;color:white;border:0;border-radius:7px;padding:12px 14px;font-weight:bold;font-size:13px;cursor:pointer}
+.searchbuttons{display:flex;gap:9px;margin-top:10px}
+.searchbuttons button{flex:1}
+.categories{display:flex;gap:8px;overflow-x:auto;margin:22px 0}
+.categories button{white-space:nowrap;background:#292929}
+.categories button.active{background:#e50914}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:#202020;border-radius:10px;overflow:hidden;border:1px solid #303030}
+.poster{height:145px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(135deg,#4a0808,#171717 75%)}
+.poster.blue{background:linear-gradient(135deg,#073b64,#151515 80%)}
+.poster.purple{background:linear-gradient(135deg,#4b1769,#171717 80%)}
+.poster.gold{background:linear-gradient(135deg,#71500a,#171717 80%)}
+.poster.green{background:linear-gradient(135deg,#07523d,#171717 80%)}
+.poster small{color:#ddd;font-size:10px;letter-spacing:2px}
+.poster strong{font-size:22px;line-height:1.05}
+.info{padding:12px}
+.info h3{margin:0 0 7px;font-size:16px}
+.info p{color:#bbb;font-size:12px;line-height:1.5;min-height:34px}
+.tag{display:inline-block;background:#333;padding:5px 7px;border-radius:4px;font-size:10px;color:#ddd;margin-bottom:10px}
+.watch{display:block;text-align:center;text-decoration:none;background:#e50914;color:white;padding:11px;border-radius:6px;font-size:13px;font-weight:bold}
+.note{font-size:12px;color:#aaa;line-height:1.5;margin-top:25px}
+footer{text-align:center;color:#777;padding:28px;font-size:12px}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.poster{height:190px}}
 </style>
 </head>
 <body>
-<header>STREAM WORLD</header>
+<header>
+ <div class="logo">STREAM WORLD</div>
+ <div class="tagline">YOUR ENTERTAINMENT WORLD</div>
+</header>
 <main>
-<h2>Ontdek films, series en meer</h2>
-<input id="search" placeholder="Zoek een film of serie..." oninput="searchItems()">
-<div style="display:flex;gap:10px;margin:10px 0">
-<button onclick="searchOnline()">ZOEK ONLINE</button>
-<button onclick="searchYouTube()">ZOEK YOUTUBE</button>
-</div>
-<div class="grid" id="catalog">
-<div class="card"><h3>NPO Start</h3><p>Series en programma's</p><a href="https://npo.nl/start" target="_blank">Bekijk aanbod</a></div>
-<div class="card"><h3>Pluto TV</h3><p>Gratis films en series</p><a href="https://pluto.tv" target="_blank">Bekijk aanbod</a></div>
-<div class="card"><h3>Plex</h3><p>Gratis films en series</p><a href="https://watch.plex.tv" target="_blank">Bekijk aanbod</a></div>
-<div class="card"><h3>Rakuten TV</h3><p>Gratis aanbod beschikbaar</p><a href="https://www.rakuten.tv" target="_blank">Bekijk aanbod</a></div>
-<div class="card"><h3>YouTube</h3><p>Gratis films en documentaires</p><a href="https://www.youtube.com" target="_blank">Bekijk aanbod</a></div>
-<div class="card"><h3>Internet Archive</h3><p>Rechtenvrije films en video's</p><a href="https://archive.org/details/movies" target="_blank">Bekijk aanbod</a></div>
-<div class="card"><h3>Het Klokhuis</h3><p>Educatieve video's</p><a href="https://hetklokhuis.nl" target="_blank">Bekijk aanbod</a></div>
-<div class="card"><h3>Zapp</h3><p>Programma's voor kinderen</p><a href="https://www.zapp.nl" target="_blank">Bekijk aanbod</a></div>
-<div class="card"><h3>NPO Doc</h3><p>Documentaires</p><a href="https://npo.nl/start" target="_blank">Bekijk aanbod</a></div>
-<div class="card"><h3>Crunchyroll</h3><p>Anime, deels gratis</p><a href="https://www.crunchyroll.com" target="_blank">Bekijk aanbod</a></div>
-</div>
+ <h2>Wat wil je kijken?</h2>
+ <div class="searchbox">
+  <input id="search" placeholder="Zoek een film, serie of YouTuber..." oninput="filterCards()">
+ </div>
+ <div class="searchbuttons">
+  <button onclick="searchOnline()">ZOEK ONLINE</button>
+  <button onclick="searchYouTube()">ZOEK YOUTUBE</button>
+ </div>
+ <div class="categories">
+  <button class="active" onclick="chooseCategory('alles',this)">Alles</button>
+  <button onclick="chooseCategory('series',this)">Series</button>
+  <button onclick="chooseCategory('films',this)">Films</button>
+  <button onclick="chooseCategory('kinderen',this)">Kinderen</button>
+  <button onclick="chooseCategory('documentaires',this)">Documentaires</button>
+  <button onclick="chooseCategory('anime',this)">Anime</button>
+  <button onclick="chooseCategory('youtube',this)">YouTube</button>
+ </div>
+ <h2>Populair op STREAM WORLD</h2>
+ <div class="grid" id="catalog">
+
+  <article class="card" data-category="kinderen series">
+   <div class="poster green"><small>STREAM WORLD ORIGINALS</small><strong>HET<br>KLOKHUIS</strong></div>
+   <div class="info"><h3>Het Klokhuis</h3><span class="tag">Gratis aanbod</span><p>Ontdek leuke en leerzame onderwerpen.</p><a class="watch" href="https://hetklokhuis.nl/" target="_blank">KIJK NU ↗</a></div>
+  </article>
+
+  <article class="card" data-category="kinderen series">
+   <div class="poster blue"><small>NIEUWS</small><strong>JEUGD<br>JOURNAAL</strong></div>
+   <div class="info"><h3>Jeugdjournaal</h3><span class="tag">Gratis aanbod</span><p>Het nieuws uitgelegd voor kinderen.</p><a class="watch" href="https://jeugdjournaal.nl/" target="_blank">KIJK NU ↗</a></div>
+  </article>
+
+  <article class="card" data-category="series kinderen">
+   <div class="poster purple"><small>NPO ZAPP</small><strong>ZAPP</strong></div>
+   <div class="info"><h3>Zapp programma's</h3><span class="tag">Gratis aanbod</span><p>Programma's en series voor kinderen.</p><a class="watch" href="https://www.zapp.nl/" target="_blank">KIJK NU ↗</a></div>
+  </article>
+
+  <article class="card" data-category="films series">
+   <div class="poster"><small>GRATIS MET RECLAME</small><strong>PLEX<br>FILMS</strong></div>
+   <div class="info"><h3>Gratis films op Plex</h3><span class="tag">Gratis aanbod</span><p>Ontdek films en series. Het aanbod wisselt.</p><a class="watch" href="https://watch.plex.tv/nl/on-demand" target="_blank">KIJK NU ↗</a></div>
+  </article>
+
+  <article class="card" data-category="films series">
+   <div class="poster gold"><small>GRATIS SECTIE</small><strong>RAKUTEN<br>TV</strong></div>
+   <div class="info"><h3>Rakuten TV</h3><span class="tag">Gratis en betaald</span><p>Bekijk de gratis films en controleer de prijs.</p><a class="watch" href="https://www.rakuten.tv/" target="_blank">KIJK NU ↗</a></div>
+  </article>
+
+  <article class="card" data-category="series films documentaires">
+   <div class="poster blue"><small>PUBLIEKE OMROEP</small><strong>NPO<br>START</strong></div>
+   <div class="info"><h3>NPO Start</h3><span class="tag">Gratis en betaald</span><p>Programma's, series, films en documentaires.</p><a class="watch" href="https://npo.nl/start" target="_blank">KIJK NU ↗</a></div>
+  </article>
+
+  <article class="card" data-category="anime">
+   <div class="poster purple"><small>ANIME WORLD</small><strong>CRUNCHY<br>ROLL</strong></div>
+   <div class="info"><h3>Crunchyroll</h3><span class="tag">Gratis en betaald</span><p>Ontdek anime. Beschikbaarheid verschilt per titel.</p><a class="watch" href="https://www.crunchyroll.com/" target="_blank">KIJK NU ↗</a></div>
+  </article>
+
+  <article class="card" data-category="youtube">
+   <div class="poster"><small>VIDEO'S</small><strong>YOUTUBE</strong></div>
+   <div class="info"><h3>YouTube creators</h3><span class="tag">Gratis video's</span><p>Zoek bijvoorbeeld Salish & Jordan Matter.</p><a class="watch" href="https://www.youtube.com/results?search_query=Salish+Jordan+Matter" target="_blank">KIJK NU ↗</a></div>
+  </article>
+
+  <article class="card" data-category="documentaires films">
+   <div class="poster green"><small>ONTDEK DE WERELD</small><strong>NPO<br>DOC</strong></div>
+   <div class="info"><h3>NPO Documentaires</h3><span class="tag">Gratis aanbod</span><p>Bekijk documentaires via NPO Start.</p><a class="watch" href="https://npo.nl/start" target="_blank">KIJK NU ↗</a></div>
+  </article>
+
+  <article class="card" data-category="films">
+   <div class="poster gold"><small>FILM ARCHIEF</small><strong>INTERNET<br>ARCHIVE</strong></div>
+   <div class="info"><h3>Internet Archive</h3><span class="tag">Rechtenvrij aanbod</span><p>Ontdek oude films en archiefvideo's.</p><a class="watch" href="https://archive.org/details/movies" target="_blank">KIJK NU ↗</a></div>
+  </article>
+
+ </div>
+ <p id="noresults" style="display:none;color:#aaa;margin-top:20px">Geen resultaten gevonden. Probeer een andere zoekterm of gebruik ZOEK ONLINE.</p>
+ <p class="note">STREAM WORLD is een onafhankelijke verzamelsite. Je kijkt via de officiële aanbieders. Gratis aanbod kan veranderen. Controleer altijd of een titel gratis is voordat je begint. Sommige diensten tonen advertenties of vragen een abonnement.</p>
 </main>
+<footer>© STREAM WORLD · YOUR ENTERTAINMENT WORLD</footer>
 <script>
-function searchItems(){
-const q=document.getElementById('search').value.toLowerCase();
-document.querySelectorAll('.card').forEach(card=>{
-card.style.display=card.innerText.toLowerCase().includes(q)?'block':'none';
-});
+let currentCategory='alles';
+
+function filterCards(){
+ const q=document.getElementById('search').value.toLowerCase();
+ let count=0;
+ document.querySelectorAll('.card').forEach(card=>{
+  const matchesText=card.innerText.toLowerCase().includes(q);
+  const matchesCategory=currentCategory==='alles'||card.dataset.category.split(' ').includes(currentCategory);
+  card.style.display=matchesText&&matchesCategory?'block':'none';
+  if(matchesText&&matchesCategory)count++;
+ });
+ document.getElementById('noresults').style.display=count?'none':'block';
 }
+
+function chooseCategory(category,button){
+ currentCategory=category;
+ document.querySelectorAll('.categories button').forEach(b=>b.classList.remove('active'));
+ button.classList.add('active');
+ filterCards();
+}
+
 function searchOnline(){
-const q=document.getElementById('search').value;
-if(q.trim()) window.open('https://www.google.com/search?q='+encodeURIComponent(q+' films series'),'_blank');
+ const q=document.getElementById('search').value.trim();
+ if(q)window.open('https://www.google.com/search?q='+encodeURIComponent(q+' kijken Nederland officieel'),'_blank');
 }
 
 function searchYouTube(){
-const q=document.getElementById('search').value;
-if(q.trim()) window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q),'_blank');
+ const q=document.getElementById('search').value.trim();
+ if(q)window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q),'_blank');
 }
 </script>
 </body>
