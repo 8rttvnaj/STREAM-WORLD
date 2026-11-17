@@ -3,83 +3,47 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>STREAM WORLD</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#101010;color:white;font-family:Arial,sans-serif}
-header{background:#080808;padding:20px;position:sticky;top:0;z-index:5}
-.logo{font-size:27px;font-weight:900;color:#ed1c24}
-nav{display:flex;gap:10px;overflow-x:auto;margin-top:15px}
-button{background:#292929;color:white;border:0;padding:11px 15px;border-radius:6px;cursor:pointer}
-button.active{background:#e50914}
-input{width:100%;padding:13px;border-radius:7px;border:0;margin-top:15px;font-size:16px}
-main{padding:18px}
-h2{margin-top:25px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
-.card{background:#222;border-radius:9px;overflow:hidden;min-height:145px}
-.poster{height:105px;background:linear-gradient(135deg,#5b090d,#171717);display:flex;align-items:center;justify-content:center;font-size:38px}
-.info{padding:10px}
-.info strong{display:block;margin-bottom:7px}
-.small{font-size:12px;color:#bbb}
-a{color:#ff5555;text-decoration:none}
-footer{padding:30px;text-align:center;color:#888}
+header{background:#080808;padding:22px;color:#e50914;font-size:30px;font-weight:bold}
+main{padding:20px}
+input{width:100%;padding:14px;border:0;border-radius:6px;font-size:16px}
+h2{margin-top:28px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{background:#242424;border-radius:9px;padding:18px;min-height:115px}
+.card h3{margin:0 0 9px}
+.card p{color:#bbb;font-size:13px}
+a{color:#ff5555;text-decoration:none;font-weight:bold}
 </style>
 </head>
 <body>
-<header>
-<div class="logo">STREAM WORLD</div>
-<div>ALL YOUR ENTERTAINMENT. ONE WORLD.</div>
-<input id="search" placeholder="Zoek films, series, anime..." oninput="render()">
-<nav id="nav">
-<button class="active" onclick="category('Alles',this)">Alles</button>
-<button onclick="category('Films',this)">Films</button>
-<button onclick="category('Series',this)">Series</button>
-<button onclick="category('Anime',this)">Anime</button>
-<button onclick="category('Documentaires',this)">Documentaires</button>
-<button onclick="category('Kinderen',this)">Kinderen</button>
-</nav>
-</header>
+<header>STREAM WORLD</header>
 <main>
-<h2 id="heading">Ontdek STREAM WORLD</h2>
-<p class="small">Gratis kijken en ontdekken waar je titels officieel kunt streamen.</p>
-<div class="grid" id="catalog"></div>
+<h2>Ontdek films, series en meer</h2>
+<input id="search" placeholder="Zoek een film of serie..." oninput="searchItems()">
+<div class="grid" id="catalog">
+<div class="card"><h3>NPO Start</h3><p>Series en programma's</p><a href="https://npo.nl/start" target="_blank">Bekijk aanbod</a></div>
+<div class="card"><h3>Pluto TV</h3><p>Gratis films en series</p><a href="https://pluto.tv" target="_blank">Bekijk aanbod</a></div>
+<div class="card"><h3>Plex</h3><p>Gratis films en series</p><a href="https://watch.plex.tv" target="_blank">Bekijk aanbod</a></div>
+<div class="card"><h3>Rakuten TV</h3><p>Gratis aanbod beschikbaar</p><a href="https://www.rakuten.tv" target="_blank">Bekijk aanbod</a></div>
+<div class="card"><h3>YouTube</h3><p>Gratis films en documentaires</p><a href="https://www.youtube.com" target="_blank">Bekijk aanbod</a></div>
+<div class="card"><h3>Internet Archive</h3><p>Rechtenvrije films en video's</p><a href="https://archive.org/details/movies" target="_blank">Bekijk aanbod</a></div>
+<div class="card"><h3>Het Klokhuis</h3><p>Educatieve video's</p><a href="https://hetklokhuis.nl" target="_blank">Bekijk aanbod</a></div>
+<div class="card"><h3>Zapp</h3><p>Programma's voor kinderen</p><a href="https://www.zapp.nl" target="_blank">Bekijk aanbod</a></div>
+<div class="card"><h3>NPO Doc</h3><p>Documentaires</p><a href="https://npo.nl/start" target="_blank">Bekijk aanbod</a></div>
+<div class="card"><h3>Crunchyroll</h3><p>Anime, deels gratis</p><a href="https://www.crunchyroll.com" target="_blank">Bekijk aanbod</a></div>
+</div>
 </main>
-<footer>STREAM WORLD © 2026<br>Alle kijkrechten blijven bij de officiële aanbieders.</footer>
 <script>
-const titles=[
-{name:"NPO Start",type:"Series",emoji:"📺",status:"Gratis aanbod",url:"https://npo.nl/start"},
-{name:"NPO Doc",type:"Documentaires",emoji:"🌍",status:"Gratis aanbod",url:"https://npo.nl"},
-{name:"YouTube",type:"Films",emoji:"▶️",status:"Gratis en betaald aanbod",url:"https://www.youtube.com"},
-{name:"Plex",type:"Films",emoji:"🎬",status:"Gratis en betaald aanbod",url:"https://watch.plex.tv"},
-{name:"Rakuten TV",type:"Films",emoji:"🍿",status:"Gratis en betaald aanbod",url:"https://www.rakuten.tv"},
-{name:"Pluto TV",type:"Series",emoji:"📺",status:"Gratis aanbod",url:"https://pluto.tv"},
-{name:"Crunchyroll",type:"Anime",emoji:"⛩️",status:"Gratis en betaald aanbod",url:"https://www.crunchyroll.com"},
-{name:"Internet Archive",type:"Films",emoji:"🎞️",status:"Rechtenvrije en gratis titels",url:"https://archive.org/details/movies"},
-{name:"Het Klokhuis",type:"Kinderen",emoji:"🧸",status:"Gratis aanbod",url:"https://hetklokhuis.nl"},
-{name:"Zapp",type:"Kinderen",emoji:"⭐",status:"Gratis aanbod",url:"https://www.zapp.nl"}
-];
-let selected="Alles";
-function category(c,b){
-selected=c;
-document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
-b.classList.add("active");
-render();
+function searchItems(){
+const q=document.getElementById('search').value.toLowerCase();
+document.querySelectorAll('.card').forEach(card=>{
+card.style.display=card.innerText.toLowerCase().includes(q)?'block':'none';
+});
 }
-function render(){
-let q=document.getElementById("search").value.toLowerCase();
-let list=titles.filter(x=>(selected==="Alles"||x.type===selected)&&
-(x.name.toLowerCase().includes(q)||x.type.toLowerCase().includes(q)));
-document.getElementById("heading").textContent=selected==="Alles"?"Ontdek STREAM WORLD":selected;
-document.getElementById("catalog").innerHTML=list.map(x=>`
-<div class="card">
-<div class="poster">${x.emoji}</div>
-<div class="info"><strong>${x.name}</strong>
-<div class="small">${x.type} · ${x.status}</div>
-<p><a href="${x.url}" target="_blank" rel="noopener">Bekijk platform ↗</a></p>
-</div></div>`).join("")||"<p>Geen resultaten gevonden.</p>";
-}
-render();
 </script>
 </body>
 </html>
