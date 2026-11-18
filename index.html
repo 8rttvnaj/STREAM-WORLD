@@ -3,155 +3,184 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>STREAM WORLD</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#101010;color:white;font-family:Arial,sans-serif}
-header{background:#080808;padding:22px 18px;position:sticky;top:0;z-index:5;border-bottom:2px solid #e50914}
-.logo{font-size:29px;font-weight:900;color:#e50914;letter-spacing:1px}
-.tagline{color:#aaa;font-size:12px;margin-top:5px}
-main{padding:18px;max-width:1100px;margin:auto}
-h2{font-size:21px;margin:28px 0 14px}
-.searchbox{display:flex;gap:8px;margin-top:20px}
-input{width:100%;min-width:0;padding:14px;border-radius:7px;border:1px solid #444;background:#242424;color:white;font-size:16px}
-button{background:#e50914;color:white;border:0;border-radius:7px;padding:12px 14px;font-weight:bold;font-size:13px;cursor:pointer}
-.searchbuttons{display:flex;gap:9px;margin-top:10px}
-.searchbuttons button{flex:1}
-.categories{display:flex;gap:8px;overflow-x:auto;margin:22px 0}
-.categories button{white-space:nowrap;background:#292929}
-.categories button.active{background:#e50914}
+header{background:#080808;padding:18px 14px;position:sticky;top:0;z-index:5;border-bottom:2px solid #e50914}
+.logo{color:#e50914;font-size:27px;font-weight:900;letter-spacing:1px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+button{background:#e50914;color:white;border:0;padding:10px 14px;border-radius:6px;font-weight:bold;cursor:pointer}
+button:hover{background:#b80710}
+.searchrow{display:flex;gap:8px;margin-top:14px}
+input{min-width:0;flex:1;padding:12px;border-radius:6px;border:1px solid #555;background:#222;color:white;font-size:16px}
+#languagePanel{display:none;background:#222;padding:12px;margin-top:10px;border-radius:8px}
+nav{display:flex;gap:9px;overflow-x:auto;padding:14px 0}
+nav button{white-space:nowrap;background:#292929}
+nav button.active{background:#e50914}
+.hero{padding:35px 20px;background:linear-gradient(90deg,#080808,#5a090e);min-height:190px}
+.hero h1{font-size:34px;margin:8px 0}
+.hero p{color:#ddd}
+section{padding:16px}
+h2{font-size:21px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.card{background:#202020;border-radius:10px;overflow:hidden;border:1px solid #303030}
-.poster{height:145px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(135deg,#4a0808,#171717 75%)}
-.poster.blue{background:linear-gradient(135deg,#073b64,#151515 80%)}
-.poster.purple{background:linear-gradient(135deg,#4b1769,#171717 80%)}
-.poster.gold{background:linear-gradient(135deg,#71500a,#171717 80%)}
-.poster.green{background:linear-gradient(135deg,#07523d,#171717 80%)}
-.poster small{color:#ddd;font-size:10px;letter-spacing:2px}
-.poster strong{font-size:22px;line-height:1.05}
-.info{padding:12px}
-.info h3{margin:0 0 7px;font-size:16px}
-.info p{color:#bbb;font-size:12px;line-height:1.5;min-height:34px}
-.tag{display:inline-block;background:#333;padding:5px 7px;border-radius:4px;font-size:10px;color:#ddd;margin-bottom:10px}
-.watch{display:block;text-align:center;text-decoration:none;background:#e50914;color:white;padding:11px;border-radius:6px;font-size:13px;font-weight:bold}
-.note{font-size:12px;color:#aaa;line-height:1.5;margin-top:25px}
-footer{text-align:center;color:#777;padding:28px;font-size:12px}
-@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.poster{height:190px}}
+.card{background:#202020;border-radius:9px;overflow:hidden}
+.poster{height:190px;background:linear-gradient(145deg,#4c1016,#171717);display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-size:22px;font-weight:bold}
+.cardinfo{padding:10px}
+.cardinfo p{font-size:13px;color:#ccc;min-height:32px}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+.actions button{font-size:12px;padding:8px}
+.secondary{background:#444}
+#intro{position:fixed;inset:0;background:#080808;z-index:20;display:flex;align-items:center;justify-content:center;text-align:center;flex-direction:column}
+#intro h1{font-size:42px;color:#e50914;letter-spacing:2px}
+#intro p{color:#ccc}
+#intro button{margin-top:20px}
+footer{text-align:center;color:#888;padding:30px;font-size:12px}
+@media(min-width:650px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.poster{height:250px}}
 </style>
 </head>
 <body>
+
+<div id="intro">
+  <h1>STREAM WORLD</h1>
+  <p>Jouw wereld. Jouw films. Jouw series.</p>
+  <button onclick="document.getElementById('intro').style.display='none'">START KIJKEN</button>
+</div>
+
 <header>
- <div class="logo">STREAM WORLD</div>
- <div class="tagline">YOUR ENTERTAINMENT WORLD</div>
+  <div class="top">
+    <div class="logo">STREAM WORLD</div>
+    <button onclick="toggleLanguage()">🌐 Taal</button>
+  </div>
+  <div class="searchrow">
+    <input id="search" placeholder="Zoek een film of serie..." oninput="render()">
+    <button onclick="render()">Zoek</button>
+  </div>
+  <div id="languagePanel">
+    <input id="languageSearch" placeholder="Zoek een taal..." oninput="showLanguages()">
+    <div id="languageOptions"></div>
+    <p id="languageChosen">Taal: Nederlands</p>
+  </div>
+  <nav>
+    <button class="active" onclick="setPage('home',this)">Home</button>
+    <button onclick="setPage('films',this)">Films</button>
+    <button onclick="setPage('series',this)">Series</button>
+    <button onclick="setPage('kids',this)">🧒 Kids</button>
+    <button onclick="setPage('favorites',this)">❤️ Favorieten</button>
+    <button onclick="setPage('top',this)">Top 10</button>
+  </nav>
 </header>
-<main>
- <h2>Wat wil je kijken?</h2>
- <div class="searchbox">
-  <input id="search" placeholder="Zoek een film, serie of YouTuber..." oninput="filterCards()">
- </div>
- <div class="searchbuttons">
-  <button onclick="searchOnline()">ZOEK ONLINE</button>
-  <button onclick="searchYouTube()">ZOEK YOUTUBE</button>
- </div>
- <div class="categories">
-  <button class="active" onclick="chooseCategory('alles',this)">Alles</button>
-  <button onclick="chooseCategory('series',this)">Series</button>
-  <button onclick="chooseCategory('films',this)">Films</button>
-  <button onclick="chooseCategory('kinderen',this)">Kinderen</button>
-  <button onclick="chooseCategory('documentaires',this)">Documentaires</button>
-  <button onclick="chooseCategory('anime',this)">Anime</button>
-  <button onclick="chooseCategory('youtube',this)">YouTube</button>
- </div>
- <h2>Populair op STREAM WORLD</h2>
- <div class="grid" id="catalog">
 
-  <article class="card" data-category="kinderen series">
-   <div class="poster green"><small>STREAM WORLD ORIGINALS</small><strong>HET<br>KLOKHUIS</strong></div>
-   <div class="info"><h3>Het Klokhuis</h3><span class="tag">Gratis aanbod</span><p>Ontdek leuke en leerzame onderwerpen.</p><a class="watch" href="https://hetklokhuis.nl/" target="_blank">KIJK NU ↗</a></div>
-  </article>
+<div class="hero">
+  <p>WELKOM BIJ</p>
+  <h1>STREAM WORLD</h1>
+  <p>Ontdek jouw volgende favoriete film of serie.</p>
+</div>
 
-  <article class="card" data-category="kinderen series">
-   <div class="poster blue"><small>NIEUWS</small><strong>JEUGD<br>JOURNAAL</strong></div>
-   <div class="info"><h3>Jeugdjournaal</h3><span class="tag">Gratis aanbod</span><p>Het nieuws uitgelegd voor kinderen.</p><a class="watch" href="https://jeugdjournaal.nl/" target="_blank">KIJK NU ↗</a></div>
-  </article>
+<section>
+  <h2 id="sectionTitle">⭐ Ontdek STREAM WORLD</h2>
+  <div class="grid" id="catalog"></div>
+  <p id="empty" style="display:none;color:#bbb">Geen resultaten gevonden.</p>
+</section>
 
-  <article class="card" data-category="series kinderen">
-   <div class="poster purple"><small>NPO ZAPP</small><strong>ZAPP</strong></div>
-   <div class="info"><h3>Zapp programma's</h3><span class="tag">Gratis aanbod</span><p>Programma's en series voor kinderen.</p><a class="watch" href="https://www.zapp.nl/" target="_blank">KIJK NU ↗</a></div>
-  </article>
+<footer>STREAM WORLD · Jouw entertainmentwereld</footer>
 
-  <article class="card" data-category="films series">
-   <div class="poster"><small>GRATIS MET RECLAME</small><strong>PLEX<br>FILMS</strong></div>
-   <div class="info"><h3>Gratis films op Plex</h3><span class="tag">Gratis aanbod</span><p>Ontdek films en series. Het aanbod wisselt.</p><a class="watch" href="https://watch.plex.tv/nl/on-demand" target="_blank">KIJK NU ↗</a></div>
-  </article>
-
-  <article class="card" data-category="films series">
-   <div class="poster gold"><small>GRATIS SECTIE</small><strong>RAKUTEN<br>TV</strong></div>
-   <div class="info"><h3>Rakuten TV</h3><span class="tag">Gratis en betaald</span><p>Bekijk de gratis films en controleer de prijs.</p><a class="watch" href="https://www.rakuten.tv/" target="_blank">KIJK NU ↗</a></div>
-  </article>
-
-  <article class="card" data-category="series films documentaires">
-   <div class="poster blue"><small>PUBLIEKE OMROEP</small><strong>NPO<br>START</strong></div>
-   <div class="info"><h3>NPO Start</h3><span class="tag">Gratis en betaald</span><p>Programma's, series, films en documentaires.</p><a class="watch" href="https://npo.nl/start" target="_blank">KIJK NU ↗</a></div>
-  </article>
-
-  <article class="card" data-category="anime">
-   <div class="poster purple"><small>ANIME WORLD</small><strong>CRUNCHY<br>ROLL</strong></div>
-   <div class="info"><h3>Crunchyroll</h3><span class="tag">Gratis en betaald</span><p>Ontdek anime. Beschikbaarheid verschilt per titel.</p><a class="watch" href="https://www.crunchyroll.com/" target="_blank">KIJK NU ↗</a></div>
-  </article>
-
-  <article class="card" data-category="youtube">
-   <div class="poster"><small>VIDEO'S</small><strong>YOUTUBE</strong></div>
-   <div class="info"><h3>YouTube creators</h3><span class="tag">Gratis video's</span><p>Zoek bijvoorbeeld Salish & Jordan Matter.</p><a class="watch" href="https://www.youtube.com/results?search_query=Salish+Jordan+Matter" target="_blank">KIJK NU ↗</a></div>
-  </article>
-
-  <article class="card" data-category="documentaires films">
-   <div class="poster green"><small>ONTDEK DE WERELD</small><strong>NPO<br>DOC</strong></div>
-   <div class="info"><h3>NPO Documentaires</h3><span class="tag">Gratis aanbod</span><p>Bekijk documentaires via NPO Start.</p><a class="watch" href="https://npo.nl/start" target="_blank">KIJK NU ↗</a></div>
-  </article>
-
-  <article class="card" data-category="films">
-   <div class="poster gold"><small>FILM ARCHIEF</small><strong>INTERNET<br>ARCHIVE</strong></div>
-   <div class="info"><h3>Internet Archive</h3><span class="tag">Rechtenvrij aanbod</span><p>Ontdek oude films en archiefvideo's.</p><a class="watch" href="https://archive.org/details/movies" target="_blank">KIJK NU ↗</a></div>
-  </article>
-
- </div>
- <p id="noresults" style="display:none;color:#aaa;margin-top:20px">Geen resultaten gevonden. Probeer een andere zoekterm of gebruik ZOEK ONLINE.</p>
- <p class="note">STREAM WORLD is een onafhankelijke verzamelsite. Je kijkt via de officiële aanbieders. Gratis aanbod kan veranderen. Controleer altijd of een titel gratis is voordat je begint. Sommige diensten tonen advertenties of vragen een abonnement.</p>
-</main>
-<footer>© STREAM WORLD · YOUR ENTERTAINMENT WORLD</footer>
 <script>
-let currentCategory='alles';
+const titles = [
+ {name:"The Super Mario Bros. Movie",type:"film",genre:"Avontuur",kids:true,desc:"Een kleurrijk avontuur met Mario.",emoji:"🍄",trailer:"https://www.youtube.com/results?search_query=Super+Mario+Bros+Movie+trailer"},
+ {name:"Finding Nemo",type:"film",genre:"Animatie",kids:true,desc:"Een vader zoekt zijn zoon in de oceaan.",emoji:"🐠",trailer:"https://www.youtube.com/results?search_query=Finding+Nemo+trailer"},
+ {name:"Inside Out 2",type:"film",genre:"Animatie",kids:true,desc:"Nieuwe emoties komen erbij.",emoji:"🌈",trailer:"https://www.youtube.com/results?search_query=Inside+Out+2+trailer"},
+ {name:"Paddington",type:"film",genre:"Familie",kids:true,desc:"Een beer beleeft avonturen in Londen.",emoji:"🐻",trailer:"https://www.youtube.com/results?search_query=Paddington+trailer"},
+ {name:"Spider-Man: Into the Spider-Verse",type:"film",genre:"Actie",kids:false,desc:"Een bijzonder superheldenavontuur.",emoji:"🕷️",trailer:"https://www.youtube.com/results?search_query=Spider+Verse+trailer"},
+ {name:"The Lion King",type:"film",genre:"Avontuur",kids:true,desc:"Het verhaal van Simba.",emoji:"🦁",trailer:"https://www.youtube.com/results?search_query=Lion+King+trailer"},
+ {name:"Harry Potter",type:"film",genre:"Fantasy",kids:false,desc:"Magie en avontuur op Zweinstein.",emoji:"⚡",trailer:"https://www.youtube.com/results?search_query=Harry+Potter+trailer"},
+ {name:"SpongeBob",type:"serie",genre:"Animatie",kids:true,desc:"Gekke avonturen onder water.",emoji:"🧽",trailer:"https://www.youtube.com/results?search_query=SpongeBob+trailer"},
+ {name:"Wednesday",type:"serie",genre:"Mysterie",kids:false,desc:"Een mysterie op een bijzondere school.",emoji:"🖤",trailer:"https://www.youtube.com/results?search_query=Wednesday+trailer"},
+ {name:"Avatar: The Last Airbender",type:"serie",genre:"Fantasy",kids:true,desc:"Een wereld vol bijzondere krachten.",emoji:"🌊",trailer:"https://www.youtube.com/results?search_query=Avatar+Last+Airbender+trailer"},
+ {name:"Pokémon",type:"serie",genre:"Avontuur",kids:true,desc:"Ga op avontuur met Pokémon.",emoji:"⚡",trailer:"https://www.youtube.com/results?search_query=Pokemon+trailer"},
+ {name:"The Incredibles",type:"film",genre:"Actie",kids:true,desc:"Een familie met superkrachten.",emoji:"🦸",trailer:"https://www.youtube.com/results?search_query=The+Incredibles+trailer"}
+];
 
-function filterCards(){
- const q=document.getElementById('search').value.toLowerCase();
- let count=0;
- document.querySelectorAll('.card').forEach(card=>{
-  const matchesText=card.innerText.toLowerCase().includes(q);
-  const matchesCategory=currentCategory==='alles'||card.dataset.category.split(' ').includes(currentCategory);
-  card.style.display=matchesText&&matchesCategory?'block':'none';
-  if(matchesText&&matchesCategory)count++;
+let page="home";
+let favorites=JSON.parse(localStorage.getItem("swFavorites")||"[]");
+
+function setPage(p,btn){
+ page=p;
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+ btn.classList.add("active");
+ const names={home:"⭐ Ontdek STREAM WORLD",films:"🎬 Films",series:"📺 Series",kids:"🧒 Kinderwereld",favorites:"❤️ Mijn favorieten",top:"🔥 Top 10"};
+ document.getElementById("sectionTitle").textContent=names[p];
+ render();
+}
+
+function render(){
+ const q=document.getElementById("search").value.toLowerCase();
+ let list=titles.filter(t=>t.name.toLowerCase().includes(q)||t.genre.toLowerCase().includes(q));
+ if(page==="films")list=list.filter(t=>t.type==="film");
+ if(page==="series")list=list.filter(t=>t.type==="serie");
+ if(page==="kids")list=list.filter(t=>t.kids);
+ if(page==="favorites")list=list.filter(t=>favorites.includes(t.name));
+ if(page==="top")list=list.slice(0,10);
+ const catalog=document.getElementById("catalog");
+ catalog.innerHTML="";
+ list.forEach(t=>{
+  const isFav=favorites.includes(t.name);
+  const card=document.createElement("div");
+  card.className="card";
+  const poster=document.createElement("div");
+  poster.className="poster";
+  poster.textContent=t.emoji+" "+t.name;
+  const info=document.createElement("div");
+  info.className="cardinfo";
+  const heading=document.createElement("strong");
+  heading.textContent=t.name;
+  const desc=document.createElement("p");
+  desc.textContent=t.desc;
+  const actions=document.createElement("div");
+  actions.className="actions";
+  const fav=document.createElement("button");
+  fav.className="secondary";
+  fav.textContent=isFav?"❤️ Opgeslagen":"♡ Favoriet";
+  fav.onclick=()=>toggleFavorite(t.name);
+  const trailer=document.createElement("button");
+  trailer.textContent="▶ Trailer";
+  trailer.onclick=()=>window.open(t.trailer,"_blank");
+  actions.append(fav,trailer);
+  info.append(heading,desc,actions);
+  card.append(poster,info);
+  catalog.append(card);
  });
- document.getElementById('noresults').style.display=count?'none':'block';
+ document.getElementById("empty").style.display=list.length?"none":"block";
 }
 
-function chooseCategory(category,button){
- currentCategory=category;
- document.querySelectorAll('.categories button').forEach(b=>b.classList.remove('active'));
- button.classList.add('active');
- filterCards();
+function toggleFavorite(name){
+ favorites=favorites.includes(name)?favorites.filter(x=>x!==name):[...favorites,name];
+ localStorage.setItem("swFavorites",JSON.stringify(favorites));
+ render();
 }
 
-function searchOnline(){
- const q=document.getElementById('search').value.trim();
- if(q)window.open('https://www.google.com/search?q='+encodeURIComponent(q+' kijken Nederland officieel'),'_blank');
+function toggleLanguage(){
+ const panel=document.getElementById("languagePanel");
+ panel.style.display=panel.style.display==="block"?"none":"block";
+ showLanguages();
 }
 
-function searchYouTube(){
- const q=document.getElementById('search').value.trim();
- if(q)window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q),'_blank');
+const languages=["Nederlands","English","Deutsch","Français","Español","Italiano"];
+function showLanguages(){
+ const q=document.getElementById("languageSearch").value.toLowerCase();
+ const box=document.getElementById("languageOptions");
+ box.innerHTML="";
+ languages.filter(x=>x.toLowerCase().includes(q)).forEach(lang=>{
+  const b=document.createElement("button");
+  b.className="secondary";
+  b.style.margin="5px";
+  b.textContent=lang;
+  b.onclick=()=>document.getElementById("languageChosen").textContent="Gekozen taal: "+lang;
+  box.append(b);
+ });
 }
+render();
 </script>
 </body>
 </html>
