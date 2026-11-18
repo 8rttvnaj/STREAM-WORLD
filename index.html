@@ -9,696 +9,402 @@
 
 <style>
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif}
 button,input,select{font:inherit}
 button{cursor:pointer}
-a{color:inherit;text-decoration:none}
+header{padding:22px 16px;text-align:center;background:#101010;border-bottom:1px solid #292929}
+.logo{font-size:clamp(30px,7vw,48px);font-weight:900;letter-spacing:3px}
+.logo span{color:#f01825;text-shadow:0 0 15px #f01825}
+main{max-width:1000px;margin:auto;padding:18px}
+.search-area{display:grid;gap:10px;margin:15px 0}
+input,select{width:100%;padding:14px;border:1px solid #444;border-radius:9px;background:#171717;color:white}
+button{padding:13px 17px;border:0;border-radius:9px;background:#e50920;color:white;font-weight:bold}
+.search-row{display:flex;gap:8px}
+.search-row input{flex:1;min-width:0}
+h2{font-size:21px;margin:28px 0 13px}
+.services{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.service{background:#171717;border:1px solid #333;border-radius:12px;padding:18px 10px;text-align:center;text-decoration:none;color:white;min-height:90px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold}
+.service:active{transform:scale(.97)}
+.service span{display:block}
+.npo{border-color:#e64a35}
+.plex{border-color:#e5a800}
+.youtube{border-color:#e50920}
+.kijk{border-color:#ef7d24}
+.school{border-color:#42a5f5}
+.klokhuis{border-color:#70b94c}
+.panel{background:#151515;border:1px solid #333;border-radius:12px;padding:16px;margin-top:14px}
+#results{display:grid;gap:8px}
+.result{display:block;color:white;background:#202020;padding:12px;border-radius:8px;text-decoration:none}
+#gameCanvas{display:block;width:100%;max-width:420px;height:auto;background:linear-gradient(#75c9e8,#d7f4ff);border-radius:10px;margin:12px auto}
+.game-buttons{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+footer{text-align:center;color:#777;padding:30px 10px}
 
-/* STREAM WORLD 8.0 - ORIGINELE GEANIMEERDE INTRO */
+/* STREAM WORLD INTRO */
 #intro{
- position:fixed;
- inset:0;
- z-index:9999;
- display:flex;
- align-items:center;
- justify-content:center;
- overflow:hidden;
- background:#030303;
- perspective:1000px;
- opacity:1;
- visibility:visible;
- transition:opacity 1s ease,visibility 1s ease;
+ position:fixed;inset:0;z-index:9999;background:#020202;
+ display:flex;align-items:center;justify-content:center;
+ overflow:hidden;perspective:1000px;
 }
-#intro.hide{
- opacity:0;
- visibility:hidden;
- pointer-events:none;
+.intro-glow{
+ position:absolute;width:65vw;height:65vw;max-width:600px;max-height:600px;
+ border-radius:50%;background:radial-gradient(circle,rgba(220,0,15,.28),transparent 68%);
+ animation:glowPulse 3s ease-in-out infinite;
 }
-.intro-light{
- position:absolute;
- width:100%;
- height:100%;
- background:
- radial-gradient(ellipse at center,rgba(150,0,0,.32),transparent 55%),
- linear-gradient(120deg,#000,#100000,#000);
- animation:rise 5s ease-in-out infinite alternate;
+#particles{position:absolute;inset:0;overflow:hidden}
+.particle{
+ position:absolute;width:3px;height:3px;border-radius:50%;
+ background:#ff2535;box-shadow:0 0 9px #ff1428;
+ animation:particleMove var(--duration) linear infinite;
 }
 .intro-content{
- position:relative;
- z-index:2;
- text-align:center;
- width:100%;
- padding:20px;
+ position:relative;text-align:center;width:100%;padding:20px;
+ animation:introZoom 2s cubic-bezier(.15,.8,.2,1) both;
 }
 .intro-logo{
- font-size:clamp(40px,10vw,92px);
- font-weight:1000;
- letter-spacing:5px;
- color:#fff;
- white-space:nowrap;
- text-shadow:
- 0 0 10px #ff1717,
- 0 0 25px #ff1717,
- 0 0 55px #d00000,
- 0 0 90px #900000;
- transform-style:preserve-3d;
- opacity:0;
- animation:
- dramaticZoom 2.1s cubic-bezier(.12,.8,.2,1) forwards,
- neonPulse 2s ease-in-out 2.1s infinite alternate;
+ font-size:clamp(36px,10vw,82px);font-weight:1000;
+ letter-spacing:clamp(2px,1vw,9px);
+ color:white;white-space:nowrap;
+ text-shadow:0 0 10px #ff172b,0 0 28px #e50920,0 0 65px #e50920;
+ animation:neonPulse 1.5s ease-in-out infinite alternate;
 }
-.intro-logo span{color:#ff2525}
-.intro-sub{
- margin-top:18px;
- color:#eee;
- font-size:clamp(11px,2.6vw,17px);
- letter-spacing:4px;
- opacity:0;
- animation:fly 1.2s ease 1.8s forwards;
-}
+.intro-logo span{color:#f01825}
 .intro-laser{
- position:relative;
- width:min(520px,85vw);
- height:3px;
- margin:24px auto;
- background:#470000;
- box-shadow:0 0 12px red,0 0 30px #d00000;
- overflow:hidden;
- opacity:0;
- animation:rise 1s ease 1.5s forwards;
+ height:3px;width:0;margin:22px auto;background:#ff1428;
+ box-shadow:0 0 12px #ff1428,0 0 30px #ff1428;
+ animation:laserMove 1.4s ease-out 1.4s forwards;
 }
-.intro-laser:after{
- content:"";
- position:absolute;
- top:0;
- left:-40%;
- width:40%;
- height:100%;
- background:white;
- box-shadow:0 0 12px white,0 0 25px red;
- animation:laser 1.7s linear 2s infinite;
+.intro-sub{
+ opacity:0;letter-spacing:3px;font-size:clamp(11px,3vw,16px);
+ animation:subAppear 1s ease 2.6s forwards;
 }
 #startButton{
- margin-top:28px;
- padding:14px 36px;
- color:white;
- font-weight:bold;
- font-size:16px;
- letter-spacing:2px;
- background:linear-gradient(135deg,#f21b25,#870000);
- border:1px solid #ff4242;
- border-radius:30px;
- box-shadow:0 0 18px #e00000,0 0 35px #700000;
- opacity:0;
- animation:fly 1s ease 2.6s forwards;
- transition:transform .2s,box-shadow .2s;
+ opacity:0;margin-top:30px;padding:14px 30px;border:1px solid #ff2637;
+ background:#e50920;color:white;border-radius:7px;
+ box-shadow:0 0 18px #e50920;
+ animation:buttonAppear .8s ease 3.2s forwards;
 }
-#startButton:hover{
- transform:scale(1.09);
- box-shadow:0 0 30px red,0 0 55px #900;
-}
-.intro-particle{
- position:absolute;
- bottom:-20px;
- width:4px;
- height:4px;
- border-radius:50%;
- background:#ff2525;
- box-shadow:0 0 12px red,0 0 22px #b00000;
- opacity:0;
- animation:particleRise linear infinite;
-}
-@keyframes dramaticZoom{
- 0%{opacity:0;transform:scale(.08) rotateX(35deg) translateZ(-700px);filter:blur(20px)}
- 55%{opacity:1;transform:scale(1.18) rotateX(-8deg) translateZ(80px);filter:blur(0)}
- 75%{transform:scale(.94) rotateX(3deg) translateZ(0)}
- 100%{opacity:1;transform:scale(1) rotateX(0) translateZ(0)}
+#intro.closing{animation:introOut .8s ease forwards;pointer-events:none}
+@keyframes introZoom{
+ 0%{opacity:0;transform:translateZ(-700px) scale(.25) rotateX(20deg)}
+ 65%{opacity:1;transform:translateZ(70px) scale(1.12)}
+ 100%{opacity:1;transform:translateZ(0) scale(1)}
 }
 @keyframes neonPulse{
- from{text-shadow:0 0 8px red,0 0 20px red,0 0 40px #a00000}
- to{text-shadow:0 0 15px white,0 0 35px red,0 0 75px #e00000,0 0 110px #800}
+ from{text-shadow:0 0 8px #ff172b,0 0 20px #e50920}
+ to{text-shadow:0 0 18px #ff172b,0 0 40px #e50920,0 0 75px #e50920}
 }
-@keyframes laser{
- 0%{left:-40%}
- 100%{left:110%}
+@keyframes laserMove{to{width:min(75%,650px)}}
+@keyframes subAppear{to{opacity:1;transform:translateY(0)}}
+@keyframes buttonAppear{to{opacity:1}}
+@keyframes glowPulse{50%{transform:scale(1.2);opacity:.65}}
+@keyframes particleMove{
+ 0%{transform:translate3d(0,110vh,0) scale(.5);opacity:0}
+ 15%{opacity:1}
+ 100%{transform:translate3d(var(--drift),-20vh,0) scale(1.4);opacity:0}
 }
-@keyframes rise{
- from{opacity:0;transform:translateY(25px)}
- to{opacity:1;transform:translateY(0)}
-}
-@keyframes fly{
- from{opacity:0;transform:translateY(35px) scale(.8);filter:blur(8px)}
- to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
-}
-@keyframes particleRise{
- 0%{transform:translateY(0) scale(.5);opacity:0}
- 15%{opacity:.8}
- 100%{transform:translateY(-110vh) scale(1.5);opacity:0}
-}
-
-/* HEADER */
-header{
- position:sticky;
- top:0;
- z-index:20;
- background:rgba(8,8,8,.95);
- backdrop-filter:blur(12px);
- border-bottom:1px solid #292929;
- padding:17px 5%;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:15px;
- flex-wrap:wrap;
-}
-.logo{font-size:25px;font-weight:1000;letter-spacing:2px}
-.logo span{color:#ed1c24}
-select,input{
- background:#191919;
- color:white;
- border:1px solid #444;
- border-radius:9px;
- padding:11px;
- outline:none;
-}
-select:focus,input:focus{border-color:#e50914}
-
-/* ALGEMEEN */
-main{width:min(1100px,92%);margin:30px auto 70px}
-section{margin:35px 0}
-h2{font-size:25px;margin:0 0 18px}
-.action{
- border:0;
- border-radius:9px;
- background:#e50914;
- color:white;
- font-weight:bold;
- padding:11px 16px;
-}
-.action:hover{background:#ff3039}
-
-/* ZOEKBALKEN */
-.search-area{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px;
- margin:25px 0 30px;
-}
-.search-box{display:flex;gap:8px}
-.search-box input{width:100%;min-width:0}
-.section-label{color:#aaa;font-size:13px;margin-top:-10px}
-
-/* STREAMINGDIENSTEN */
-.services{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
- gap:14px;
-}
-.service{
- min-height:125px;
- background:linear-gradient(145deg,#222,#111);
- border:1px solid #333;
- border-radius:14px;
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
- gap:10px;
- text-align:center;
- padding:18px;
- transition:.2s;
-}
-.service:hover{
- transform:translateY(-5px);
- border-color:#e50914;
- box-shadow:0 8px 25px #e5091422;
-}
-.service .symbol{font-size:32px}
-.service strong{font-size:16px}
-.service small{color:#aaa}
-
-/* FLAPPY BIRD */
-.game-wrap{
- background:linear-gradient(145deg,#191919,#101010);
- border:1px solid #333;
- border-radius:18px;
- padding:18px;
-}
-.game-top{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
- flex-wrap:wrap;
- margin-bottom:14px;
-}
-.score{font-size:18px;font-weight:bold;color:#ff4545}
-#gameCanvas{
- display:block;
- width:100%;
- max-width:600px;
- height:auto;
- margin:auto;
- border-radius:12px;
- background:#82d8f3;
- border:2px solid #333;
- touch-action:manipulation;
-}
-#gameMessage{text-align:center;font-weight:bold;margin:12px 0}
-.game-controls{text-align:center;margin-top:14px;color:#bbb;font-size:14px}
-.game-buttons{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-.secondary{
- background:#292929;
- color:white;
- border:1px solid #555;
- border-radius:9px;
- padding:11px 17px;
-}
-.secondary:hover{background:#444}
-
-/* MUZIEK */
-.music-box{
- background:linear-gradient(145deg,#201010,#121212);
- border:1px solid #472020;
- border-radius:16px;
- padding:22px;
-}
-.music-box p{color:#bbb}
-.music-search{display:flex;gap:9px}
-.music-search input{flex:1;min-width:0}
-footer{text-align:center;color:#666;padding:25px;border-top:1px solid #222}
-
-@media(max-width:650px){
- header{padding:14px 4%}
- .search-area{grid-template-columns:1fr}
- .search-box{flex-wrap:nowrap}
- main{margin-top:22px}
- .intro-logo{letter-spacing:2px}
- .intro-sub{letter-spacing:2px}
-}
+@keyframes introOut{to{opacity:0;visibility:hidden}}
+@media(min-width:650px){.services{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 </head>
 
 <body>
 
-<!-- STREAM WORLD 8.0 INTRO -->
+<!-- GEANIMEERDE INTRO -->
 <div id="intro">
- <div class="intro-light"></div>
+ <div class="intro-glow"></div>
+ <div id="particles"></div>
  <div class="intro-content">
   <div class="intro-logo">STREAM <span>WORLD</span></div>
   <div class="intro-laser"></div>
   <div class="intro-sub">JOUW WERELD. JOUW ENTERTAINMENT.</div>
-  <button id="startButton" onclick="closeIntro()">START NU ▶</button>
+  <button id="startButton">START NU ▶</button>
  </div>
 </div>
 
 <header>
  <div class="logo">STREAM <span>WORLD</span></div>
- <select id="language" aria-label="Taal kiezen" onchange="changeLanguage()">
-  <option value="nl">🇳🇱 Nederlands</option>
-  <option value="en">🇬🇧 English</option>
-  <option value="de">🇩🇪 Deutsch</option>
- </select>
 </header>
 
 <main>
 
-<!-- ZOEKBALKEN -->
-<section>
- <div class="search-area">
-  <div class="search-box">
-   <input id="siteSearch" type="search" placeholder="Zoek op STREAM WORLD...">
-   <button class="action" id="siteSearchButton" onclick="searchSite()">Zoek</button>
-  </div>
-  <div class="search-box">
-   <input id="onlineSearch" type="search" placeholder="Zoek online...">
-   <button class="action" id="onlineSearchButton" onclick="searchOnline()">Online</button>
-  </div>
- </div>
-</section>
+<!-- ZOEKEN EN TAAL -->
+<div class="search-area">
+ <form class="search-row" id="internalForm">
+  <input id="internalSearch" placeholder="Zoek op STREAM WORLD...">
+  <button type="submit">ZOEK</button>
+ </form>
+
+ <form class="search-row" id="onlineForm">
+  <input id="onlineSearch" placeholder="Zoek online op internet...">
+  <button type="submit">ONLINE ZOEKEN</button>
+ </form>
+
+ <select id="language" aria-label="Taalkeuze">
+  <option value="nl">🇳🇱 Nederlands</option>
+  <option value="en">🇬🇧 English</option>
+  <option value="de">🇩🇪 Deutsch</option>
+ </select>
+</div>
+
+<div id="results"></div>
 
 <!-- STREAMINGDIENSTEN -->
-<section id="streaming">
- <h2 id="servicesTitle">📺 Streamingdiensten</h2>
- <p class="section-label" id="servicesSubtitle">Kies wat je wilt bekijken</p>
-
- <div class="services">
-  <a class="service" data-search="npo start series programmas televisie" href="https://npo.nl/start" target="_blank" rel="noopener">
-   <div class="symbol">📺</div>
-   <strong>NPO START</strong>
-   <small>Programma's en series</small>
-  </a>
-
-  <a class="service" data-search="plex films series televisie" href="https://watch.plex.tv/" target="_blank" rel="noopener">
-   <div class="symbol">▶️</div>
-   <strong>PLEX</strong>
-   <small>Films en series</small>
-  </a>
-
-  <a class="service" data-search="youtube videos muziek" href="https://www.youtube.com/" target="_blank" rel="noopener">
-   <div class="symbol">▶️</div>
-   <strong>YouTube</strong>
-   <small>Video's bekijken</small>
-  </a>
-
-  <a class="service" data-search="kijk televisie programmas" href="https://www.kijk.nl/" target="_blank" rel="noopener">
-   <div class="symbol">📡</div>
-   <strong>KIJK</strong>
-   <small>Programma's terugkijken</small>
-  </a>
-
-  <a class="service" data-search="schooltv leren videos school" href="https://schooltv.nl/" target="_blank" rel="noopener">
-   <div class="symbol">🎓</div>
-   <strong>SchoolTV</strong>
-   <small>Leren en ontdekken</small>
-  </a>
-
-  <a class="service" data-search="het klokhuis klokhuis jeugd programma" href="https://www.hetklokhuis.nl/" target="_blank" rel="noopener">
-   <div class="symbol">🧪</div>
-   <strong>Het Klokhuis</strong>
-   <small>Ontdek de wereld</small>
-  </a>
- </div>
- <p id="noResults" style="display:none;color:#aaa;margin-top:18px">Geen resultaten gevonden.</p>
-</section>
+<h2>📺 STREAMING & KIJKEN</h2>
+<div class="services" id="serviceList">
+ <a class="service npo" href="https://npo.nl/start" target="_blank" rel="noopener">NPO START</a>
+ <a class="service plex" href="https://watch.plex.tv/" target="_blank" rel="noopener">PLEX</a>
+ <a class="service youtube" href="https://www.youtube.com/" target="_blank" rel="noopener">▶ YOUTUBE</a>
+ <a class="service kijk" href="https://www.kijk.nl/" target="_blank" rel="noopener">KIJK</a>
+ <a class="service school" href="https://schooltv.nl/" target="_blank" rel="noopener">SCHOOLTV</a>
+ <a class="service klokhuis" href="https://www.hetklokhuis.nl/" target="_blank" rel="noopener">HET KLOKHUIS</a>
+</div>
 
 <!-- FLAPPY BIRD -->
-<section id="flappy">
- <h2>🐦 Flappy Bird</h2>
- <p class="section-label">Tik op het scherm om te vliegen. Bij elke tik hoor je een zacht BAK-geluidje!</p>
-
- <div class="game-wrap">
-  <div class="game-top">
-   <strong>🐤 STREAM WORLD BIRD</strong>
-   <div class="score">Score: <span id="score">0</span></div>
-  </div>
-
-  <canvas id="gameCanvas" width="600" height="400"></canvas>
-  <div id="gameMessage">Druk op START om te spelen!</div>
-
-  <div class="game-buttons">
-   <button class="action" id="gameStart" onclick="startGame()">START SPEL</button>
-   <button class="secondary" onclick="toggleSound()" id="soundButton">🔊 Geluid aan</button>
-  </div>
-  <div class="game-controls">Tik op het spel of druk op spatie om omhoog te vliegen.</div>
+<h2>🐤 FLAPPY BIRD</h2>
+<div class="panel">
+ <p style="text-align:center">Tik op het scherm of druk op de knop om te vliegen!</p>
+ <canvas id="gameCanvas" width="420" height="520"></canvas>
+ <div class="game-buttons">
+  <button id="flyButton">🐤 VLIEG!</button>
+  <button id="restartButton">OPNIEUW</button>
  </div>
-</section>
+ <p id="score" style="text-align:center">Score: 0</p>
+</div>
 
-<!-- MUZIEK -->
-<section id="music">
- <h2 id="musicTitle">🎵 Muziek zoeken</h2>
- <div class="music-box">
-  <p id="musicDescription">Zoek je favoriete muziek op YouTube!</p>
-  <div class="music-search">
-   <input id="musicSearch" type="search" placeholder="Welke muziek zoek je?">
-   <button class="action" onclick="searchMusic()" id="musicButton">Zoek muziek</button>
-  </div>
- </div>
-</section>
+<!-- MUZIEK ZOEKEN -->
+<h2>🎵 MUZIEK ZOEKEN</h2>
+<div class="panel">
+ <form class="search-row" id="musicForm">
+  <input id="musicSearch" placeholder="Zoek een liedje of artiest...">
+  <button type="submit">ZOEK MUZIEK</button>
+ </form>
+</div>
 
 </main>
 
-<footer>STREAM WORLD © 2026</footer>
+<footer>STREAM WORLD ©</footer>
 
 <script>
-/* INTRO */
-function closeIntro(){
- document.getElementById("intro").classList.add("hide");
+// INTRO: rode bewegende deeltjes, zonder introgeluid
+const intro=document.getElementById("intro");
+const particleArea=document.getElementById("particles");
+
+for(let i=0;i<55;i++){
+ const p=document.createElement("i");
+ p.className="particle";
+ p.style.left=Math.random()*100+"%";
+ p.style.top=Math.random()*100+"%";
+ p.style.setProperty("--duration",(4+Math.random()*7)+"s");
+ p.style.setProperty("--drift",(Math.random()*180-90)+"px");
+ p.style.animationDelay=(-Math.random()*9)+"s";
+ particleArea.appendChild(p);
 }
+
+function closeIntro(){
+ if(intro.classList.contains("closing"))return;
+ intro.classList.add("closing");
+ setTimeout(()=>intro.remove(),850);
+}
+document.getElementById("startButton").addEventListener("click",closeIntro);
 setTimeout(closeIntro,9000);
 
-const intro=document.getElementById("intro");
-for(let i=0;i<35;i++){
- const p=document.createElement("div");
- p.className="intro-particle";
- p.style.left=Math.random()*100+"%";
- p.style.animationDuration=(5+Math.random()*8)+"s";
- p.style.animationDelay=(Math.random()*7)+"s";
- intro.appendChild(p);
-}
-
-/* INTERNE ZOEKFUNCTIE */
-function searchSite(){
- const query=document.getElementById("siteSearch").value.trim().toLowerCase();
- const cards=[...document.querySelectorAll(".service")];
- let count=0;
- cards.forEach(card=>{
-  const text=(card.innerText+" "+card.dataset.search).toLowerCase();
-  const visible=!query||text.includes(query);
-  card.style.display=visible?"flex":"none";
-  if(visible)count++;
- });
- document.getElementById("noResults").style.display=count===0?"block":"none";
-}
-document.getElementById("siteSearch").addEventListener("keydown",e=>{
- if(e.key==="Enter")searchSite();
-});
-
-/* ONLINE ZOEKEN */
-function searchOnline(){
+// ONLINE ZOEKEN
+document.getElementById("onlineForm").addEventListener("submit",e=>{
+ e.preventDefault();
  const q=document.getElementById("onlineSearch").value.trim();
- if(!q)return;
- window.open("https://www.google.com/search?q="+encodeURIComponent(q),"_blank");
-}
-document.getElementById("onlineSearch").addEventListener("keydown",e=>{
- if(e.key==="Enter")searchOnline();
+ if(q)window.open("https://www.google.com/search?q="+encodeURIComponent(q),"_blank");
 });
 
-/* MUZIEK */
-function searchMusic(){
- const q=document.getElementById("musicSearch").value.trim();
+// INTERNE ZOEKEN
+const internalForm=document.getElementById("internalForm");
+const internalInput=document.getElementById("internalSearch");
+const results=document.getElementById("results");
+
+internalForm.addEventListener("submit",e=>{
+ e.preventDefault();
+ const q=internalInput.value.trim().toLowerCase();
+ results.innerHTML="";
  if(!q)return;
- window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(q),"_blank");
-}
-document.getElementById("musicSearch").addEventListener("keydown",e=>{
- if(e.key==="Enter")searchMusic();
+ const services=[...document.querySelectorAll("#serviceList a")];
+ const matches=services.filter(a=>a.textContent.toLowerCase().includes(q));
+ if(matches.length){
+  matches.forEach(a=>{
+   const link=document.createElement("a");
+   link.className="result";
+   link.href=a.href;
+   link.target="_blank";
+   link.rel="noopener";
+   link.textContent=a.textContent+" ↗";
+   results.appendChild(link);
+  });
+ }else{
+  results.textContent="Geen resultaten gevonden op STREAM WORLD.";
+ }
 });
 
-/* TAALKEUZE */
-function changeLanguage(){
- const lang=document.getElementById("language").value;
- const translations={
-  nl:{
-   site:"Zoek op STREAM WORLD...",online:"Zoek online...",
-   search:"Zoek",onlineButton:"Online",
-   services:"📺 Streamingdiensten",
-   subtitle:"Kies wat je wilt bekijken",
-   music:"🎵 Muziek zoeken",
-   musicDescription:"Zoek je favoriete muziek op YouTube!",
-   musicPlaceholder:"Welke muziek zoek je?",
-   musicButton:"Zoek muziek"
-  },
-  en:{
-   site:"Search STREAM WORLD...",online:"Search online...",
-   search:"Search",onlineButton:"Online",
-   services:"📺 Streaming services",
-   subtitle:"Choose what you want to watch",
-   music:"🎵 Search music",
-   musicDescription:"Find your favourite music on YouTube!",
-   musicPlaceholder:"What music are you looking for?",
-   musicButton:"Search music"
-  },
-  de:{
-   site:"STREAM WORLD durchsuchen...",online:"Online suchen...",
-   search:"Suchen",onlineButton:"Online",
-   services:"📺 Streamingdienste",
-   subtitle:"Wähle aus, was du ansehen möchtest",
-   music:"🎵 Musik suchen",
-   musicDescription:"Suche deine Lieblingsmusik auf YouTube!",
-   musicPlaceholder:"Welche Musik suchst du?",
-   musicButton:"Musik suchen"
-  }
- };
- const t=translations[lang];
- document.getElementById("siteSearch").placeholder=t.site;
+// TAALKEUZE
+const translations={
+ nl:{internal:"Zoek op STREAM WORLD...",online:"Zoek online op internet...",search:"ZOEK",onlineButton:"ONLINE ZOEKEN"},
+ en:{internal:"Search STREAM WORLD...",online:"Search the internet...",search:"SEARCH",onlineButton:"SEARCH ONLINE"},
+ de:{internal:"STREAM WORLD durchsuchen...",online:"Im Internet suchen...",search:"SUCHEN",onlineButton:"ONLINE SUCHEN"}
+};
+document.getElementById("language").addEventListener("change",e=>{
+ const t=translations[e.target.value];
+ document.getElementById("internalSearch").placeholder=t.internal;
  document.getElementById("onlineSearch").placeholder=t.online;
- document.getElementById("siteSearchButton").textContent=t.search;
- document.getElementById("onlineSearchButton").textContent=t.onlineButton;
- document.getElementById("servicesTitle").textContent=t.services;
- document.getElementById("servicesSubtitle").textContent=t.subtitle;
- document.getElementById("musicTitle").textContent=t.music;
- document.getElementById("musicDescription").textContent=t.musicDescription;
- document.getElementById("musicSearch").placeholder=t.musicPlaceholder;
- document.getElementById("musicButton").textContent=t.musicButton;
-}
+ internalForm.querySelector("button").textContent=t.search;
+ document.querySelector("#onlineForm button").textContent=t.onlineButton;
+});
 
-/* FLAPPY BIRD */
+// MUZIEK ZOEKEN
+document.getElementById("musicForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const q=document.getElementById("musicSearch").value.trim();
+ if(q)window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(q)," _blank".trim());
+});
+
+// FLAPPY BIRD
 const canvas=document.getElementById("gameCanvas");
 const ctx=canvas.getContext("2d");
-const scoreDisplay=document.getElementById("score");
-const message=document.getElementById("gameMessage");
-let bird,pipes,score,frame,running=false,gameOver=false;
-let soundOn=true;
+const scoreText=document.getElementById("score");
+let bird,pipes,score,playing,frame;
 let audioContext=null;
 
-function playChickenCluck(){
- if(!soundOn)return;
+function chickenSound(){
  try{
-  audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();
+  audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();
   if(audioContext.state==="suspended")audioContext.resume();
-  const now=audioContext.currentTime;
   const osc=audioContext.createOscillator();
   const gain=audioContext.createGain();
   osc.type="triangle";
-  osc.frequency.setValueAtTime(520,now);
-  osc.frequency.exponentialRampToValueAtTime(280,now+.09);
-  osc.frequency.exponentialRampToValueAtTime(390,now+.16);
-  gain.gain.setValueAtTime(.0001,now);
-  gain.gain.exponentialRampToValueAtTime(.10,now+.015);
-  gain.gain.exponentialRampToValueAtTime(.0001,now+.19);
+  osc.frequency.setValueAtTime(650,audioContext.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(260,audioContext.currentTime+.12);
+  osc.frequency.exponentialRampToValueAtTime(480,audioContext.currentTime+.2);
+  gain.gain.setValueAtTime(.16,audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+.22);
   osc.connect(gain);
   gain.connect(audioContext.destination);
-  osc.start(now);
-  osc.stop(now+.2);
- }catch(e){}
-}
-
-function toggleSound(){
- soundOn=!soundOn;
- document.getElementById("soundButton").textContent=
-  soundOn?"🔊 Geluid aan":"🔇 Geluid uit";
+  osc.start();
+  osc.stop(audioContext.currentTime+.23);
+ }catch(err){}
 }
 
 function resetGame(){
- bird={x:125,y:190,velocity:0,radius:15};
+ bird={x:95,y:230,velocity:0};
  pipes=[];
  score=0;
  frame=0;
- gameOver=false;
- scoreDisplay.textContent="0";
+ playing=true;
+ scoreText.textContent="Score: 0";
 }
 
-function startGame(){
- if(running)return;
- resetGame();
- running=true;
- message.textContent="Veel plezier! 🐤";
- document.getElementById("gameStart").textContent="OPNIEUW STARTEN";
- requestAnimationFrame(gameLoop);
+function flap(){
+ if(!playing){resetGame();return;}
+ bird.velocity=-6.5;
+ chickenSound();
 }
-
-function flapBird(){
- if(!running){
-  if(gameOver)startGame();
-  return;
- }
- bird.velocity=-5.8;
- playChickenCluck();
-}
-
-canvas.addEventListener("pointerdown",e=>{
- e.preventDefault();
- flapBird();
-});
-
-document.addEventListener("keydown",e=>{
- if((e.code==="Space"||e.code==="ArrowUp")&&
-    document.getElementById("flappy").getBoundingClientRect().top<window.innerHeight){
-  e.preventDefault();
-  flapBird();
- }
-});
 
 function drawBird(){
  ctx.save();
  ctx.translate(bird.x,bird.y);
- ctx.rotate(Math.min(Math.max(bird.velocity*.06,-.5),.7));
- ctx.fillStyle="#ffd52a";
+ ctx.fillStyle="#ffdc24";
  ctx.beginPath();
- ctx.arc(0,0,bird.radius,0,Math.PI*2);
- ctx.fill();
- ctx.fillStyle="#ff8c24";
- ctx.beginPath();
- ctx.moveTo(12,-3);ctx.lineTo(27,2);ctx.lineTo(12,7);
+ ctx.arc(0,0,15,0,Math.PI*2);
  ctx.fill();
  ctx.fillStyle="white";
- ctx.beginPath();ctx.arc(5,-7,5,0,Math.PI*2);ctx.fill();
- ctx.fillStyle="#111";
- ctx.beginPath();ctx.arc(7,-7,2,0,Math.PI*2);ctx.fill();
- ctx.fillStyle="#ed3434";
  ctx.beginPath();
- ctx.arc(-4,-15,5,Math.PI,0);
- ctx.arc(4,-15,5,Math.PI,0);
+ ctx.arc(7,-5,5,0,Math.PI*2);
+ ctx.fill();
+ ctx.fillStyle="#111";
+ ctx.beginPath();
+ ctx.arc(9,-5,2,0,Math.PI*2);
+ ctx.fill();
+ ctx.fillStyle="#f47b20";
+ ctx.beginPath();
+ ctx.moveTo(13,1);
+ ctx.lineTo(25,5);
+ ctx.lineTo(13,9);
+ ctx.fill();
+ ctx.fillStyle="#e43b35";
+ ctx.beginPath();
+ ctx.arc(-3,-15,5,0,Math.PI*2);
  ctx.fill();
  ctx.restore();
 }
 
-function drawPipe(pipe){
- const gradient=ctx.createLinearGradient(pipe.x,0,pipe.x+pipe.width,0);
- gradient.addColorStop(0,"#16852d");
- gradient.addColorStop(.5,"#47cf52");
- gradient.addColorStop(1,"#126b25");
- ctx.fillStyle=gradient;
- ctx.fillRect(pipe.x,0,pipe.width,pipe.top);
- ctx.fillRect(pipe.x,pipe.bottom,pipe.width,400-pipe.bottom);
- ctx.fillStyle="#126b25";
- ctx.fillRect(pipe.x-5,pipe.top-17,pipe.width+10,17);
- ctx.fillRect(pipe.x-5,pipe.bottom,pipe.width+10,17);
+function endGame(){
+ playing=false;
+ scoreText.textContent="Game over! Score: "+score+" — druk op OPNIEUW.";
 }
 
-function gameLoop(){
- if(!running)return;
- frame++;
- ctx.clearRect(0,0,600,400);
+function loop(){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ ctx.fillStyle="#b9e9f7";
+ ctx.fillRect(0,0,420,520);
 
- const sky=ctx.createLinearGradient(0,0,0,400);
- sky.addColorStop(0,"#66c9ee");
- sky.addColorStop(1,"#d3f4ff");
- ctx.fillStyle=sky;
- ctx.fillRect(0,0,600,400);
+ ctx.fillStyle="#70bd45";
+ ctx.fillRect(0,490,420,30);
 
- ctx.fillStyle="rgba(255,255,255,.8)";
- for(let i=0;i<4;i++){
-  let x=((i*175-frame*.35)%700+700)%700;
-  ctx.beginPath();
-  ctx.arc(x,75+i%2*65,19,0,Math.PI*2);
-  ctx.arc(x+22,72+i%2*65,25,0,Math.PI*2);
-  ctx.arc(x+47,78+i%2*65,17,0,Math.PI*2);
-  ctx.fill();
- }
+ if(playing){
+  frame++;
+  bird.velocity+=.32;
+  bird.y+=bird.velocity;
 
- bird.velocity+=.27;
- bird.y+=bird.velocity;
-
- if(frame%95===0){
-  const top=55+Math.random()*145;
-  pipes.push({x:620,top:top,bottom:top+145,width:65,passed:false});
- }
-
- pipes.forEach(pipe=>{
-  pipe.x-=2.7;
-  drawPipe(pipe);
-  if(!pipe.passed&&pipe.x+pipe.width<bird.x){
-   pipe.passed=true;
-   score++;
-   scoreDisplay.textContent=score;
+  if(frame%95===0){
+   const gap=145;
+   const top=60+Math.random()*210;
+   pipes.push({x:430,top:top,gap:gap,passed:false});
   }
-  const insideX=bird.x+bird.radius>pipe.x&&bird.x-bird.radius<pipe.x+pipe.width;
-  if(insideX&&(bird.y-bird.radius<pipe.top||bird.y+bird.radius>pipe.bottom)){
-   endGame();
-  }
- });
- pipes=pipes.filter(p=>p.x+p.width>-10);
 
- ctx.fillStyle="#e4ca79";
- ctx.fillRect(0,375,600,25);
- ctx.fillStyle="#5ab83e";
- ctx.fillRect(0,375,600,7);
+  pipes.forEach(p=>{
+   p.x-=2.5;
+   ctx.fillStyle="#329c42";
+   ctx.fillRect(p.x,0,55,p.top);
+   ctx.fillRect(p.x,p.top+p.gap,55,520-p.top-p.gap-30);
+   ctx.fillStyle="#267d35";
+   ctx.fillRect(p.x-4,p.top-12,63,12);
+   ctx.fillRect(p.x-4,p.top+p.gap,63,12);
+
+   if(!p.passed&&p.x+55<bird.x){
+    p.passed=true;
+    score++;
+    scoreText.textContent="Score: "+score;
+   }
+
+   if(bird.x+12>p.x&&bird.x-12<p.x+55&&
+      (bird.y-12<p.top||bird.y+12>p.top+p.gap))endGame();
+  });
+  pipes=pipes.filter(p=>p.x>-70);
+
+  if(bird.y>478||bird.y<0)endGame();
+ }
 
  drawBird();
 
- if(bird.y+bird.radius>375||bird.y-bird.radius<0)endGame();
- if(running)requestAnimationFrame(gameLoop);
+ if(!playing){
+  ctx.fillStyle="rgba(0,0,0,.5)";
+  ctx.fillRect(0,0,420,520);
+  ctx.fillStyle="white";
+  ctx.textAlign="center";
+  ctx.font="bold 25px Arial";
+  ctx.fillText("FLAPPY BIRD",210,235);
+  ctx.font="16px Arial";
+  ctx.fillText("Druk op OPNIEUW om te spelen",210,270);
+ }
+ requestAnimationFrame(loop);
 }
 
-function endGame(){
- if(!running)return;
- running=false;
- gameOver=true;
- message.textContent="💥 Game over! Je score: "+score;
- document.getElementById("gameStart").textContent="OPNIEUW SPELEN";
-}
+document.getElementById("flyButton").addEventListener("click",flap);
+document.getElementById("restartButton").addEventListener("click",resetGame);
+canvas.addEventListener("pointerdown",flap);
+document.addEventListener("keydown",e=>{
+ if(e.code==="Space"&&document.activeElement.tagName!=="INPUT"){
+  e.preventDefault();
+  flap();
+ }
+});
+resetGame();
+loop();
 </script>
 </body>
 </html>
