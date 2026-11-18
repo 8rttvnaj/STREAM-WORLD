@@ -4,102 +4,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090909">
-<title>STREAM WORLD 5.0</title>
+<meta name="theme-color" content="#080808">
+<title>STREAM WORLD</title>
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:#090909;color:white;font-family:Arial,sans-serif}
-header{background:#111;padding:16px 18px;border-bottom:2px solid #e50914}
-.logo{font-size:29px;font-weight:900;color:#e50914;letter-spacing:1px}
+body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif}
+header{background:#101010;padding:17px;border-bottom:2px solid #e50914}
+.logo{font-size:30px;font-weight:900;letter-spacing:1px;color:#e50914}
 .logo span{color:white}
 nav{display:flex;gap:8px;overflow-x:auto;margin-top:14px}
-nav a{color:white;background:#292929;text-decoration:none;padding:10px 13px;border-radius:7px;white-space:nowrap;font-size:13px}
+nav a{background:#292929;color:white;text-decoration:none;padding:10px 13px;border-radius:8px;white-space:nowrap;font-size:13px}
 main{max-width:950px;margin:auto;padding:16px}
 h2{border-left:4px solid #e50914;padding-left:11px;margin-top:30px}
 h3{margin-top:0}
-.hero{background:linear-gradient(130deg,#50000b,#151515 75%);padding:25px 19px;border-radius:14px;margin:15px 0 25px}
+.hero{background:linear-gradient(125deg,#51000b,#151515 75%);padding:25px 19px;border-radius:14px;margin:15px 0 24px}
 .hero h1{font-size:32px;margin:0 0 10px}
 .panel{background:#191919;border:1px solid #333;border-radius:13px;padding:17px;margin:13px 0}
 button{background:#e50914;color:white;border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:pointer;margin:5px 3px}
 button:active{transform:scale(.97)}
-input{width:100%;background:#292929;color:white;border:1px solid #555;border-radius:8px;padding:13px;margin:8px 0;font-size:16px}
+input,select{width:100%;background:#292929;color:white;border:1px solid #555;border-radius:8px;padding:13px;margin:7px 0;font-size:16px}
 .result{background:#292929;padding:13px;border-radius:9px;margin-top:12px;min-height:42px;line-height:1.5}
-.service{display:flex;align-items:center;justify-content:space-between;background:#222;color:white;text-decoration:none;padding:15px;border:1px solid #383838;border-radius:9px;margin:9px 0;font-weight:bold}
+.service{display:flex;justify-content:space-between;align-items:center;background:#222;color:white;text-decoration:none;padding:15px;border:1px solid #383838;border-radius:9px;margin:9px 0;font-weight:bold}
 .service:hover{background:#39070c;border-color:#e50914}
-.service span:last-child{color:#ff3744}
-.scroll{display:block;text-align:center;margin:30px 0;padding:23px;background:#191919;border:1px solid #e50914;border-radius:12px;text-decoration:none;color:white;font-size:25px;font-weight:900;letter-spacing:2px}
-.scroll small{display:block;font-size:12px;color:#aaa;margin-top:8px;letter-spacing:1px}
+.scroll{display:block;text-align:center;margin:30px 0;padding:23px;background:#191919;border:1px solid #e50914;border-radius:12px;text-decoration:none;color:white;font-size:26px;font-weight:900;letter-spacing:2px}
+.scroll small{display:block;font-size:12px;color:#aaa;margin-top:8px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
 .tile{background:#191919;border:1px solid #333;padding:17px 10px;border-radius:12px;text-align:center}
 .tile b{display:block;margin-top:8px}
-.emoji{font-size:32px}
 footer{text-align:center;color:#888;padding:30px}
-#intro{position:fixed;inset:0;background:#050505;z-index:20;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;animation:fade 1s ease 2.5s forwards}
-#intro h1{font-size:38px;color:#e50914;animation:glow 1s infinite alternate}
-#intro h1 span{color:white}
-@keyframes glow{to{text-shadow:0 0 30px red}}
-@keyframes fade{to{opacity:0;visibility:hidden;pointer-events:none}}
+#intro{position:fixed;inset:0;background:radial-gradient(ellipse at center,#310008 0%,#090909 55%,#000 100%);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;transition:opacity 1s,visibility 1s}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+.intro-logo{font-size:clamp(32px,8vw,55px);font-weight:1000;letter-spacing:3px;color:#e50914;text-shadow:0 0 10px red,0 0 30px #e50914;animation:logoIn 1.4s ease both,neon 1.4s infinite alternate}
+.intro-logo span{color:white}
+.intro-line{height:3px;width:0;background:#e50914;box-shadow:0 0 15px red;animation:lineIn 1.4s ease .5s forwards}
+.intro-sub{opacity:0;animation:fadeIn 1s ease 1.3s forwards;color:#ddd;letter-spacing:3px;font-size:12px;margin-top:20px}
+#intro button{margin-top:28px;opacity:0;animation:fadeIn .8s ease 1.8s forwards}
+@keyframes logoIn{from{opacity:0;transform:scale(.7);filter:blur(12px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
+@keyframes neon{from{text-shadow:0 0 8px red}to{text-shadow:0 0 28px red,0 0 45px #e50914}}
+@keyframes lineIn{to{width:min(340px,75vw)}}
+@keyframes fadeIn{to{opacity:1}}
 </style>
 </head>
 <body>
 
+<!-- GEANIMEERDE INTRO -->
 <div id="intro">
-<h1>STREAM <span>WORLD</span></h1>
-<p>Jouw wereld. Jouw entertainment.</p>
-<button onclick="document.getElementById('intro').remove()">START NU ▶</button>
+  <div class="intro-logo">STREAM <span>WORLD</span></div>
+  <div class="intro-line"></div>
+  <div class="intro-sub">JOUW WERELD. JOUW ENTERTAINMENT.</div>
+  <button onclick="sluitIntro()">START NU ▶</button>
 </div>
 
 <header>
-<div class="logo">STREAM <span>WORLD</span></div>
-<nav>
-<a href="#streaming">📺 Kijken</a>
-<a href="#games">🎮 Games</a>
-<a href="#quiz">🧠 Quiz</a>
-<a href="#grappen">😂 Grappen</a>
-<a href="#vliegtuigen">✈️ Vliegtuigen</a>
-<a href="#muziek">🎵 Muziek</a>
-<a href="#wereld">🌍 Wereld</a>
-</nav>
+  <div class="logo">STREAM <span>WORLD</span></div>
+
+  <!-- ZOEKEN BOVEN DE STREAMINGDIENSTEN -->
+  <input id="siteSearch" placeholder="🔎 Zoek in STREAM WORLD..." onkeydown="if(event.key==='Enter')zoekSite()">
+  <button onclick="zoekSite()">ZOEK IN STREAM WORLD</button>
+
+  <input id="onlineSearch" placeholder="🌍 Wat wil je online zoeken?" onkeydown="if(event.key==='Enter')zoekOnline()">
+  <button onclick="zoekOnline()">🔎 ZOEK ONLINE</button>
+
+  <label for="language">🌐 Taal / Language</label>
+  <select id="language" onchange="changeLanguage()">
+    <option value="nl">🇳🇱 Nederlands</option>
+    <option value="en">🇬🇧 English</option>
+    <option value="de">🇩🇪 Deutsch</option>
+  </select>
+
+  <nav>
+    <a href="#streaming">📺 Kijken</a>
+    <a href="#games">🎮 Games</a>
+    <a href="#quiz">🧠 Quiz</a>
+    <a href="#grappen">😂 Grappen</a>
+    <a href="#vliegtuigen">✈️ Vliegtuigen</a>
+    <a href="#muziek">🎵 Muziek</a>
+    <a href="#wereld">🌍 Wereld</a>
+  </nav>
 </header>
 
 <main>
-
 <div class="hero">
-<h1>Welkom bij STREAM WORLD! 🔴</h1>
-<p>Jouw plek voor kijken, ontdekken, spelen en plezier maken.</p>
+<h1 id="welcome">Welkom bij STREAM WORLD! 🔴</h1>
+<p id="tagline">Jouw plek voor kijken, ontdekken, spelen en plezier maken.</p>
 </div>
 
-<!-- STREAMINGDIENSTEN STAAN HELEMAAL BOVENAAN -->
+<!-- STREAMINGDIENSTEN EERST -->
 <section id="streaming">
-<h2>📺 KIJKEN & STREAMEN</h2>
-<p>Open jouw favoriete streamingdiensten en ontdek leuke programma's.</p>
+<h2 id="streamTitle">📺 KIJKEN & STREAMEN</h2>
+<p id="streamText">Open jouw favoriete streamingdiensten.</p>
 
-<a class="service" href="https://npo.nl/start" target="_blank" rel="noopener">
-<span>📺 NPO START</span><span>OPEN ↗</span>
-</a>
-<a class="service" href="https://watch.plex.tv/" target="_blank" rel="noopener">
-<span>🎬 PLEX</span><span>OPEN ↗</span>
-</a>
-<a class="service" href="https://www.youtube.com/" target="_blank" rel="noopener">
-<span>▶️ YOUTUBE</span><span>OPEN ↗</span>
-</a>
-<a class="service" href="https://www.kijk.nl/" target="_blank" rel="noopener">
-<span>📡 KIJK</span><span>OPEN ↗</span>
-</a>
-<a class="service" href="https://schooltv.nl/" target="_blank" rel="noopener">
-<span>🎓 SCHOOLTV</span><span>OPEN ↗</span>
-</a>
-<a class="service" href="https://www.hetklokhuis.nl/" target="_blank" rel="noopener">
-<span>🧪 HET KLOKHUIS</span><span>OPEN ↗</span>
-</a>
+<a class="service" href="https://npo.nl/start" target="_blank" rel="noopener"><span>📺 NPO START</span><span>OPEN ↗</span></a>
+<a class="service" href="https://watch.plex.tv/" target="_blank" rel="noopener"><span>🎬 PLEX</span><span>OPEN ↗</span></a>
+<a class="service" href="https://www.youtube.com/" target="_blank" rel="noopener"><span>▶️ YOUTUBE</span><span>OPEN ↗</span></a>
+<a class="service" href="https://www.kijk.nl/" target="_blank" rel="noopener"><span>📡 KIJK</span><span>OPEN ↗</span></a>
+<a class="service" href="https://schooltv.nl/" target="_blank" rel="noopener"><span>🎓 SCHOOLTV</span><span>OPEN ↗</span></a>
+<a class="service" href="https://www.hetklokhuis.nl/" target="_blank" rel="noopener"><span>🧪 HET KLOKHUIS</span><span>OPEN ↗</span></a>
 </section>
 
-<!-- SCROLL AANDUIDING -->
-<a class="scroll" href="#ontdek">
-SCROLL ⬇️
-<small>ONTDEK ALLES WAT ER NOG MEER IS</small>
-</a>
+<a class="scroll" href="#ontdek">SCROLL ⬇️<small>ONTDEK ALLES WAT ER NOG MEER IS</small></a>
 
 <section id="ontdek">
 <h2>🌟 ONTDEK STREAM WORLD</h2>
@@ -111,7 +115,6 @@ SCROLL ⬇️
 <a class="service" href="#vliegtuigen">✈️ Vliegtuigen</a>
 <a class="service" href="#muziek">🎵 Muziek</a>
 <a class="service" href="#wereld">🌍 Wereld</a>
-<a class="service" href="#zoeken">🔎 Zoeken</a>
 </div>
 </section>
 
@@ -120,12 +123,11 @@ SCROLL ⬇️
 <div class="panel">
 <h3>🔢 Raad het getal</h3>
 <p>Ik denk aan een getal tussen 1 en 10. Raad jij het?</p>
-<input id="guess" type="number" min="1" max="10" placeholder="Typ een getal van 1 tot 10">
+<input id="guess" type="number" min="1" max="10" placeholder="Getal van 1 t/m 10">
 <button onclick="raad()">RAAD!</button>
 <button onclick="nieuwGetal()">NIEUW SPEL</button>
 <div class="result" id="guessResult">Succes! 🎯</div>
 </div>
-
 <div class="panel">
 <h3>✊ Steen, papier, schaar</h3>
 <p>Kies jouw zet!</p>
@@ -134,10 +136,9 @@ SCROLL ⬇️
 <button onclick="speel('Schaar')">✌️ Schaar</button>
 <div class="result" id="rpsResult">Ben jij sterker dan de computer?</div>
 </div>
-
 <div class="panel">
 <h3>⚡ Reactiespel</h3>
-<p>Druk op start en wacht tot de knop groen wordt. Druk dan zo snel mogelijk!</p>
+<p>Wacht tot de knop groen wordt en druk dan zo snel mogelijk!</p>
 <button id="reactionButton" onclick="reactieStart()">START</button>
 <div class="result" id="reactionResult">Hoe snel ben jij?</div>
 </div>
@@ -167,7 +168,7 @@ SCROLL ⬇️
 <h2>🎲 UITDAGINGEN</h2>
 <div class="panel">
 <h3>Durf jij deze uitdaging aan?</h3>
-<div class="result" id="challenge">Klik op de knop voor een willekeurige uitdaging!</div>
+<div class="result" id="challenge">Klik voor een willekeurige uitdaging!</div>
 <button onclick="uitdaging()">NIEUWE UITDAGING</button>
 </div>
 </section>
@@ -196,9 +197,9 @@ SCROLL ⬇️
 <section id="muziek">
 <h2>🎵 MUZIEK ONTDEKKEN</h2>
 <div class="panel">
-<h3>Zoek jouw favoriete muziek</h3>
+<p>Zoek jouw favoriete muziek op YouTube.</p>
 <input id="musicSearch" placeholder="Welke muziek wil je vinden?">
-<button onclick="zoekMuziek()">ZOEK OP YOUTUBE 🎵</button>
+<button onclick="zoekMuziek()">ZOEK MUZIEK 🎵</button>
 </div>
 </section>
 
@@ -210,17 +211,6 @@ SCROLL ⬇️
 <button onclick="nieuwWereldFeit()">VOLGEND FEITJE</button>
 </div>
 </section>
-
-<section id="zoeken">
-<h2>🔎 ZOEK ONLINE</h2>
-<div class="panel">
-<p>Zoek op internet of op YouTube!</p>
-<input id="webSearch" placeholder="Wat wil je zoeken?">
-<button onclick="zoekOnline()">ZOEK OP GOOGLE 🔎</button>
-<button onclick="zoekYouTube()">ZOEK OP YOUTUBE ▶️</button>
-</div>
-</section>
-
 </main>
 
 <footer>
@@ -230,8 +220,57 @@ SCROLL ⬇️
 </footer>
 
 <script>
-let geheim=Math.floor(Math.random()*10)+1;
+function sluitIntro(){
+document.getElementById('intro').classList.add('hide');
+}
+setTimeout(sluitIntro,5500);
 
+// EIGEN WEBSITE DOORZOEKEN
+function zoekSite(){
+let q=document.getElementById('siteSearch').value.trim().toLowerCase();
+if(!q)return;
+let onderdelen=[
+['streaming','streaming npo plex youtube kijk schooltv klokhuis kijken'],
+['games','games spel getal steen papier schaar reactiespel'],
+['quiz','quiz vragen score'],
+['grappen','grappen grap lachen'],
+['uitdagingen','uitdaging uitdaging'],
+['vliegtuigen','vliegtuig vliegtuigen vliegtuigquiz vliegtuigfeit'],
+['muziek','muziek liedjes'],
+['wereld','wereld feitjes weetjes']
+];
+let match=onderdelen.find(x=>x[1].includes(q)||q.split(' ').some(w=>w.length>2&&x[1].includes(w)));
+if(match){
+document.getElementById(match[0]).scrollIntoView({behavior:'smooth'});
+}else{
+alert('Geen onderdeel gevonden. Probeer een ander zoekwoord of gebruik ZOEK ONLINE.');
+}
+}
+
+// ONLINE ZOEKEN
+function zoekOnline(){
+let q=document.getElementById('onlineSearch').value.trim();
+if(q)window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank');
+}
+
+// TAALKEUZE
+function changeLanguage(){
+let lang=document.getElementById('language').value;
+let texts={
+nl:{welcome:'Welkom bij STREAM WORLD! 🔴',tagline:'Jouw plek voor kijken, ontdekken, spelen en plezier maken.',streamTitle:'📺 KIJKEN & STREAMEN',streamText:'Open jouw favoriete streamingdiensten.'},
+en:{welcome:'Welcome to STREAM WORLD! 🔴',tagline:'Your place to watch, discover, play and have fun.',streamTitle:'📺 WATCH & STREAM',streamText:'Open your favourite streaming services.'},
+de:{welcome:'Willkommen bei STREAM WORLD! 🔴',tagline:'Dein Ort zum Schauen, Entdecken, Spielen und Spaßhaben.',streamTitle:'📺 ANSEHEN & STREAMEN',streamText:'Öffne deine Lieblings-Streamingdienste.'}
+};
+let t=texts[lang];
+document.getElementById('welcome').textContent=t.welcome;
+document.getElementById('tagline').textContent=t.tagline;
+document.getElementById('streamTitle').textContent=t.streamTitle;
+document.getElementById('streamText').textContent=t.streamText;
+document.documentElement.lang=lang;
+}
+
+// GETALLEN SPEL
+let geheim=Math.floor(Math.random()*10)+1;
 function raad(){
 let n=Number(document.getElementById('guess').value);
 let r=document.getElementById('guessResult');
@@ -246,14 +285,16 @@ document.getElementById('guess').value='';
 document.getElementById('guessResult').textContent='Nieuw getal gekozen. Succes!';
 }
 
+// STEEN PAPIER SCHAAR
 function speel(keuze){
 let opties=['Steen','Papier','Schaar'];
 let computer=opties[Math.floor(Math.random()*3)];
-let winst=keuze==='Steen'&&computer==='Schaar'||keuze==='Papier'&&computer==='Steen'||keuze==='Schaar'&&computer==='Papier';
+let winst=(keuze==='Steen'&&computer==='Schaar')||(keuze==='Papier'&&computer==='Steen')||(keuze==='Schaar'&&computer==='Papier');
 let uitslag=keuze===computer?'Gelijkspel!':winst?'Jij wint! 🎉':'De computer wint!';
 document.getElementById('rpsResult').textContent='Jij: '+keuze+' | Computer: '+computer+'. '+uitslag;
 }
 
+// REACTIESPEL
 let reactionTimer=null,reactionStartTime=0,ready=false;
 function reactieStart(){
 clearTimeout(reactionTimer);
@@ -272,8 +313,7 @@ b.style.background='#e50914';
 b.onclick=reactieStart;
 return;
 }
-let tijd=Date.now()-reactionStartTime;
-r.textContent='⚡ Jouw reactietijd: '+tijd+' milliseconden!';
+r.textContent='⚡ Jouw reactietijd: '+(Date.now()-reactionStartTime)+' milliseconden!';
 b.textContent='OPNIEUW';
 b.style.background='#e50914';
 b.onclick=reactieStart;
@@ -288,6 +328,7 @@ r.textContent='NUUU! 🟢';
 },1500+Math.random()*3000);
 }
 
+// QUIZ
 const quiz=[
 {q:'Wat is de hoofdstad van Nederland?',a:['Amsterdam','Rotterdam','Utrecht'],c:0},
 {q:'Hoeveel poten heeft een spin?',a:['6','8','10'],c:1},
@@ -297,7 +338,6 @@ const quiz=[
 {q:'Welke oceaan is het grootst?',a:['Atlantische Oceaan','Grote Oceaan','Indische Oceaan'],c:1}
 ];
 let qi=0,score=0,answered=false;
-
 function startQuiz(){qi=0;score=0;toonVraag()}
 function toonVraag(){
 answered=false;
@@ -325,6 +365,7 @@ qi++;
 setTimeout(toonVraag,1200);
 }
 
+// GRAPPEN
 const grappen=[
 'Waarom kan een fiets niet zelfstandig staan? Omdat hij twee banden heeft!',
 'Wat zegt een nul tegen een acht? Mooie riem!',
@@ -339,6 +380,7 @@ function nieuweGrap(){
 document.getElementById('joke').textContent=grappen[Math.floor(Math.random()*grappen.length)];
 }
 
+// UITDAGINGEN
 const challenges=[
 'Doe 10 jumping jacks!',
 'Praat 30 seconden als een robot.',
@@ -353,6 +395,7 @@ function uitdaging(){
 document.getElementById('challenge').textContent=challenges[Math.floor(Math.random()*challenges.length)];
 }
 
+// VLIEGTUIGEN
 const planeFacts=[
 'De Airbus A380 is het grootste passagiersvliegtuig ter wereld.',
 'De Boeing 787 Dreamliner gebruikt lichte composietmaterialen.',
@@ -368,6 +411,7 @@ function planeAnswer(ok){
 document.getElementById('planeResult').textContent=ok?'🎉 Helemaal goed! De Airbus A380 heeft twee volledige passagiersdekken!':'Niet helemaal! Het juiste antwoord is de Airbus A380.';
 }
 
+// WERELD
 const worldFacts=[
 'De aarde heeft vijf oceanen.',
 'Japan bestaat uit duizenden eilanden.',
@@ -379,19 +423,6 @@ const worldFacts=[
 ];
 function nieuwWereldFeit(){
 document.getElementById('worldFact').textContent=worldFacts[Math.floor(Math.random()*worldFacts.length)];
-}
-
-function zoekOnline(){
-let q=document.getElementById('webSearch').value.trim();
-if(q)window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank');
-}
-function zoekYouTube(){
-let q=document.getElementById('webSearch').value.trim();
-if(q)window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q),'_blank');
-}
-function zoekMuziek(){
-let q=document.getElementById('musicSearch').value.trim();
-if(q)window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q+' muziek'),'_blank');
 }
 </script>
 </body>
