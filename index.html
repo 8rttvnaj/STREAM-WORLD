@@ -11,19 +11,20 @@ body{margin:0;background:#101010;color:white;font-family:Arial,sans-serif}
 button{background:#292929;color:white;border:0;border-radius:7px;padding:12px;cursor:pointer}
 button:hover{background:#e50914}
 header{background:#080808;padding:18px;position:sticky;top:0;z-index:5;border-bottom:2px solid #e50914}
-.logo{font-size:27px;font-weight:900;color:#e50914}
-nav{display:flex;gap:8px;overflow:auto;margin-top:15px}
+.logo{font-size:28px;font-weight:900;color:#e50914}
+nav{display:flex;gap:8px;overflow-x:auto;margin-top:15px}
 .search{display:flex;gap:8px;margin-top:14px}
 input{width:100%;padding:13px;border:0;border-radius:7px;font-size:16px}
 main{padding:17px}
 .hero{padding:30px 20px;background:linear-gradient(110deg,#750000,#171717);border-radius:12px}
-.hero h1{font-size:32px}
-.small{font-size:12px;color:#aaa}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:14px}
 .card{background:#202020;border-radius:9px;overflow:hidden}
-.poster{width:100%;height:205px;object-fit:cover;cursor:pointer;background:#333}
+.poster-button{padding:0;background:#202020;width:100%;border-radius:0}
+.poster{width:100%;height:210px;object-fit:cover;display:block}
+.poster-fallback{height:210px;background:linear-gradient(145deg,#570000,#171717);display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-size:17px;font-weight:bold}
 .card h3{font-size:14px;padding:0 10px}
-.card button{width:calc(100% - 20px);margin:5px 10px 10px}
+.card button.action{width:calc(100% - 20px);margin:5px 10px 10px}
+.small{font-size:12px;color:#aaa}
 .services{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .service{display:block;text-align:center;background:#292929;padding:17px 5px;border-radius:8px;color:white;text-decoration:none}
 .service:hover{background:#e50914}
@@ -34,7 +35,7 @@ main{padding:17px}
 #intro{position:fixed;inset:0;background:black;z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column;animation:fade 5s forwards}
 .intro-logo{font-size:clamp(30px,8vw,65px);font-weight:900;letter-spacing:4px;text-shadow:0 0 30px red;animation:appear 1.5s .5s both}
 .intro-logo span{color:#e50914}
-.intro-sub{color:#aaa;letter-spacing:5px;margin-top:15px;animation:appear 1s 1.5s both}
+.intro-sub{color:#aaa;letter-spacing:4px;margin-top:15px}
 #skip{position:absolute;bottom:30px;right:20px}
 @keyframes appear{from{opacity:0;transform:scale(.6);filter:blur(10px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
 @keyframes fade{0%,75%{opacity:1}100%{opacity:0;visibility:hidden;pointer-events:none}}
@@ -98,7 +99,7 @@ footer{text-align:center;padding:30px;color:#888}
  </div>
 
  <h2>🎥 Gratis en legaal kijken</h2>
- <a class="service" href="https://www.justwatch.com/nl" target="_blank">🔍 Zoek waar films legaal te kijken zijn</a>
+ <a class="service" href="https://www.justwatch.com/nl" target="_blank">🔍 JustWatch Nederland</a>
 </main>
 
 <footer>STREAM WORLD © 2026 · YOUR ENTERTAINMENT WORLD</footer>
@@ -111,15 +112,14 @@ footer{text-align:center;padding:30px;color:#888}
 <script>
 let favorites=JSON.parse(localStorage.getItem("sw_favorites")||"[]");
 let currentItems=[];
+const results=document.getElementById("results");
+const message=document.getElementById("message");
+const heading=document.getElementById("heading");
 
 function closeIntro(){
  document.getElementById("intro").style.display="none";
 }
 setTimeout(closeIntro,5000);
-
-const results=document.getElementById("results");
-const message=document.getElementById("message");
-const heading=document.getElementById("heading");
 
 function escapeHTML(s){
  return String(s||"").replace(/[&<>"']/g,c=>({
@@ -132,7 +132,9 @@ async function searchTV(q){
  const r=await fetch("https://api.tvmaze.com/search/shows?q="+encodeURIComponent(q));
  const d=await r.json();
  return d.slice(0,20).map(x=>({
- id:String(x.show.id),title:x.show.name,type:"tv",
+ id:String(x.show.id),
+ title:x.show.name,
+ type:"tv",
  image:x.show.image?.original||x.show.image?.medium||"",
  description:(x.show.summary||"").replace(/<[^>]*>/g,"")
  }));
@@ -142,23 +144,36 @@ async function searchMovies(q){
  const r=await fetch("https://itunes.apple.com/search?term="+encodeURIComponent(q)+"&entity=movie&limit=20&country=nl");
  const d=await r.json();
  return d.results.map(x=>({
- id:String(x.trackId),title:x.trackName,type:"movie",
- image:x.artworkUrl512||x.artworkUrl100||"",
- description:x.longDescription||x.shortDescription||"Film. Bekijk de beschikbare informatie en kijkmogelijkheden."
+ id:String(x.trackId),
+ title:x.trackName,
+ type:"movie",
+ image:(x.artworkUrl100||"").replace("100x100","600x600"),
+ description:x.longDescription||x.shortDescription||"Bekijk de beschikbare informatie en kijkmogelijkheden."
  }));
+}
+
+/* POSTERFOTO'S MET AUTOMATISCHE RESERVEFUNCTIE */
+function posterHTML(item,index){
+ const title=escapeHTML(item.title);
+ const image=escapeHTML(item.image);
+ return `
+ <button class="poster-button" onclick="openDetail(${index})"
+ aria-label="Bekijk ${title}">
+ <img class="poster" src="${image}" alt="${title}"
+ onerror="this.outerHTML='<div class=&quot;poster-fallback&quot;>${title}</div>'">
+ </button>`;
 }
 
 function render(){
  results.innerHTML=currentItems.map((x,i)=>{
  const saved=favorites.some(f=>f.id===x.id&&f.type===x.type);
  return `<div class="card">
- <img class="poster" src="${escapeHTML(x.image)}"
- alt="${escapeHTML(x.title)}"
- onclick="openDetail(${i})"
- onerror="this.style.display='none'">
- <h3 onclick="openDetail(${i})">${escapeHTML(x.title)}</h3>
- <button onclick="openDetail(${i})">🎬 Bekijk film/serie</button>
- <button onclick="toggleFavorite(${i})">${saved?"❤️ Favoriet":"🤍 Bewaar favoriet"}</button>
+ ${posterHTML(x,i)}
+ <h3>${escapeHTML(x.title)}</h3>
+ <button class="action" onclick="openDetail(${i})">🎬 Bekijk titel</button>
+ <button class="action" onclick="toggleFavorite(${i})">
+ ${saved?"❤️ Opgeslagen":"🤍 Favoriet"}
+ </button>
  </div>`;
  }).join("");
 }
@@ -168,18 +183,23 @@ function openDetail(i){
  if(!x)return;
  const q=encodeURIComponent(x.title);
  const kind=x.type==="movie"?"film":"serie";
- const content=document.getElementById("detailContent");
- content.innerHTML=`
+ document.getElementById("detailContent").innerHTML=`
  <h1>${escapeHTML(x.title)}</h1>
- <img class="detail-poster" src="${escapeHTML(x.image)}" alt="">
+ ${x.image?`<img class="detail-poster" src="${escapeHTML(x.image)}"
+ onerror="this.style.display='none'" alt="">`:""}
  <p>${escapeHTML(x.description)}</p>
- <h2>▶️ Waar kun je ${kind} kijken?</h2>
- <p class="small">Bekijk de zoekresultaten bij de aanbieders. Controleer of de titel beschikbaar is en gratis te bekijken is.</p>
- <a class="watch" target="_blank" href="https://www.justwatch.com/nl/zoeken?q=${q}">🔎 JustWatch – alle kijkmogelijkheden</a>
- <a class="watch" target="_blank" href="https://www.youtube.com/results?search_query=${q}+full+movie">▶️ YouTube – zoek deze titel</a>
- <a class="watch" target="_blank" href="https://www.google.com/search?q=${q}+site%3Awatch.plex.tv">🟡 Plex – zoek deze titel</a>
- <a class="watch" target="_blank" href="https://www.google.com/search?q=${q}+site%3Anpo.nl%2Fstart">🔴 NPO START – zoek deze titel</a>
- <a class="watch" target="_blank" href="https://www.google.com/search?q=${q}+gratis+legaal+kijken">🌐 Andere legale kijkmogelijkheden</a>
+ <h2>▶️ Waar kun je deze ${kind} kijken?</h2>
+ <p class="small">Controleer bij de aanbieder of de titel beschikbaar is en gratis te bekijken is.</p>
+ <a class="watch" target="_blank" rel="noopener"
+ href="https://www.justwatch.com/nl/zoeken?q=${q}">🔎 JustWatch – kijkmogelijkheden</a>
+ <a class="watch" target="_blank" rel="noopener"
+ href="https://www.youtube.com/results?search_query=${q}+full+movie">▶️ YouTube – zoeken</a>
+ <a class="watch" target="_blank" rel="noopener"
+ href="https://watch.plex.tv/">🟡 Plex TV</a>
+ <a class="watch" target="_blank" rel="noopener"
+ href="https://npo.nl/start">🔴 NPO START</a>
+ <a class="watch" target="_blank" rel="noopener"
+ href="https://www.google.com/search?q=${q}+gratis+legaal+kijken">🌐 Andere legale kijkmogelijkheden</a>
  `;
  document.getElementById("detail").style.display="block";
 }
@@ -208,7 +228,10 @@ async function searchAll(){
   currentItems=[...m,...s];
   render();
   message.textContent=currentItems.length+" resultaten gevonden.";
- }catch(e){message.textContent="Zoeken tijdelijk niet beschikbaar."}
+  if(!currentItems.length)message.textContent="Geen resultaten gevonden.";
+ }catch(e){
+  message.textContent="Zoeken tijdelijk niet beschikbaar. Probeer opnieuw.";
+ }
 }
 
 async function category(type){
@@ -235,15 +258,13 @@ async function kids(){
  heading.textContent="🧒 Kids & Jeugd";
  message.textContent="Kinderprogramma's zoeken...";
  const titles=["Het Klokhuis","Bluey","Pokémon","Peppa Pig","Paw Patrol","Sesamstraat","SpongeBob"];
- try{
-  const data=await Promise.all(titles.map(async q=>{
-   try{return (await searchTV(q)).slice(0,1)}
-   catch(e){return []}
-  }));
-  currentItems=data.flat();
-  render();
-  message.textContent="Kinderprogramma's ontdekken.";
- }catch(e){message.textContent="Probeer opnieuw."}
+ const data=await Promise.all(titles.map(async q=>{
+  try{return (await searchTV(q)).slice(0,1)}
+  catch(e){return []}
+ }));
+ currentItems=data.flat();
+ render();
+ message.textContent="Ontdek kinderprogramma's.";
 }
 
 async function top10(){
