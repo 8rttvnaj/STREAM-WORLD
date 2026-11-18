@@ -4,12 +4,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#050505">
+<meta name="theme-color" content="#080808">
 <title>STREAM WORLD</title>
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:#080808;color:#fff;font-family:Arial,sans-serif}
+body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif}
 button,a,select,input{font:inherit}
 button{background:#e50914;color:white;border:0;padding:12px 17px;border-radius:9px;font-weight:bold;cursor:pointer}
 button:active{transform:scale(.97)}
@@ -34,8 +34,6 @@ h2{border-left:4px solid #e50914;padding-left:11px;margin-top:32px}
 .result{background:#292929;padding:13px;border-radius:9px;margin-top:12px;min-height:42px;line-height:1.5}
 footer{text-align:center;color:#888;padding:30px}
 .status{color:#ff777e;font-size:13px;min-height:18px}
-
-/* ECHTE GEANIMEERDE INTRO */
 #intro{position:fixed;inset:0;z-index:9999;overflow:hidden;background:radial-gradient(ellipse at center,#4b0010 0%,#160006 42%,#000 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;transition:opacity 1s,visibility 1s}
 #intro.hide{opacity:0;visibility:hidden;pointer-events:none}
 .intro-content{position:relative;z-index:2;padding:20px;width:100%}
@@ -55,7 +53,6 @@ footer{text-align:center;color:#888;padding:30px}
 </head>
 <body>
 
-<!-- INTRO -->
 <div id="intro">
  <div id="particles"></div>
  <div class="intro-content">
@@ -68,7 +65,6 @@ footer{text-align:center;color:#888;padding:30px}
 
 <header>
  <div class="logo">STREAM <span>WORLD</span></div>
-
  <div class="search-area">
   <div class="search-label" id="internalLabel">🔎 ZOEK IN STREAM WORLD</div>
   <div class="search-row">
@@ -76,13 +72,11 @@ footer{text-align:center;color:#888;padding:30px}
    <button onclick="searchSite()">ZOEK</button>
   </div>
   <div class="status" id="siteStatus"></div>
-
   <div class="search-label" id="onlineLabel">🌍 ZOEK ONLINE</div>
   <div class="search-row">
    <input id="onlineSearch" placeholder="Wat wil je op internet zoeken?" onkeydown="if(event.key==='Enter')searchOnline()">
    <button onclick="searchOnline()">ZOEK ONLINE</button>
   </div>
-
   <div class="search-label" id="languageLabel">🌐 TAAL KIEZEN</div>
   <select id="language" onchange="changeLanguage()">
    <option value="nl">🇳🇱 Nederlands</option>
@@ -90,15 +84,8 @@ footer{text-align:center;color:#888;padding:30px}
    <option value="de">🇩🇪 Deutsch</option>
   </select>
  </div>
-
  <nav>
-  <a href="#streaming">📺 Kijken</a>
-  <a href="#games">🎮 Games</a>
-  <a href="#quiz">🧠 Quiz</a>
-  <a href="#grappen">😂 Grappen</a>
-  <a href="#vliegtuigen">✈️ Vliegtuigen</a>
-  <a href="#muziek">🎵 Muziek</a>
-  <a href="#wereld">🌍 Wereld</a>
+  <a href="#streaming">📺 Kijken</a><a href="#games">🎮 Games</a><a href="#quiz">🧠 Quiz</a><a href="#grappen">😂 Grappen</a><a href="#vliegtuigen">✈️ Vliegtuigen</a><a href="#muziek">🎵 Muziek</a><a href="#wereld">🌍 Wereld</a>
  </nav>
 </header>
 
@@ -124,37 +111,25 @@ footer{text-align:center;color:#888;padding:30px}
  <section id="ontdek">
   <h2>🌟 ONTDEK STREAM WORLD</h2>
   <div class="grid">
-   <a class="service" href="#games">🎮 Games</a>
-   <a class="service" href="#quiz">🧠 Quizzen</a>
-   <a class="service" href="#grappen">😂 Grappen</a>
-   <a class="service" href="#uitdagingen">🎲 Uitdagingen</a>
-   <a class="service" href="#vliegtuigen">✈️ Vliegtuigen</a>
-   <a class="service" href="#muziek">🎵 Muziek</a>
-   <a class="service" href="#wereld">🌍 Wereld</a>
+   <a class="service" href="#games">🎮 Games</a><a class="service" href="#quiz">🧠 Quizzen</a><a class="service" href="#grappen">😂 Grappen</a><a class="service" href="#uitdagingen">🎲 Uitdagingen</a><a class="service" href="#vliegtuigen">✈️ Vliegtuigen</a><a class="service" href="#muziek">🎵 Muziek</a><a class="service" href="#wereld">🌍 Wereld</a>
   </div>
  </section>
 
  <section id="games">
   <h2>🎮 GAMES</h2>
   <div class="panel">
-   <h3>🔢 Raad het getal</h3>
-   <p>Ik denk aan een getal tussen 1 en 10. Raad jij het?</p>
+   <h3>🔢 Raad het getal</h3><p>Ik denk aan een getal tussen 1 en 10. Raad jij het?</p>
    <input id="guess" type="number" min="1" max="10" placeholder="Getal van 1 t/m 10">
-   <button onclick="guessNumber()">RAAD!</button>
-   <button onclick="newNumber()">NIEUW SPEL</button>
+   <button onclick="guessNumber()">RAAD!</button><button onclick="newNumber()">NIEUW SPEL</button>
    <div class="result" id="guessResult">Succes! 🎯</div>
   </div>
   <div class="panel">
-   <h3>✊ Steen, papier, schaar</h3>
-   <p>Kies jouw zet!</p>
-   <button onclick="playRPS('Steen')">✊ Steen</button>
-   <button onclick="playRPS('Papier')">✋ Papier</button>
-   <button onclick="playRPS('Schaar')">✌️ Schaar</button>
+   <h3>✊ Steen, papier, schaar</h3><p>Kies jouw zet!</p>
+   <button onclick="playRPS('Steen')">✊ Steen</button><button onclick="playRPS('Papier')">✋ Papier</button><button onclick="playRPS('Schaar')">✌️ Schaar</button>
    <div class="result" id="rpsResult">Versla de computer!</div>
   </div>
   <div class="panel">
-   <h3>⚡ Reactiespel</h3>
-   <p>Wacht tot de knop groen wordt en druk dan zo snel mogelijk!</p>
+   <h3>⚡ Reactiespel</h3><p>Wacht tot de knop groen wordt en druk dan zo snel mogelijk!</p>
    <button id="reactionButton" onclick="reactionAction()">START</button>
    <div class="result" id="reactionResult">Hoe snel ben jij?</div>
   </div>
@@ -163,96 +138,106 @@ footer{text-align:center;color:#888;padding:30px}
  <section id="quiz">
   <h2>🧠 QUIZ</h2>
   <div class="panel">
-   <h3>De STREAM WORLD quiz</h3>
-   <p id="question">Klik op START QUIZ om te beginnen.</p>
-   <div id="answers"></div>
-   <div class="result" id="quizResult">Score: 0</div>
+   <h3>De STREAM WORLD quiz</h3><p id="question">Klik op START QUIZ om te beginnen.</p>
+   <div id="answers"></div><div class="result" id="quizResult">Score: 0</div>
    <button onclick="startQuiz()">START QUIZ / OPNIEUW</button>
   </div>
  </section>
 
  <section id="grappen">
   <h2>😂 GRAPPENMACHINE</h2>
-  <div class="panel">
-   <h3>🤣 Tijd om te lachen!</h3>
-   <div class="result" id="joke">Waarom kan een fiets niet zelfstandig staan? Omdat hij twee banden heeft!</div>
-   <button onclick="newJoke()">VERTEL EEN GRAP 🤣</button>
-  </div>
+  <div class="panel"><h3>🤣 Tijd om te lachen!</h3><div class="result" id="joke">Waarom kan een fiets niet zelfstandig staan? Omdat hij twee banden heeft!</div><button onclick="newJoke()">VERTEL EEN GRAP 🤣</button></div>
  </section>
 
  <section id="uitdagingen">
   <h2>🎲 UITDAGINGEN</h2>
-  <div class="panel">
-   <h3>Durf jij deze uitdaging aan?</h3>
-   <div class="result" id="challenge">Klik voor een willekeurige uitdaging!</div>
-   <button onclick="newChallenge()">NIEUWE UITDAGING</button>
-  </div>
+  <div class="panel"><h3>Durf jij deze uitdaging aan?</h3><div class="result" id="challenge">Klik voor een willekeurige uitdaging!</div><button onclick="newChallenge()">NIEUWE UITDAGING</button></div>
  </section>
 
  <section id="vliegtuigen">
   <h2>✈️ VLIEGTUIGENWERELD</h2>
-  <div class="panel">
-   <h3>🛫 Vliegtuigfeitjes</h3>
-   <div class="result" id="planeFact">De Airbus A380 is het grootste passagiersvliegtuig ter wereld.</div>
-   <button onclick="newPlaneFact()">VOLGEND FEITJE</button>
-  </div>
-  <div class="panel">
-   <h3>🧠 Vliegtuigquiz</h3>
-   <p>Welk vliegtuig heeft twee volledige passagiersdekken?</p>
-   <button onclick="planeAnswer(true)">Airbus A380</button>
-   <button onclick="planeAnswer(false)">Boeing 737</button>
-   <div class="result" id="planeResult">Kies je antwoord!</div>
-  </div>
-  <div class="panel">
-   <h3>🌍 Bekijk vliegtuigen live</h3>
-   <a class="service" href="https://www.flightradar24.com/" target="_blank" rel="noopener">✈️ FLIGHTRADAR24 ↗</a>
-   <a class="service" href="https://www.youtube.com/results?search_query=airplane+spotting" target="_blank" rel="noopener">🎥 VLIEGTUIGSPOTTEN ↗</a>
-  </div>
+  <div class="panel"><h3>🛫 Vliegtuigfeitjes</h3><div class="result" id="planeFact">De Airbus A380 is het grootste passagiersvliegtuig ter wereld.</div><button onclick="newPlaneFact()">VOLGEND FEITJE</button></div>
+  <div class="panel"><h3>🧠 Vliegtuigquiz</h3><p>Welk vliegtuig heeft twee volledige passagiersdekken?</p><button onclick="planeAnswer(true)">Airbus A380</button><button onclick="planeAnswer(false)">Boeing 737</button><div class="result" id="planeResult">Kies je antwoord!</div></div>
+  <div class="panel"><h3>🌍 Bekijk vliegtuigen live</h3><a class="service" href="https://www.flightradar24.com/" target="_blank" rel="noopener">✈️ FLIGHTRADAR24 ↗</a><a class="service" href="https://www.youtube.com/results?search_query=airplane+spotting" target="_blank" rel="noopener">🎥 VLIEGTUIGSPOTTEN ↗</a></div>
  </section>
 
  <section id="muziek">
   <h2>🎵 MUZIEK ONTDEKKEN</h2>
-  <div class="panel">
-   <p>Zoek jouw favoriete muziek op YouTube.</p>
-   <input id="musicSearch" placeholder="Welke muziek wil je vinden?">
-   <button onclick="searchMusic()">ZOEK MUZIEK 🎵</button>
-  </div>
+  <div class="panel"><p>Zoek jouw favoriete muziek op YouTube.</p><input id="musicSearch" placeholder="Welke muziek wil je vinden?"><button onclick="searchMusic()">ZOEK MUZIEK 🎵</button></div>
  </section>
 
  <section id="wereld">
   <h2>🌍 ONTDEK DE WERELD</h2>
-  <div class="panel">
-   <h3>Wist je dat?</h3>
-   <div class="result" id="worldFact">De aarde heeft vijf oceanen.</div>
-   <button onclick="newWorldFact()">VOLGEND FEITJE</button>
-  </div>
+  <div class="panel"><h3>Wist je dat?</h3><div class="result" id="worldFact">De aarde heeft vijf oceanen.</div><button onclick="newWorldFact()">VOLGEND FEITJE</button></div>
  </section>
 </main>
 
-<footer>
- <div class="logo">STREAM <span>WORLD</span></div>
- <p>Jouw wereld. Jouw entertainment.</p>
- <p>© STREAM WORLD 2026</p>
-</footer>
+<footer><div class="logo">STREAM <span>WORLD</span></div><p>Jouw wereld. Jouw entertainment.</p><p>© STREAM WORLD 2026</p></footer>
 
 <script>
-// INTRO EN BEWEGENDE DEELTJES
+// GELUIDEN
+let audioContext;
+let introSoundPlayed=false;
+
+function getAudio(){
+ if(!audioContext)audioContext=new(window.AudioContext||window.webkitAudioContext)();
+ if(audioContext.state==='suspended')audioContext.resume();
+ return audioContext;
+}
+function tone(freq,start,duration,volume,type='sine'){
+ const ctx=getAudio();
+ const osc=ctx.createOscillator();
+ const gain=ctx.createGain();
+ osc.type=type;
+ osc.frequency.setValueAtTime(freq,ctx.currentTime+start);
+ gain.gain.setValueAtTime(0.001,ctx.currentTime+start);
+ gain.gain.exponentialRampToValueAtTime(volume,ctx.currentTime+start+0.04);
+ gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+start+duration);
+ osc.connect(gain);gain.connect(ctx.destination);
+ osc.start(ctx.currentTime+start);
+ osc.stop(ctx.currentTime+start+duration+0.05);
+}
+function playIntroSound(){
+ if(introSoundPlayed)return;
+ introSoundPlayed=true;
+ tone(110,0,1.2,0.12,'sine');
+ tone(165,0.35,1.1,0.10,'triangle');
+ tone(220,0.75,1.3,0.12,'sine');
+ tone(440,1.05,1,0.045,'triangle');
+}
+function playStartSound(){
+ tone(75,0,0.35,0.16,'sine');
+ tone(105,0.38,0.4,0.22,'sine');
+ tone(145,0.78,0.9,0.32,'sawtooth');
+ tone(55,0.82,1,0.22,'sine');
+}
+
+// INTRO
 const intro=document.getElementById('intro');
 const particleBox=document.getElementById('particles');
 for(let i=0;i<35;i++){
- const p=document.createElement('i');
- p.className='particle';
+ const p=document.createElement('i');p.className='particle';
  p.style.left=Math.random()*100+'%';
  p.style.animationDuration=(3+Math.random()*5)+'s';
  p.style.animationDelay=(-Math.random()*7)+'s';
  p.style.setProperty('--drift',(Math.random()*160-80)+'px');
  particleBox.appendChild(p);
 }
-function closeIntro(){intro.classList.add('hide')}
+function closeIntro(){
+ if(!intro.classList.contains('hide')){
+  playStartSound();
+  intro.classList.add('hide');
+ }
+}
 document.getElementById('startButton').addEventListener('click',closeIntro);
-setTimeout(closeIntro,9000);
+setTimeout(()=>{intro.classList.add('hide')},9000);
 
-// INTERNE ZOEKFUNCTIE
+// Probeer introgeluid; Safari kan automatisch geluid blokkeren.
+window.addEventListener('load',()=>{
+ try{playIntroSound()}catch(e){}
+});
+
+// ZOEKFUNCTIE
 const sections=[
  ['streaming','streaming npo plex youtube kijk schooltv klokhuis kijken'],
  ['games','games spel getal steen papier schaar reactiespel'],
@@ -269,30 +254,21 @@ function searchSite(){
  if(!q){status.textContent='Typ eerst iets om te zoeken.';return}
  const words=q.split(/\s+/).filter(w=>w.length>1);
  const match=sections.find(s=>s[1].includes(q)||words.some(w=>s[1].includes(w)));
- if(match){
-  status.textContent='Gevonden: '+match[0].toUpperCase();
-  document.getElementById(match[0]).scrollIntoView({behavior:'smooth'});
- }else{
-  status.textContent='Geen onderdeel gevonden. Probeer een ander zoekwoord.';
- }
+ if(match){status.textContent='Gevonden: '+match[0].toUpperCase();document.getElementById(match[0]).scrollIntoView({behavior:'smooth'})}
+ else status.textContent='Geen onderdeel gevonden. Probeer een ander zoekwoord.';
 }
-
-// ONLINE ZOEKFUNCTIE
 function searchOnline(){
  const q=document.getElementById('onlineSearch').value.trim();
- if(!q){document.getElementById('onlineSearch').focus();return}
- window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank');
+ if(q)window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank');
 }
-
-// TAALKEUZE
 const translations={
  nl:{internal:'🔎 ZOEK IN STREAM WORLD',online:'🌍 ZOEK ONLINE',language:'🌐 TAAL KIEZEN',welcome:'Welkom bij STREAM WORLD! 🔴',tagline:'Jouw plek voor kijken, ontdekken, spelen en plezier maken.',stream:'📺 KIJKEN & STREAMEN',streamText:'Open jouw favoriete streamingdiensten.'},
  en:{internal:'🔎 SEARCH STREAM WORLD',online:'🌍 SEARCH ONLINE',language:'🌐 CHOOSE LANGUAGE',welcome:'Welcome to STREAM WORLD! 🔴',tagline:'Your place to watch, discover, play and have fun.',stream:'📺 WATCH & STREAM',streamText:'Open your favourite streaming services.'},
  de:{internal:'🔎 STREAM WORLD DURCHSUCHEN',online:'🌍 ONLINE SUCHEN',language:'🌐 SPRACHE WÄHLEN',welcome:'Willkommen bei STREAM WORLD! 🔴',tagline:'Dein Ort zum Schauen, Entdecken, Spielen und Spaßhaben.',stream:'📺 ANSEHEN & STREAMEN',streamText:'Öffne deine Lieblings-Streamingdienste.'}
 };
 function changeLanguage(){
- const t=translations[document.getElementById('language').value];
- document.documentElement.lang=document.getElementById('language').value;
+ const lang=document.getElementById('language').value,t=translations[lang];
+ document.documentElement.lang=lang;
  document.getElementById('internalLabel').textContent=t.internal;
  document.getElementById('onlineLabel').textContent=t.online;
  document.getElementById('languageLabel').textContent=t.language;
@@ -302,26 +278,20 @@ function changeLanguage(){
  document.getElementById('streamText').textContent=t.streamText;
 }
 
-// RAAD HET GETAL
+// GETALLEN
 let secretNumber=Math.floor(Math.random()*10)+1;
 function guessNumber(){
- const n=Number(document.getElementById('guess').value);
- const r=document.getElementById('guessResult');
+ const n=Number(document.getElementById('guess').value),r=document.getElementById('guessResult');
  if(!Number.isInteger(n)||n<1||n>10){r.textContent='Vul een getal van 1 tot 10 in!';return}
  if(n===secretNumber)r.textContent='🎉 GOED GERADEN! Jij hebt gewonnen!';
  else if(n<secretNumber)r.textContent='Te laag! Probeer hoger.';
  else r.textContent='Te hoog! Probeer lager.';
 }
-function newNumber(){
- secretNumber=Math.floor(Math.random()*10)+1;
- document.getElementById('guess').value='';
- document.getElementById('guessResult').textContent='Nieuw getal gekozen. Succes!';
-}
+function newNumber(){secretNumber=Math.floor(Math.random()*10)+1;document.getElementById('guess').value='';document.getElementById('guessResult').textContent='Nieuw getal gekozen. Succes!'}
 
 // STEEN PAPIER SCHAAR
 function playRPS(choice){
- const options=['Steen','Papier','Schaar'];
- const computer=options[Math.floor(Math.random()*3)];
+ const options=['Steen','Papier','Schaar'],computer=options[Math.floor(Math.random()*3)];
  const win=(choice==='Steen'&&computer==='Schaar')||(choice==='Papier'&&computer==='Steen')||(choice==='Schaar'&&computer==='Papier');
  const result=choice===computer?'Gelijkspel!':win?'Jij wint! 🎉':'De computer wint!';
  document.getElementById('rpsResult').textContent='Jij: '+choice+' | Computer: '+computer+'. '+result;
@@ -330,33 +300,14 @@ function playRPS(choice){
 // REACTIESPEL
 let reactionState='idle',reactionTimer=null,reactionTime=0;
 function reactionAction(){
- const b=document.getElementById('reactionButton');
- const r=document.getElementById('reactionResult');
- if(reactionState==='idle'||reactionState==='done'||reactionState==='early'){
-  clearTimeout(reactionTimer);
-  reactionState='waiting';
-  b.textContent='WACHT...';
-  b.style.background='#555';
-  r.textContent='Wacht tot de knop groen wordt!';
-  reactionTimer=setTimeout(()=>{
-   reactionState='ready';
-   reactionTime=Date.now();
-   b.textContent='DRUK NU!';
-   b.style.background='green';
-   r.textContent='NU! 🟢';
-  },1500+Math.random()*3000);
+ const b=document.getElementById('reactionButton'),r=document.getElementById('reactionResult');
+ if(['idle','done','early'].includes(reactionState)){
+  clearTimeout(reactionTimer);reactionState='waiting';b.textContent='WACHT...';b.style.background='#555';r.textContent='Wacht tot de knop groen wordt!';
+  reactionTimer=setTimeout(()=>{reactionState='ready';reactionTime=Date.now();b.textContent='DRUK NU!';b.style.background='green';r.textContent='NU! 🟢'},1500+Math.random()*3000);
  }else if(reactionState==='waiting'){
-  clearTimeout(reactionTimer);
-  reactionState='early';
-  b.textContent='OPNIEUW';
-  b.style.background='#e50914';
-  r.textContent='Te vroeg! Probeer opnieuw.';
+  clearTimeout(reactionTimer);reactionState='early';b.textContent='OPNIEUW';b.style.background='#e50914';r.textContent='Te vroeg! Probeer opnieuw.';
  }else if(reactionState==='ready'){
-  const ms=Date.now()-reactionTime;
-  reactionState='done';
-  b.textContent='OPNIEUW';
-  b.style.background='#e50914';
-  r.textContent='⚡ Jouw reactietijd: '+ms+' milliseconden!';
+  const ms=Date.now()-reactionTime;reactionState='done';b.textContent='OPNIEUW';b.style.background='#e50914';r.textContent='⚡ Jouw reactietijd: '+ms+' milliseconden!';
  }
 }
 
@@ -373,32 +324,16 @@ let qi=0,score=0,answered=false;
 function startQuiz(){qi=0;score=0;showQuestion()}
 function showQuestion(){
  answered=false;
- if(qi>=quiz.length){
-  document.getElementById('question').textContent='🏆 QUIZ AFGELOPEN!';
-  document.getElementById('answers').innerHTML='';
-  document.getElementById('quizResult').textContent='Jouw eindscore: '+score+' van '+quiz.length+' goed!';
-  return;
- }
- const q=quiz[qi];
- document.getElementById('question').textContent=(qi+1)+'. '+q.q;
- const box=document.getElementById('answers');
- box.innerHTML='';
- q.a.forEach((a,i)=>{
-  const b=document.createElement('button');
-  b.textContent=a;
-  b.addEventListener('click',()=>answerQuestion(i));
-  box.appendChild(b);
- });
+ if(qi>=quiz.length){document.getElementById('question').textContent='🏆 QUIZ AFGELOPEN!';document.getElementById('answers').innerHTML='';document.getElementById('quizResult').textContent='Jouw eindscore: '+score+' van '+quiz.length+' goed!';return}
+ const q=quiz[qi];document.getElementById('question').textContent=(qi+1)+'. '+q.q;
+ const box=document.getElementById('answers');box.innerHTML='';
+ q.a.forEach((a,i)=>{const b=document.createElement('button');b.textContent=a;b.addEventListener('click',()=>answerQuestion(i));box.appendChild(b)});
  document.getElementById('quizResult').textContent='Score: '+score;
 }
 function answerQuestion(i){
- if(answered)return;
- answered=true;
- const q=quiz[qi];
- if(i===q.c)score++;
+ if(answered)return;answered=true;const q=quiz[qi];if(i===q.c)score++;
  document.getElementById('quizResult').textContent=i===q.c?'Goed gedaan! 🎉 Score: '+score:'Helaas! Het juiste antwoord was: '+q.a[q.c];
- qi++;
- setTimeout(showQuestion,1200);
+ qi++;setTimeout(showQuestion,1200);
 }
 
 // GRAPPEN
@@ -415,46 +350,19 @@ const jokes=[
 function newJoke(){document.getElementById('joke').textContent=jokes[Math.floor(Math.random()*jokes.length)]}
 
 // UITDAGINGEN
-const challenges=[
- 'Doe 10 jumping jacks!',
- 'Praat 30 seconden als een robot.',
- 'Noem 5 vliegtuigen binnen 10 seconden!',
- 'Probeer 15 seconden op één been te staan.',
- 'Maak je grappigste gezicht!',
- 'Doe alsof je een vliegtuig bent dat opstijgt!',
- 'Tel zo snel mogelijk terug van 30 naar 0.',
- 'Noem 5 landen binnen 10 seconden!'
-];
+const challenges=['Doe 10 jumping jacks!','Praat 30 seconden als een robot.','Noem 5 vliegtuigen binnen 10 seconden!','Probeer 15 seconden op één been te staan.','Maak je grappigste gezicht!','Doe alsof je een vliegtuig bent dat opstijgt!','Tel zo snel mogelijk terug van 30 naar 0.','Noem 5 landen binnen 10 seconden!'];
 function newChallenge(){document.getElementById('challenge').textContent=challenges[Math.floor(Math.random()*challenges.length)]}
 
 // VLIEGTUIGEN
-const planeFacts=[
- 'De Airbus A380 is het grootste passagiersvliegtuig ter wereld.',
- 'De Boeing 787 Dreamliner gebruikt lichte composietmaterialen.',
- 'De Airbus BelugaXL vervoert grote vliegtuigonderdelen.',
- 'De Emirates A380 heeft twee volledige passagiersdekken.',
- 'De KLM heeft blauw als herkenbare huisstijlkleur.',
- 'De Boeing 747 wordt ook wel de Jumbo Jet genoemd.'
-];
+const planeFacts=['De Airbus A380 is het grootste passagiersvliegtuig ter wereld.','De Boeing 787 Dreamliner gebruikt lichte composietmaterialen.','De Airbus BelugaXL vervoert grote vliegtuigonderdelen.','De Emirates A380 heeft twee volledige passagiersdekken.','De KLM heeft blauw als herkenbare huisstijlkleur.','De Boeing 747 wordt ook wel de Jumbo Jet genoemd.'];
 function newPlaneFact(){document.getElementById('planeFact').textContent=planeFacts[Math.floor(Math.random()*planeFacts.length)]}
 function planeAnswer(ok){document.getElementById('planeResult').textContent=ok?'🎉 Helemaal goed! De Airbus A380 heeft twee volledige passagiersdekken!':'Niet helemaal! Het juiste antwoord is de Airbus A380.'}
 
 // MUZIEK
-function searchMusic(){
- const q=document.getElementById('musicSearch').value.trim();
- if(q)window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q),'_blank');
-}
+function searchMusic(){const q=document.getElementById('musicSearch').value.trim();if(q)window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q),'_blank')}
 
 // WERELDFEITJES
-const worldFacts=[
- 'De aarde heeft vijf oceanen.',
- 'Japan bestaat uit duizenden eilanden.',
- 'De Sahara is de grootste hete woestijn ter wereld.',
- 'Een octopus heeft drie harten.',
- 'De Mount Everest is de hoogste berg boven zeeniveau.',
- 'De Grote Oceaan is de grootste oceaan op aarde.',
- 'Een dag op Venus duurt langer dan een Venusjaar.'
-];
+const worldFacts=['De aarde heeft vijf oceanen.','Japan bestaat uit duizenden eilanden.','De Sahara is de grootste hete woestijn ter wereld.','Een octopus heeft drie harten.','De Mount Everest is de hoogste berg boven zeeniveau.','De Grote Oceaan is de grootste oceaan op aarde.','Een dag op Venus duurt langer dan een Venusjaar.'];
 function newWorldFact(){document.getElementById('worldFact').textContent=worldFacts[Math.floor(Math.random()*worldFacts.length)]}
 </script>
 </body>
