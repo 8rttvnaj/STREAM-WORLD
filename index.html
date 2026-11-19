@@ -4,627 +4,1075 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#050505">
-<title>STREAMWORLD x Plex</title>
+<meta name="theme-color" content="#101010">
+<title>STREAMWORLD MEGA-BIEB</title>
 
 <style>
+:root{
+  --yellow:#FFD83D;
+  --coral:#FF7466;
+  --orange:#FF922E;
+  --lime:#B5E853;
+  --white:#FFFFFF;
+  --bg:#101010;
+  --panel:#202020;
+  --muted:#bdbdbd;
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:#080808;color:#fff;font-family:Arial,sans-serif}
-button,a,select,input{font:inherit}
-button{background:#e50914;color:white;border:0;padding:12px 17px;border-radius:9px;font-weight:bold;cursor:pointer}
-button:active{transform:scale(.97)}
-header{background:#111;padding:18px;border-bottom:2px solid #e50914}
-.logo{font-size:30px;font-weight:1000;letter-spacing:2px;color:#ed1020}
-.logo span{color:white}
-.brand-x{color:#ed1020!important;margin:0 7px}
-.search-area{max-width:850px;margin:15px auto}
-.search-label{font-size:12px;letter-spacing:1px;color:#ff626a;font-weight:bold}
-.search-row{display:flex;gap:7px}
-input,select{width:100%;min-width:0;background:#252525;color:white;border:1px solid #555;border-radius:9px;padding:13px;margin:7px 0}
-nav{display:flex;gap:8px;overflow-x:auto;margin-top:16px}
-nav a{color:white;text-decoration:none;background:#292929;padding:10px 13px;border-radius:8px;white-space:nowrap}
-main{max-width:1050px;margin:auto;padding:16px}
-h2{border-left:4px solid #e50914;padding-left:11px;margin-top:32px}
-.panel{background:#191919;border:1px solid #383838;border-radius:13px;padding:17px;margin:13px 0}
-.hero{background:linear-gradient(120deg,#56000c,#171717);padding:23px;border-radius:14px;margin:18px 0}
-.status{color:#ff777e;font-size:13px;min-height:18px}
-footer{text-align:center;color:#888;padding:30px}
+body{
+  margin:0;
+  background:var(--bg);
+  color:white;
+  font-family:Arial,sans-serif;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit}
+.hidden{display:none!important}
 
-/* GEANIMEERDE INTRO */
-#intro{position:fixed;inset:0;z-index:9999;overflow:hidden;background:radial-gradient(ellipse at center,#4b0010 0%,#160006 42%,#000 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;transition:opacity 1s,visibility 1s}
-#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
-.intro-content{position:relative;z-index:2;padding:20px;width:100%}
-.intro-title{font-size:clamp(35px,9vw,65px);font-weight:1000;letter-spacing:2px;color:#ed1020;text-shadow:0 0 10px red,0 0 30px red,0 0 60px #ff0015;animation:dramaticZoom 2s cubic-bezier(.15,.8,.2,1) both,neonPulse 1.4s 2s infinite alternate}
-.intro-title span{color:white}
-.intro-title .brand-x{color:#ed1020!important}
-.intro-line{width:0;max-width:420px;height:4px;margin:17px auto;background:#ff1525;box-shadow:0 0 12px red,0 0 30px red;animation:laser 1.1s 1.1s ease-out forwards}
-.intro-sub{opacity:0;letter-spacing:3px;font-size:12px;color:#eee;animation:rise 1s 2s forwards}
-#startButton{opacity:0;margin-top:32px;padding:15px 30px;letter-spacing:2px;box-shadow:0 0 15px #e50914;animation:rise .8s 2.6s forwards}
-.particle{position:absolute;width:4px;height:4px;background:#ff2938;border-radius:50%;box-shadow:0 0 12px red;animation:fly linear infinite}
-@keyframes dramaticZoom{
-0%{opacity:0;transform:perspective(500px) translateZ(-500px) scale(.1) rotateX(35deg);filter:blur(15px)}
-65%{opacity:1;transform:perspective(500px) translateZ(40px) scale(1.12);filter:blur(0)}
-100%{transform:perspective(500px) translateZ(0) scale(1)}
+/* INTRO */
+#intro{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  background:#080808;
+  animation:introOut 3.5s forwards;
+  pointer-events:none;
 }
-@keyframes neonPulse{from{text-shadow:0 0 8px red,0 0 18px red}to{text-shadow:0 0 20px red,0 0 45px red,0 0 75px #e50914}}
-@keyframes laser{from{width:0;opacity:0}20%{opacity:1}to{width:min(420px,85vw);opacity:1}}
-@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fly{0%{transform:translate(0,100vh) scale(.3);opacity:0}15%{opacity:1}100%{transform:translate(var(--drift),-110vh) scale(1.8);opacity:0}}
+.intro-logo{
+  font-size:clamp(38px,9vw,82px);
+  font-weight:1000;
+  letter-spacing:3px;
+  animation:introPop 1s ease;
+}
+.intro-logo .s{color:var(--yellow)}
+.intro-logo .w{color:var(--coral)}
+.intro-sub{
+  margin-top:15px;
+  letter-spacing:6px;
+  color:white;
+  animation:introPop 1.5s ease;
+}
+@keyframes introPop{
+  from{opacity:0;transform:scale(.5)}
+  to{opacity:1;transform:scale(1)}
+}
+@keyframes introOut{
+  0%,75%{opacity:1}
+  100%{opacity:0;visibility:hidden}
+}
 
-/* STREAM-BIBLIOTHEEK */
-.library-banner{
- background:linear-gradient(120deg,#39000a,#151515);
- border:1px solid #6c111b;
- border-radius:14px;
- padding:22px;
- margin:15px 0;
+/* HEADER */
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:#111;
+  border-bottom:2px solid #333;
+  padding:15px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:15px;
 }
-.library-title{
- font-size:clamp(25px,6vw,36px);
- font-weight:1000;
- color:#ed1020;
- letter-spacing:1px;
+.logo{
+  font-size:25px;
+  font-weight:1000;
+  letter-spacing:1px;
 }
-.library-subtitle{
- color:#bbb;
- font-size:12px;
- letter-spacing:2px;
+.logo .s{color:var(--yellow)}
+.logo .w{color:var(--coral)}
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
 }
-.plex-player{
- width:100%;
- height:65vh;
- min-height:350px;
- border:1px solid #444;
- border-radius:12px;
- background:#000;
- overflow:hidden;
+nav a{
+  text-decoration:none;
+  background:#292929;
+  padding:9px 13px;
+  border-radius:20px;
+  font-size:13px;
 }
-.plex-player iframe{width:100%;height:100%;border:0}
-.plex-note{color:#aaa;font-size:13px;line-height:1.5}
-.category-link{
- display:block;
- background:#242424;
- color:white;
- text-decoration:none;
- border:1px solid #444;
- border-radius:10px;
- padding:15px;
- margin:8px 0;
- font-weight:bold;
+nav a:hover{background:var(--yellow);color:#111}
+select{
+  padding:10px;
+  border:1px solid #555;
+  border-radius:10px;
+  color:white;
+  background:#252525;
 }
-.category-link:hover{border-color:#e50914;background:#39000a}
 
-/* FLAPPY BIRD */
+/* HERO */
+.hero{
+  text-align:center;
+  padding:65px 5%;
+  background:
+    radial-gradient(circle at 15% 20%,#51420d 0,transparent 36%),
+    radial-gradient(circle at 85% 75%,#4a211d 0,transparent 35%),
+    #171717;
+}
+.hero h1{
+  font-size:clamp(38px,8vw,76px);
+  margin:0 0 15px;
+  font-weight:1000;
+}
+.hero h1 span{color:var(--yellow)}
+.hero p{
+  color:#ddd;
+  max-width:650px;
+  margin:0 auto 25px;
+  line-height:1.6;
+}
+.actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.btn{
+  border:0;
+  border-radius:25px;
+  padding:13px 20px;
+  background:var(--yellow);
+  color:#111;
+  font-weight:bold;
+}
+.btn.coral{background:var(--coral)}
+.btn.orange{background:var(--orange)}
+.btn.lime{background:var(--lime)}
+.btn:hover{filter:brightness(1.1);transform:translateY(-2px)}
+
+/* SECTIONS */
+section{padding:35px 5%}
+.heading{
+  font-size:28px;
+  margin:0 0 10px;
+}
+.description{
+  color:var(--muted);
+  line-height:1.6;
+  margin:0 0 22px;
+}
+.yellow{color:var(--yellow)}
+.coral-text{color:var(--coral)}
+.orange-text{color:var(--orange)}
+.lime-text{color:var(--lime)}
+
+/* SEARCH */
+.search-area{
+  max-width:900px;
+  margin:auto;
+  padding:28px 5%;
+}
+.search-row{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+}
+.search-row input{
+  flex:1;
+  min-width:180px;
+  padding:15px;
+  border-radius:12px;
+  border:2px solid var(--yellow);
+  background:#222;
+  color:white;
+}
+.search-row button{
+  border:0;
+  border-radius:12px;
+  background:var(--yellow);
+  color:#111;
+  padding:12px 18px;
+  font-weight:bold;
+}
+#searchInfo{
+  color:#aaa;
+  font-size:13px;
+  margin-top:12px;
+}
+
+/* FILTERS */
+.filters{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.filter{
+  border:1px solid #555;
+  background:#292929;
+  color:white;
+  border-radius:20px;
+  padding:10px 15px;
+}
+.filter.active{
+  background:var(--lime);
+  color:#111;
+  border-color:var(--lime);
+  font-weight:bold;
+}
+
+/* SERVICE CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(225px,1fr));
+  gap:17px;
+}
+.card{
+  background:var(--panel);
+  border:1px solid #393939;
+  border-radius:18px;
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  min-height:260px;
+  transition:.2s;
+}
+.card:hover{
+  transform:translateY(-5px);
+  border-color:var(--yellow);
+  box-shadow:0 8px 25px #0007;
+}
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+}
+.card-icon{
+  width:49px;
+  height:49px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  font-size:25px;
+  background:var(--yellow);
+  color:#111;
+}
+.card h3{
+  margin:16px 0 8px;
+  font-size:20px;
+}
+.card p{
+  color:#ccc;
+  font-size:14px;
+  line-height:1.5;
+  flex:1;
+}
+.status{
+  font-size:10px;
+  font-weight:bold;
+  padding:6px 9px;
+  border-radius:20px;
+  color:#111;
+  background:var(--lime);
+}
+.status.limited{background:var(--orange)}
+.status.paid{background:var(--coral)}
+.card .details{
+  font-size:12px;
+  color:#aaa;
+  line-height:1.5;
+  margin:8px 0;
+}
+.card-actions{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+.card-actions a{
+  flex:1;
+  text-align:center;
+  text-decoration:none;
+  padding:11px 7px;
+  border-radius:11px;
+  background:var(--yellow);
+  color:#111;
+  font-weight:bold;
+  font-size:13px;
+}
+.card-actions button{
+  width:43px;
+  border:1px solid #555;
+  border-radius:11px;
+  background:#303030;
+  color:white;
+  font-size:19px;
+}
+.card-actions button.fav{color:var(--yellow)}
+.count{
+  color:var(--yellow);
+  font-weight:bold;
+  margin-bottom:15px;
+}
+.no-results{
+  padding:25px;
+  border-radius:15px;
+  background:#222;
+  color:#ccc;
+  text-align:center;
+  grid-column:1/-1;
+}
+
+/* ONLINE SEARCH */
+.online-box{
+  background:#202020;
+  padding:22px;
+  border-radius:18px;
+  border:1px solid #444;
+}
+.online-box input{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #777;
+  background:#111;
+  color:white;
+  margin:10px 0 15px;
+}
+
+/* DAILY PICK */
+.pick-panel{
+  background:linear-gradient(120deg,#493b0b,#38201d);
+  border:1px solid #66521c;
+  border-radius:20px;
+  padding:25px;
+}
+.pick-result{
+  font-size:25px;
+  font-weight:bold;
+  margin:15px 0;
+  color:var(--yellow);
+}
+
+/* RATING */
+.rating-panel{
+  background:#202020;
+  border:1px solid #444;
+  border-radius:18px;
+  padding:22px;
+  max-width:600px;
+}
+.rating-panel select{width:100%;margin:10px 0}
+.stars{
+  display:flex;
+  gap:8px;
+  margin:12px 0;
+}
+.star{
+  background:none;
+  border:0;
+  color:#777;
+  font-size:30px;
+  padding:0;
+}
+.star.selected{color:var(--yellow)}
+#ratingMessage{color:var(--lime);font-size:14px}
+
+/* GAME */
+.game-panel{
+  background:#202020;
+  border:1px solid #444;
+  border-radius:20px;
+  padding:22px;
+  max-width:600px;
+}
 #gameCanvas{
- width:100%;
- max-width:500px;
- display:block;
- margin:12px auto;
- background:#80c9e9;
- border-radius:12px;
- touch-action:manipulation;
+  display:block;
+  width:100%;
+  max-width:480px;
+  margin:15px auto;
+  background:#bceaff;
+  border:4px solid var(--yellow);
+  border-radius:12px;
+  touch-action:manipulation;
 }
-.game-buttons{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-@media(max-width:480px){
- header{padding:14px}
- .logo{font-size:27px}
- .search-row button{padding:12px 10px;font-size:12px}
- .intro-sub{letter-spacing:2px}
- .plex-player{height:55vh;min-height:300px}
+.game-controls{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.game-controls button{
+  border:0;
+  border-radius:12px;
+  padding:12px 16px;
+  background:var(--orange);
+  font-weight:bold;
+}
+#gameMessage{color:#ccc;text-align:center}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:35px 5%;
+  border-top:2px solid #333;
+  color:#aaa;
+  font-size:13px;
+  line-height:1.8;
+}
+footer strong{color:var(--yellow)}
+
+@media(max-width:600px){
+  header{justify-content:center}
+  nav{justify-content:center}
+  .hero{padding:48px 5%}
+  section{padding:28px 5%}
 }
 </style>
 </head>
 
 <body>
 
-<!-- GEANIMEERDE INTRO -->
 <div id="intro">
- <div id="particles"></div>
- <div class="intro-content">
-  <div class="intro-title">STREAMWORLD <span class="brand-x">x</span> <span>Plex</span></div>
-  <div class="intro-line"></div>
-  <div class="intro-sub">JOUW WERELD. JOUW ENTERTAINMENT.</div>
-  <button id="startButton" onclick="closeIntro()">START NU ▶</button>
- </div>
+  <div class="intro-logo">
+    <span class="s">STREAM</span><span class="w">WORLD</span>
+  </div>
+  <div class="intro-sub">MEGA-BIEB</div>
 </div>
 
 <header>
- <div class="logo">STREAMWORLD <span class="brand-x">x</span> <span>Plex</span></div>
-
- <div class="search-area">
-  <div class="search-label" id="internalLabel">🔎 ZOEK IN STREAMWORLD</div>
-  <div class="search-row">
-   <input id="siteSearch" placeholder="Zoek films, Plex, games..." onkeydown="if(event.key==='Enter')searchSite()">
-   <button onclick="searchSite()">ZOEK</button>
-  </div>
-  <div class="status" id="siteStatus"></div>
-
-  <div class="search-label" id="onlineLabel">🌍 ZOEK ONLINE</div>
-  <div class="search-row">
-   <input id="onlineSearch" placeholder="Wat wil je op internet zoeken?" onkeydown="if(event.key==='Enter')searchOnline()">
-   <button onclick="searchOnline()">ZOEK ONLINE</button>
+  <div class="logo">
+    <span class="s">STREAM</span><span class="w">WORLD</span>
   </div>
 
-  <div class="search-label" id="languageLabel">🌐 TAAL KIEZEN</div>
-  <select id="language" onchange="changeLanguage()">
-   <option value="nl">🇳🇱 Nederlands</option>
-   <option value="en">🇬🇧 English</option>
-   <option value="de">🇩🇪 Deutsch</option>
+  <nav>
+    <a href="#diensten">Bibliotheek</a>
+    <a href="#favorieten">Favorieten</a>
+    <a href="#vandaag">Wat kijk ik?</a>
+    <a href="#rating">Rating</a>
+    <a href="#zoeken">Zoeken</a>
+    <a href="#game">Game</a>
+  </nav>
+
+  <select id="language" aria-label="Taal kiezen">
+    <option value="nl">🇳🇱 Nederlands</option>
+    <option value="en">🇬🇧 English</option>
+    <option value="de">🇩🇪 Deutsch</option>
   </select>
- </div>
-
- <nav>
-  <a href="#plex">🎬 STREAM-BIBLIOTHEEK</a>
-  <a href="#games">🐤 Games</a>
- </nav>
 </header>
 
 <main>
 
- <div class="hero">
-  <h1 id="welcome">Welkom bij STREAMWORLD x Plex! 🔴</h1>
-  <p id="tagline">Jouw plek voor kijken, ontdekken en entertainment.</p>
- </div>
+<div class="hero">
+  <h1>Welkom bij <span>STREAMWORLD!</span></h1>
+  <p>
+    Jouw MEGA-BIEB voor streamingdiensten en officiële
+    kijkwebsites. Zoek, ontdek en open jouw favoriete diensten!
+  </p>
+  <div class="actions">
+    <a href="#diensten"><button class="btn">OPEN MEGA-BIEB</button></a>
+    <a href="#vandaag"><button class="btn coral">WAT KIJK IK VANDAAG?</button></a>
+  </div>
+</div>
 
- <!-- STREAM-BIBLIOTHEEK -->
- <section id="plex">
+<div class="search-area" id="zoeken">
+  <h2 class="heading">🔎 Zoek in STREAMWORLD</h2>
+  <div class="search-row">
+    <input id="internalSearch" type="search"
+      placeholder="Zoek een streamingdienst..."
+      oninput="renderServices()">
+    <button onclick="renderServices()">ZOEK</button>
+  </div>
+  <div id="searchInfo">Zoek bijvoorbeeld Plex, anime, documentaires of jeugd.</div>
+</div>
 
-  <div class="library-banner">
-   <div class="library-title">🎬 STREAM-BIBLIOTHEEK</div>
-   <div class="library-subtitle">STREAMWORLD x PLEX</div>
-   <p>Ontdek gratis films, series, documentaires en anime.</p>
+<section id="diensten">
+  <h2 class="heading"><span class="yellow">STREAM-BIBLIOTHEEK</span></h2>
+  <p class="description">
+    Alle diensten overzichtelijk bij elkaar.
+    De kaarten openen de officiële websites van de aanbieders.
+  </p>
+
+  <div class="filters">
+    <button class="filter active" onclick="setFilter('all',this)">Alles</button>
+    <button class="filter" onclick="setFilter('free',this)">Gratis aanbod</button>
+    <button class="filter" onclick="setFilter('kids',this)">Jeugd</button>
+    <button class="filter" onclick="setFilter('doc',this)">Documentaires</button>
+    <button class="filter" onclick="setFilter('international',this)">Internationaal</button>
+    <button class="filter" onclick="setFilter('favorites',this)">⭐ Favorieten</button>
   </div>
 
-  <div class="panel">
-   <h3>🍿 WELKOM IN DE STREAM-BIBLIOTHEEK</h3>
-   <p>
-    Ontdek het gratis kijkaanbod van Plex.
-    Je kunt de officiële Plex-catalogus openen vanuit STREAMWORLD x Plex.
-   </p>
+  <div class="count" id="serviceCount"></div>
+  <div class="cards" id="serviceCards"></div>
+</section>
 
-   <a class="category-link" href="https://watch.plex.tv/on-demand" target="_blank" rel="noopener">
-    🎬 GRATIS FILMS ONTDEKKEN ↗
-   </a>
+<section id="favorieten">
+  <h2 class="heading"><span class="coral-text">⭐ MIJN FAVORIETEN</span></h2>
+  <p class="description">Bewaar je favoriete streamingdiensten met het sterretje.</p>
+  <div class="cards" id="favoriteCards"></div>
+</section>
 
-   <a class="category-link" href="https://watch.plex.tv/" target="_blank" rel="noopener">
-    📺 SERIES ONTDEKKEN ↗
-   </a>
-
-   <a class="category-link" href="https://watch.plex.tv/" target="_blank" rel="noopener">
-    🎥 DOCUMENTAIRES ONTDEKKEN ↗
-   </a>
-
-   <a class="category-link" href="https://watch.plex.tv/" target="_blank" rel="noopener">
-    🍥 ANIME & ANIMATIE ONTDEKKEN ↗
-   </a>
+<section id="vandaag">
+  <h2 class="heading"><span class="orange-text">WAT KIJK IK VANDAAG?</span></h2>
+  <p class="description">Laat STREAMWORLD een streamingdienst voor je kiezen.</p>
+  <div class="pick-panel">
+    <div>🎲 JOUW WILLEKEURIGE KIJKTIP</div>
+    <div class="pick-result" id="pickResult">Klaar om iets te ontdekken?</div>
+    <p id="pickDescription" style="color:#ddd">
+      Klik op de knop en ontdek een dienst uit de MEGA-BIEB.
+    </p>
+    <button class="btn" onclick="randomPick()">KIES VOOR MIJ!</button>
+    <a id="pickLink" href="#" target="_blank" rel="noopener noreferrer"
+       class="btn coral hidden" style="display:inline-block;text-decoration:none">
+      OPEN DIENST
+    </a>
   </div>
+</section>
 
-  <div class="panel">
-   <h3>🔎 ZOEK IN PLEX</h3>
-   <p>Zoek een film of serie in de officiële Plex-omgeving.</p>
-   <input id="plexSearch" placeholder="Typ een film of serie...">
-   <button onclick="searchPlex()">ZOEK IN PLEX ↗</button>
+<section id="rating">
+  <h2 class="heading"><span class="lime-text">STREAM-RATING</span> ⭐</h2>
+  <p class="description">Geef jouw favoriete streamingdienst een beoordeling.</p>
+  <div class="rating-panel">
+    <label for="ratingService">Welke dienst beoordeel je?</label>
+    <select id="ratingService"></select>
+    <div class="stars" id="stars">
+      <button class="star" onclick="setStars(1)">★</button>
+      <button class="star" onclick="setStars(2)">★</button>
+      <button class="star" onclick="setStars(3)">★</button>
+      <button class="star" onclick="setStars(4)">★</button>
+      <button class="star" onclick="setStars(5)">★</button>
+    </div>
+    <button class="btn lime" onclick="saveRating()">BEWAAR RATING</button>
+    <p id="ratingMessage"></p>
+    <p style="font-size:12px;color:#aaa">
+      Je beoordelingen worden lokaal in deze browser bewaard.
+    </p>
   </div>
+</section>
 
-  <div class="panel">
-   <h3>▶️ STREAM-BIBLIOTHEEK KIJKOMGEVING</h3>
-   <p class="plex-note">
-    De officiële Plex-kijkomgeving wordt hieronder geopend.
-    Plex bepaalt zelf welke video's gratis beschikbaar zijn en of
-    afspelen in een externe website wordt toegestaan.
-   </p>
-
-   <div class="plex-player">
-    <iframe
-     id="plexFrame"
-     src="https://watch.plex.tv/on-demand"
-     title="STREAM-BIBLIOTHEEK - Plex"
-     loading="lazy"
-     allow="fullscreen; autoplay; picture-in-picture"
-     referrerpolicy="strict-origin-when-cross-origin">
-    </iframe>
-   </div>
-
-   <p class="plex-note">
-    Werkt de speler niet? Dan kan Plex externe insluiting blokkeren.
-    Open Plex rechtstreeks via de knop.
-   </p>
-
-   <button onclick="openPlex()">OPEN STREAM-BIBLIOTHEEK ↗</button>
+<section>
+  <h2 class="heading"><span class="orange-text">ONLINE ZOEKEN</span></h2>
+  <div class="online-box">
+    <p>Zoek online naar een programma, serie of officiële kijkwebsite.</p>
+    <input id="onlineSearch" placeholder="Wat wil je online zoeken?">
+    <div class="actions" style="justify-content:flex-start">
+      <button class="btn" onclick="onlineSearch()">ZOEK OP GOOGLE</button>
+      <button class="btn coral" onclick="youtubeSearch()">ZOEK OP YOUTUBE</button>
+    </div>
   </div>
+</section>
 
-  <div class="panel">
-   <h3>ℹ️ OVER DE STREAM-BIBLIOTHEEK</h3>
-   <p>
-    STREAMWORLD x Plex is de toegangspoort tot het aanbod van Plex.
-    De films en series worden door Plex aangeboden en afgespeeld.
-    STREAMWORLD x Plex host of kopieert deze video's niet zelf.
-   </p>
-   <p class="plex-note">
-    Het aanbod kan verschillen per land en kan veranderen.
-    Voor sommige titels kunnen beperkingen of advertenties gelden.
-   </p>
+<section id="game">
+  <h2 class="heading"><span class="lime-text">FLAPPY BIRD</span> 🐔</h2>
+  <p class="description">Even pauze? Laat de kip vliegen!</p>
+
+  <div class="game-panel">
+    <strong>Score: <span id="score">0</span></strong>
+    <canvas id="gameCanvas" width="480" height="300"></canvas>
+    <div class="game-controls">
+      <button onclick="startGame()">START / OPNIEUW</button>
+      <button onclick="flap()">🐔 SPRING!</button>
+      <button onclick="toggleMusic()">♫ MUZIEK AAN/UIT</button>
+    </div>
+    <p id="gameMessage">Druk op START om te beginnen!</p>
   </div>
-
- </section>
-
- <!-- FLAPPY BIRD -->
- <section id="games">
-  <h2>🐤 FLAPPY BIRD</h2>
-
-  <div class="panel">
-   <h3>🐤 FLAPPY BIRD – STREAMWORLD x Plex EDITION</h3>
-   <p>Tik op het scherm of druk op SPELEN om te vliegen!</p>
-
-   <canvas id="gameCanvas" width="400" height="500"></canvas>
-
-   <div class="game-buttons">
-    <button onclick="startGame()">SPELEN ▶</button>
-    <button onclick="toggleMusic()" id="musicButton">🎵 MUZIEK AAN</button>
-    <button onclick="toggleSound()" id="soundButton">🐔 GELUID AAN</button>
-   </div>
-
-   <div class="status" id="gameStatus">Tik op SPELEN om te beginnen!</div>
-  </div>
- </section>
+</section>
 
 </main>
 
 <footer>
- <div class="logo">STREAMWORLD <span class="brand-x">x</span> <span>Plex</span></div>
- <p>Jouw wereld. Jouw entertainment.</p>
- <p>© STREAMWORLD x Plex 2026</p>
+  <strong>STREAMWORLD MEGA-BIEB</strong><br>
+  Jouw wereld van kijkdiensten.<br><br>
+  STREAMWORLD is een verzameling officiële links.
+  Video's worden afgespeeld bij de betreffende aanbieder.
+  STREAMWORLD uploadt of kopieert geen films of series.<br><br>
+  Gratis aanbod, accountvereisten en regiobeschikbaarheid
+  kunnen bij de aanbieders veranderen.<br><br>
+  © STREAMWORLD
 </footer>
 
 <script>
 
-/* INTRO */
-const intro=document.getElementById('intro');
-const particleBox=document.getElementById('particles');
+/* STREAM-BIBLIOTHEEK */
 
-for(let i=0;i<35;i++){
- const p=document.createElement('i');
- p.className='particle';
- p.style.left=Math.random()*100+'%';
- p.style.animationDuration=(3+Math.random()*5)+'s';
- p.style.animationDelay=(-Math.random()*7)+'s';
- p.style.setProperty('--drift',(Math.random()*160-80)+'px');
- particleBox.appendChild(p);
+const services = [
+{
+ name:"Crunchyroll",icon:"🍥",
+ url:"https://www.crunchyroll.com/",
+ description:"Anime, Japanse animatie en series.",
+ status:"Beperkt gratis",type:"limited",
+ categories:["kids","international"],
+ info:"Niet alles is gratis. Account of betaald abonnement kan nodig zijn."
+},
+{
+ name:"NPO Start",icon:"📺",
+ url:"https://npo.nl/start",
+ description:"Nederlandse programma's, series, documentaires en live-tv.",
+ status:"Gratis aanbod",type:"free",
+ categories:["kids","doc"],
+ info:"NPO Plus is betaald. Sommige functies vragen een account."
+},
+{
+ name:"Het Klokhuis",icon:"🔬",
+ url:"https://hetklokhuis.nl/",
+ description:"Nederlandse afleveringen over wetenschap, dieren en techniek.",
+ status:"Gratis",type:"free",
+ categories:["kids","doc"],
+ info:"Gratis aanbod via de officiële website."
+},
+{
+ name:"Schooltv",icon:"🎓",
+ url:"https://schooltv.nl/",
+ description:"Nederlandstalige educatieve video's en programma's.",
+ status:"Gratis",type:"free",
+ categories:["kids","doc"],
+ info:"Gratis educatief aanbod."
+},
+{
+ name:"Plex",icon:"🎬",
+ url:"https://watch.plex.tv/",
+ description:"Gratis films, series en livekanalen.",
+ status:"Gratis aanbod",type:"free",
+ categories:["doc","international"],
+ info:"Gratis catalogus met reclame. Account kan voor bepaalde functies nodig zijn."
+},
+{
+ name:"YouTube",icon:"▶️",
+ url:"https://www.youtube.com/",
+ description:"Gratis video's en officiële kijkcontent.",
+ status:"Gratis",type:"free",
+ categories:["kids","doc"],
+ info:"Eén gewone dienst in de bibliotheek. Geen aparte YouTube-verzameling."
+},
+{
+ name:"NLZIET",icon:"🇳🇱",
+ url:"https://www.nlziet.nl/",
+ description:"Nederlandse televisie en programma's terugkijken.",
+ status:"Betaald abonnement",type:"paid",
+ categories:["kids"],
+ info:"Niet gratis zonder abonnement. Opgenomen omdat je deze dienst eerder koos."
+},
+{
+ name:"KIJK",icon:"📡",
+ url:"https://www.kijk.nl/",
+ description:"Nederlandse programma's, series en uitzendingen.",
+ status:"Gratis aanbod",type:"free",
+ categories:["kids"],
+ info:"Gratis aanbod met reclame. Beschikbaarheid kan verschillen."
+},
+{
+ name:"2DOC",icon:"🎥",
+ url:"https://www.2doc.nl/",
+ description:"Nederlandse documentaires en bijzondere verhalen.",
+ status:"Gratis",type:"free",
+ categories:["doc"],
+ info:"Gratis documentaires van de publieke omroep."
+},
+{
+ name:"Filmzie",icon:"🍿",
+ url:"https://filmzie.com/",
+ description:"Gratis films en onafhankelijke cinema.",
+ status:"Gratis aanbod",type:"free",
+ categories:["international"],
+ info:"Gratis aanbod met reclame. Controleer beschikbaarheid in Nederland."
+},
+{
+ name:"Net in Nederland",icon:"🌍",
+ url:"https://www.netinnederland.nl/",
+ description:"Programma's en verhalen over Nederland.",
+ status:"Gratis",type:"free",
+ categories:["doc"],
+ info:"Publiek aanbod. Controleer of alle video's nog beschikbaar zijn."
+},
+{
+ name:"Docsonline",icon:"🎞️",
+ url:"https://www.docsonline.tv/",
+ description:"Documentaires en non-fictie.",
+ status:"Gratis aanbod controleren",type:"limited",
+ categories:["doc"],
+ info:"Controleer per documentaire of deze gratis te bekijken is."
+},
+{
+ name:"Andere Tijden",icon:"⏳",
+ url:"https://anderetijden.nl/",
+ description:"Nederlandse geschiedenis en historische documentaires.",
+ status:"Gratis",type:"free",
+ categories:["doc"],
+ info:"Gratis historische programma's."
+},
+{
+ name:"ARTE.tv",icon:"🎭",
+ url:"https://www.arte.tv/",
+ description:"Internationale films, series, cultuur en documentaires.",
+ status:"Gratis aanbod",type:"free",
+ categories:["doc","international"],
+ info:"Sommige video's zijn geografisch beperkt."
 }
-
-function closeIntro(){
- intro.classList.add('hide');
-}
-
-setTimeout(closeIntro,9000);
-
-/* INTERNE ZOEKFUNCTIE */
-const sections=[
- ['plex','plex stream-bibliotheek films series documentaires anime film gratis stream'],
- ['games','games flappy bird kip spel muziek']
 ];
 
-function searchSite(){
- const q=document.getElementById('siteSearch').value.trim().toLowerCase();
- const status=document.getElementById('siteStatus');
+let currentFilter="all";
+let favorites=[];
+let selectedStars=0;
 
- if(!q){
-  status.textContent='Typ eerst iets om te zoeken.';
-  return;
- }
+/* FAVORIETEN */
 
- const words=q.split(/\s+/);
- const match=sections.find(s=>
-  s[1].includes(q)||words.some(w=>w.length>1&&s[1].includes(w))
- );
+function toggleFavorite(name){
+  if(favorites.includes(name)){
+    favorites=favorites.filter(x=>x!==name);
+  }else{
+    favorites.push(name);
+  }
+  renderServices();
+  renderFavorites();
+}
 
- if(match){
-  status.textContent='Gevonden: '+match[0].toUpperCase();
-  document.getElementById(match[0]).scrollIntoView({behavior:'smooth'});
- }else{
-  status.textContent='Niet gevonden. Probeer Plex, films, anime of games.';
- }
+function serviceCard(s){
+  const favorite=favorites.includes(s.name);
+  const statusClass=s.type==="paid"?"paid":s.type==="limited"?"limited":"";
+  return `
+    <article class="card">
+      <div class="card-top">
+        <div class="card-icon">${s.icon}</div>
+        <span class="status ${statusClass}">${s.status}</span>
+      </div>
+      <h3>${s.name}</h3>
+      <p>${s.description}</p>
+      <div class="details">${s.info}</div>
+      <div class="card-actions">
+        <a href="${s.url}" target="_blank" rel="noopener noreferrer">OPEN WEBSITE ↗</a>
+        <button class="${favorite?"fav":""}"
+          aria-label="Favoriet"
+          onclick="toggleFavorite('${s.name}')">${favorite?"★":"☆"}</button>
+      </div>
+    </article>`;
+}
+
+/* ZOEKEN EN FILTEREN */
+
+function renderServices(){
+  const query=document.getElementById("internalSearch").value
+    .trim().toLowerCase();
+  const filtered=services.filter(s=>{
+    const matchesQuery=(s.name+" "+s.description+" "+s.info)
+      .toLowerCase().includes(query);
+    let matchesFilter=true;
+    if(currentFilter==="free")matchesFilter=s.type==="free";
+    if(currentFilter==="kids")matchesFilter=s.categories.includes("kids");
+    if(currentFilter==="doc")matchesFilter=s.categories.includes("doc");
+    if(currentFilter==="international")
+      matchesFilter=s.categories.includes("international");
+    if(currentFilter==="favorites")matchesFilter=favorites.includes(s.name);
+    return matchesQuery&&matchesFilter;
+  });
+
+  document.getElementById("serviceCards").innerHTML=
+    filtered.length?filtered.map(serviceCard).join("")
+    :'<div class="no-results">Geen diensten gevonden. Probeer een andere zoekterm!</div>';
+
+  document.getElementById("serviceCount").textContent=
+    filtered.length+" diensten gevonden";
+
+  document.getElementById("searchInfo").textContent=
+    query?"Zoekresultaten voor: "+query:"Zoek in de volledige bibliotheek.";
+}
+
+function setFilter(filter,button){
+  currentFilter=filter;
+  document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  renderServices();
+}
+
+function renderFavorites(){
+  const items=services.filter(s=>favorites.includes(s.name));
+  document.getElementById("favoriteCards").innerHTML=
+    items.length?items.map(serviceCard).join("")
+    :'<div class="no-results">Je hebt nog geen favorieten. Druk op een sterretje bij een dienst!</div>';
+}
+
+/* WILLEKEURIGE DIENST */
+
+function randomPick(){
+  const available=services.filter(s=>s.type!=="paid");
+  const s=available[Math.floor(Math.random()*available.length)];
+  document.getElementById("pickResult").textContent=s.icon+" "+s.name;
+  document.getElementById("pickDescription").textContent=s.description;
+  const link=document.getElementById("pickLink");
+  link.href=s.url;
+  link.classList.remove("hidden");
+}
+
+/* STREAM-RATING */
+
+const ratingSelect=document.getElementById("ratingService");
+services.forEach(s=>{
+  const option=document.createElement("option");
+  option.value=s.name;
+  option.textContent=s.name;
+  ratingSelect.appendChild(option);
+});
+
+function setStars(value){
+  selectedStars=value;
+  document.querySelectorAll(".star").forEach((star,index)=>{
+    star.classList.toggle("selected",index<value);
+  });
+}
+
+function saveRating(){
+  if(!selectedStars){
+    document.getElementById("ratingMessage").textContent=
+      "Kies eerst een aantal sterren!";
+    return;
+  }
+  const name=ratingSelect.value;
+  const ratings=JSON.parse(localStorage.getItem("swRatings")||"{}");
+  ratings[name]=selectedStars;
+  localStorage.setItem("swRatings",JSON.stringify(ratings));
+  document.getElementById("ratingMessage").textContent=
+    "⭐ "+name+" heeft "+selectedStars+" sterren gekregen!";
 }
 
 /* ONLINE ZOEKEN */
-function searchOnline(){
- const q=document.getElementById('onlineSearch').value.trim();
- if(!q)return;
- window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank','noopener');
-}
 
-/* PLEX */
-function openPlex(){
- window.open('https://watch.plex.tv/on-demand','_blank','noopener');
+function getOnlineQuery(){
+  const value=document.getElementById("onlineSearch").value.trim();
+  if(!value){
+    alert("Vul eerst in wat je wilt zoeken!");
+    return null;
+  }
+  return value;
 }
-
-function searchPlex(){
- const q=document.getElementById('plexSearch').value.trim();
- if(!q){
-  document.getElementById('plexSearch').focus();
-  return;
- }
- window.open('https://watch.plex.tv/','_blank','noopener');
+function onlineSearch(){
+  const q=getOnlineQuery();
+  if(q)window.open("https://www.google.com/search?q="+encodeURIComponent(q),
+    "_blank","noopener");
+}
+function youtubeSearch(){
+  const q=getOnlineQuery();
+  if(q)window.open("https://www.youtube.com/results?search_query="+
+    encodeURIComponent(q),"_blank","noopener");
 }
 
 /* TAALKEUZE */
+
 const translations={
  nl:{
-  internal:'🔎 ZOEK IN STREAMWORLD',
-  online:'🌍 ZOEK ONLINE',
-  language:'🌐 TAAL KIEZEN',
-  welcome:'Welkom bij STREAMWORLD x Plex! 🔴',
-  tagline:'Jouw plek voor kijken, ontdekken en entertainment.'
+  hero:"Welkom bij",
+  library:"STREAM-BIBLIOTHEEK",
+  search:"Zoek in STREAMWORLD",
+  today:"WAT KIJK IK VANDAAG?",
+  favorites:"MIJN FAVORIETEN",
+  rating:"STREAM-RATING",
+  game:"FLAPPY BIRD"
  },
  en:{
-  internal:'🔎 SEARCH STREAMWORLD',
-  online:'🌍 SEARCH ONLINE',
-  language:'🌐 CHOOSE LANGUAGE',
-  welcome:'Welcome to STREAMWORLD x Plex! 🔴',
-  tagline:'Your place for watching, discovering and entertainment.'
+  hero:"Welcome to",
+  library:"STREAM LIBRARY",
+  search:"Search STREAMWORLD",
+  today:"WHAT SHOULD I WATCH TODAY?",
+  favorites:"MY FAVORITES",
+  rating:"STREAM RATING",
+  game:"FLAPPY BIRD"
  },
  de:{
-  internal:'🔎 STREAMWORLD DURCHSUCHEN',
-  online:'🌍 ONLINE SUCHEN',
-  language:'🌐 SPRACHE WÄHLEN',
-  welcome:'Willkommen bei STREAMWORLD x Plex! 🔴',
-  tagline:'Dein Ort zum Schauen, Entdecken und Entertainment.'
+  hero:"Willkommen bei",
+  library:"STREAM-BIBLIOTHEK",
+  search:"STREAMWORLD durchsuchen",
+  today:"WAS SCHAUE ICH HEUTE?",
+  favorites:"MEINE FAVORITEN",
+  rating:"STREAM-BEWERTUNG",
+  game:"FLAPPY BIRD"
  }
 };
 
-function changeLanguage(){
- const lang=document.getElementById('language').value;
- const t=translations[lang];
-
- document.documentElement.lang=lang;
- document.getElementById('internalLabel').textContent=t.internal;
- document.getElementById('onlineLabel').textContent=t.online;
- document.getElementById('languageLabel').textContent=t.language;
- document.getElementById('welcome').textContent=t.welcome;
- document.getElementById('tagline').textContent=t.tagline;
-}
+document.getElementById("language").addEventListener("change",function(){
+  const t=translations[this.value];
+  document.querySelector(".hero h1").innerHTML=
+    t.hero+' <span>STREAMWORLD!</span>';
+  document.querySelector("#diensten .heading").textContent=t.library;
+  document.querySelector("#zoeken .heading").textContent="🔎 "+t.search;
+  document.querySelector("#vandaag .heading").textContent=t.today;
+  document.querySelector("#favorieten .heading").textContent="⭐ "+t.favorites;
+  document.querySelector("#rating .heading").textContent="⭐ "+t.rating;
+  document.querySelector("#game .heading").textContent="🐔 "+t.game;
+});
 
 /* FLAPPY BIRD */
-const canvas=document.getElementById('gameCanvas');
-const ctx=canvas.getContext('2d');
 
-let bird={x:85,y:220,velocity:0};
+const canvas=document.getElementById("gameCanvas");
+const ctx=canvas.getContext("2d");
+
+let bird={x:85,y:140,vy:0};
 let pipes=[];
 let score=0;
-let gameRunning=false;
-let gameOver=false;
-let lastPipe=0;
-
-let soundOn=true;
+let playing=false;
+let gameFrame=null;
 let musicOn=false;
 let audioContext=null;
-let musicInterval=null;
-let musicStep=0;
-
-function audio(){
- if(!audioContext){
-  audioContext=new (window.AudioContext||window.webkitAudioContext)();
- }
- if(audioContext.state==='suspended')audioContext.resume();
- return audioContext;
-}
-
-function tone(freq,duration=0.12,type='sine',volume=0.08){
- const a=audio();
- const osc=a.createOscillator();
- const gain=a.createGain();
- osc.type=type;
- osc.frequency.value=freq;
- gain.gain.setValueAtTime(volume,a.currentTime);
- gain.gain.exponentialRampToValueAtTime(0.001,a.currentTime+duration);
- osc.connect(gain);
- gain.connect(a.destination);
- osc.start();
- osc.stop(a.currentTime+duration);
-}
-
-function chickenSound(){
- if(!soundOn)return;
- tone(850,0.09,'square',0.06);
- setTimeout(()=>tone(1100,0.1,'square',0.06),100);
-}
-
-function flapSound(){
- if(soundOn)tone(500,0.09,'triangle',0.07);
-}
-
-function toggleSound(){
- soundOn=!soundOn;
- document.getElementById('soundButton').textContent=
-  soundOn?'🐔 GELUID AAN':'🔇 GELUID UIT';
-}
-
-function toggleMusic(){
- musicOn=!musicOn;
- document.getElementById('musicButton').textContent=
-  musicOn?'🎵 MUZIEK UIT':'🎵 MUZIEK AAN';
-
- if(musicOn){
-  audio();
-  playMusic();
- }else{
-  clearInterval(musicInterval);
- }
-}
-
-function playMusic(){
- clearInterval(musicInterval);
- const notes=[392,440,494,440,392,330,349,392];
- musicStep=0;
-
- musicInterval=setInterval(()=>{
-  if(musicOn){
-   tone(notes[musicStep%notes.length],0.18,'triangle',0.035);
-   musicStep++;
-  }
- },240);
-}
-
-function drawBackground(){
- ctx.fillStyle='#80c9e9';
- ctx.fillRect(0,0,400,500);
-
- ctx.fillStyle='#fff';
- ctx.beginPath();
- ctx.arc(75,80,25,0,Math.PI*2);
- ctx.arc(105,80,32,0,Math.PI*2);
- ctx.arc(135,80,23,0,Math.PI*2);
- ctx.fill();
-
- ctx.fillStyle='#75c54b';
- ctx.fillRect(0,460,400,40);
-}
-
-function drawBird(){
- ctx.save();
- ctx.translate(bird.x,bird.y);
-
- ctx.fillStyle='#ffe23b';
- ctx.beginPath();
- ctx.arc(0,0,17,0,Math.PI*2);
- ctx.fill();
-
- ctx.fillStyle='#fff';
- ctx.beginPath();
- ctx.arc(7,-6,7,0,Math.PI*2);
- ctx.fill();
-
- ctx.fillStyle='#111';
- ctx.beginPath();
- ctx.arc(10,-6,3,0,Math.PI*2);
- ctx.fill();
-
- ctx.fillStyle='#ff851b';
- ctx.beginPath();
- ctx.moveTo(12,2);
- ctx.lineTo(30,7);
- ctx.lineTo(12,12);
- ctx.fill();
-
- ctx.fillStyle='#ffab23';
- ctx.beginPath();
- ctx.ellipse(-7,5,9,5,-0.5,0,Math.PI*2);
- ctx.fill();
-
- ctx.restore();
-}
-
-function drawPipes(){
- pipes.forEach(p=>{
-  ctx.fillStyle='#239b35';
-  ctx.fillRect(p.x,0,52,p.top);
-  ctx.fillRect(p.x,p.top-13,52,13);
-  ctx.fillRect(p.x,p.bottom,52,460-p.bottom);
-  ctx.fillRect(p.x,p.bottom,52,13);
- });
-}
-
-function drawScore(){
- ctx.fillStyle='white';
- ctx.strokeStyle='#333';
- ctx.lineWidth=3;
- ctx.font='bold 30px Arial';
- ctx.textAlign='center';
- ctx.strokeText(score,200,45);
- ctx.fillText(score,200,45);
-}
+let musicTimer=null;
+let chickenSounds=true;
 
 function drawGame(){
- drawBackground();
- drawPipes();
- drawBird();
- drawScore();
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
- if(!gameRunning){
-  ctx.fillStyle='rgba(0,0,0,.55)';
-  ctx.fillRect(20,170,360,110);
-  ctx.fillStyle='white';
-  ctx.textAlign='center';
-  ctx.font='bold 22px Arial';
-  ctx.fillText(gameOver?'GAME OVER!':'FLAPPY BIRD',200,215);
-  ctx.font='16px Arial';
-  ctx.fillText(gameOver?'Druk op SPELEN om opnieuw te beginnen':'Druk op SPELEN!',200,247);
- }
+  ctx.fillStyle="#bceaff";
+  ctx.fillRect(0,0,480,300);
+
+  ctx.fillStyle="#fff";
+  ctx.beginPath();ctx.arc(90,50,18,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(110,48,23,0,Math.PI*2);ctx.fill();
+
+  ctx.fillStyle="#7dc95c";
+  ctx.fillRect(0,275,480,25);
+
+  pipes.forEach(p=>{
+    ctx.fillStyle="#53ad4b";
+    ctx.fillRect(p.x,0,48,p.top);
+    ctx.fillRect(p.x,p.bottom,48,275-p.bottom);
+    ctx.fillStyle="#348e38";
+    ctx.fillRect(p.x-4,p.top-12,56,12);
+    ctx.fillRect(p.x-4,p.bottom,56,12);
+  });
+
+  ctx.font="31px Arial";
+  ctx.fillText("🐔",bird.x-17,bird.y+10);
+
+  ctx.fillStyle="#111";
+  ctx.font="bold 19px Arial";
+  ctx.fillText("SCORE: "+score,15,27);
 }
 
 function startGame(){
- bird={x:85,y:220,velocity:0};
- pipes=[];
- score=0;
- lastPipe=0;
- gameOver=false;
- gameRunning=true;
- document.getElementById('gameStatus').textContent='Vlieg, kip, vlieg! 🐔';
- flapSound();
- requestAnimationFrame(gameLoop);
+  cancelAnimationFrame(gameFrame);
+  bird={x:85,y:140,vy:0};
+  pipes=[];
+  score=0;
+  playing=true;
+  document.getElementById("score").textContent=score;
+  document.getElementById("gameMessage").textContent=
+    "Tik, klik of druk op SPRING om te vliegen!";
+  for(let i=0;i<3;i++){
+    pipes.push({
+      x:390+i*190,
+      top:40+Math.random()*100,
+      bottom:190+Math.random()*40,
+      passed:false
+    });
+  }
+  gameLoop();
 }
 
 function flap(){
- if(!gameRunning){
-  if(gameOver)startGame();
-  return;
- }
- bird.velocity=-6.2;
- flapSound();
+  if(!playing){
+    if(!gameFrame)startGame();
+    return;
+  }
+  bird.vy=-6.5;
+  playChicken();
 }
 
-function gameLoop(timestamp){
- if(!gameRunning){
+function gameLoop(){
+  if(!playing)return;
+
+  bird.vy+=.32;
+  bird.y+=bird.vy;
+
+  pipes.forEach(p=>{
+    p.x-=2.5;
+    if(p.x+48<bird.x&&!p.passed){
+      p.passed=true;
+      score++;
+      document.getElementById("score").textContent=score;
+    }
+  });
+
+  if(pipes[pipes.length-1].x<290){
+    pipes.push({
+      x:510,
+      top:40+Math.random()*100,
+      bottom:190+Math.random()*40,
+      passed:false
+    });
+  }
+  pipes=pipes.filter(p=>p.x>-60);
+
+  let collision=bird.y>265||bird.y<5;
+  pipes.forEach(p=>{
+    if(bird.x+12>p.x&&bird.x-12<p.x+48){
+      if(bird.y-12<p.top||bird.y+12>p.bottom)collision=true;
+    }
+  });
+
   drawGame();
-  return;
- }
 
- bird.velocity+=0.32;
- bird.y+=bird.velocity;
-
- if(timestamp-lastPipe>1450){
-  const top=70+Math.random()*190;
-  pipes.push({x:410,top:top,bottom:top+145,passed:false});
-  lastPipe=timestamp;
- }
-
- pipes.forEach(p=>{
-  p.x-=2.5;
-
-  if(!p.passed&&p.x+52<bird.x){
-   p.passed=true;
-   score++;
-   tone(750,0.1,'sine',0.08);
+  if(collision){
+    playing=false;
+    document.getElementById("gameMessage").textContent=
+      "🐔 GAME OVER! Jouw score: "+score+". Druk op START om opnieuw te spelen.";
+    return;
   }
-
-  if(
-   bird.x+12>p.x&&bird.x-12<p.x+52&&
-   (bird.y-12<p.top||bird.y+12>p.bottom)
-  ){
-   endGame();
-  }
- });
-
- pipes=pipes.filter(p=>p.x>-60);
-
- if(bird.y>450||bird.y<0)endGame();
-
- drawGame();
-
- if(gameRunning)requestAnimationFrame(gameLoop);
+  gameFrame=requestAnimationFrame(gameLoop);
 }
 
-function endGame(){
- if(!gameRunning)return;
- gameRunning=false;
- gameOver=true;
- chickenSound();
- document.getElementById('gameStatus').textContent='🐔 GAME OVER! Jouw score: '+score;
- drawGame();
+canvas.addEventListener("pointerdown",flap);
+
+function playChicken(){
+  if(!chickenSounds)return;
+  try{
+    audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();
+    const oscillator=audioContext.createOscillator();
+    const gain=audioContext.createGain();
+    oscillator.type="sine";
+    oscillator.frequency.setValueAtTime(700,audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(
+      350,audioContext.currentTime+.12);
+    gain.gain.setValueAtTime(.12,audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(
+      .001,audioContext.currentTime+.15);
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime+.15);
+  }catch(e){}
 }
 
-canvas.addEventListener('pointerdown',flap);
+function toggleMusic(){
+  musicOn=!musicOn;
+  if(musicOn){
+    startMusic();
+  }else{
+    stopMusic();
+  }
+}
+function startMusic(){
+  try{
+    audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();
+    const notes=[392,440,523,440,349,392,440,330];
+    let i=0;
+    musicTimer=setInterval(()=>{
+      if(!musicOn)return;
+      const osc=audioContext.createOscillator();
+      const gain=audioContext.createGain();
+      osc.type="triangle";
+      osc.frequency.value=notes[i%notes.length];
+      gain.gain.value=.035;
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      osc.start();
+      osc.stop(audioContext.currentTime+.16);
+      i++;
+    },220);
+  }catch(e){}
+}
+function stopMusic(){
+  if(musicTimer)clearInterval(musicTimer);
+  musicTimer=null;
+}
+
+/* INITIALISEREN */
+
+renderServices();
+renderFavorites();
 drawGame();
 
 </script>
