@@ -10,232 +10,116 @@
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
- margin:0;background:#080808;color:#fff;
- font-family:Arial,sans-serif
-}
-button,input{font:inherit}
-button{
- background:#e50914;color:white;border:0;
- padding:12px 17px;border-radius:9px;
- font-weight:bold;cursor:pointer
-}
+body{margin:0;background:#080808;color:#fff;font-family:Arial,sans-serif}
+button,a,select,input{font:inherit}
+button{background:#e50914;color:white;border:0;padding:12px 17px;border-radius:9px;font-weight:bold;cursor:pointer}
 button:active{transform:scale(.97)}
-
-/* HEADER */
-header{
- background:#111;padding:18px;
- border-bottom:2px solid #e50914;
- position:sticky;top:0;z-index:10
-}
-.logo{
- font-size:30px;font-weight:1000;
- letter-spacing:2px;color:#ed1020
-}
+header{background:#111;padding:18px;border-bottom:2px solid #e50914}
+.logo{font-size:30px;font-weight:1000;letter-spacing:2px;color:#ed1020}
 .logo span{color:white}
-
 .search-area{max-width:850px;margin:15px auto}
-.search-row{display:flex;gap:8px}
-input{
- width:100%;min-width:0;background:#252525;
- color:white;border:1px solid #555;
- border-radius:9px;padding:14px;
- margin:7px 0;font-size:15px
-}
-nav{
- display:flex;gap:8px;overflow-x:auto;
- margin-top:16px
-}
-nav button{white-space:nowrap;background:#292929}
-nav button.active{background:#e50914}
+.search-label{font-size:12px;letter-spacing:1px;color:#ff626a;font-weight:bold}
+.search-row{display:flex;gap:7px}
+input,select{width:100%;min-width:0;background:#252525;color:white;border:1px solid #555;border-radius:9px;padding:13px;margin:7px 0}
+nav{display:flex;gap:8px;overflow-x:auto;margin-top:16px}
+nav a{color:white;text-decoration:none;background:#292929;padding:10px 13px;border-radius:8px;white-space:nowrap}
+main{max-width:1050px;margin:auto;padding:16px}
+h2{border-left:4px solid #e50914;padding-left:11px;margin-top:32px}
+.panel{background:#191919;border:1px solid #383838;border-radius:13px;padding:17px;margin:13px 0}
+.hero{background:linear-gradient(120deg,#56000c,#171717);padding:23px;border-radius:14px;margin:18px 0}
+.service{display:flex;justify-content:space-between;align-items:center;background:#222;color:white;text-decoration:none;padding:16px;border:1px solid #383838;border-radius:10px;margin:9px 0;font-weight:bold}
+.service:hover{background:#420910;border-color:#ed1020}
+.status{color:#ff777e;font-size:13px;min-height:18px}
+footer{text-align:center;color:#888;padding:30px}
 
-/* HERO */
-.hero{
- background:linear-gradient(120deg,#65000e,#19000a,#111);
- padding:45px 22px;border-radius:14px;
- margin:22px auto;max-width:1100px;
- text-align:center
+/* ORIGINELE GEANIMEERDE INTRO */
+#intro{position:fixed;inset:0;z-index:9999;overflow:hidden;background:radial-gradient(ellipse at center,#4b0010 0%,#160006 42%,#000 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;transition:opacity 1s,visibility 1s}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+.intro-content{position:relative;z-index:2;padding:20px;width:100%}
+.intro-title{font-size:clamp(35px,9vw,65px);font-weight:1000;letter-spacing:2px;color:#ed1020;text-shadow:0 0 10px red,0 0 30px red,0 0 60px #ff0015;animation:dramaticZoom 2s cubic-bezier(.15,.8,.2,1) both,neonPulse 1.4s 2s infinite alternate}
+.intro-title span{color:white}
+.intro-line{width:0;max-width:420px;height:4px;margin:17px auto;background:#ff1525;box-shadow:0 0 12px red,0 0 30px red;animation:laser 1.1s 1.1s ease-out forwards}
+.intro-sub{opacity:0;letter-spacing:3px;font-size:12px;color:#eee;animation:rise 1s 2s forwards}
+#startButton{opacity:0;margin-top:32px;padding:15px 30px;letter-spacing:2px;box-shadow:0 0 15px #e50914;animation:rise .8s 2.6s forwards}
+.particle{position:absolute;width:4px;height:4px;background:#ff2938;border-radius:50%;box-shadow:0 0 12px red;animation:fly linear infinite}
+@keyframes dramaticZoom{
+0%{opacity:0;transform:perspective(500px) translateZ(-500px) scale(.1) rotateX(35deg);filter:blur(15px)}
+65%{opacity:1;transform:perspective(500px) translateZ(40px) scale(1.12);filter:blur(0)}
+100%{transform:perspective(500px) translateZ(0) scale(1)}
 }
-.hero h1{font-size:clamp(28px,6vw,48px);margin:0 0 12px}
-.hero p{color:#ddd;line-height:1.6}
-.hero button{margin-top:10px}
+@keyframes neonPulse{from{text-shadow:0 0 8px red,0 0 18px red}to{text-shadow:0 0 20px red,0 0 45px red,0 0 75px #e50914}}
+@keyframes laser{from{width:0;opacity:0}20%{opacity:1}to{width:min(420px,85vw);opacity:1}}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fly{0%{transform:translate(0,100vh) scale(.3);opacity:0}15%{opacity:1}100%{transform:translate(var(--drift),-110vh) scale(1.8);opacity:0}}
 
-/* CONTENT */
-main{max-width:1100px;margin:auto;padding:16px}
-h2{
- border-left:4px solid #e50914;
- padding-left:11px;margin-top:32px
+/* STREAM-BIBLIOTHEEK */
+.library-banner{
+ background:linear-gradient(120deg,#39000a,#151515);
+ border:1px solid #6c111b;
+ border-radius:14px;
+ padding:22px;
+ margin:15px 0;
 }
-.intro-text{color:#aaa;line-height:1.5}
-.filters{
- display:flex;gap:9px;flex-wrap:wrap;
- margin:20px 0
+.library-title{
+ font-size:clamp(25px,6vw,36px);
+ font-weight:1000;
+ color:#ed1020;
+ letter-spacing:1px;
 }
-.filters button{background:#292929}
-.filters button.active{background:#e50914}
+.library-subtitle{
+ color:#bbb;
+ font-size:12px;
+ letter-spacing:2px;
+}
+.plex-player{
+ width:100%;
+ height:65vh;
+ min-height:350px;
+ border:1px solid #444;
+ border-radius:12px;
+ background:#000;
+ overflow:hidden;
+}
+.plex-player iframe{width:100%;height:100%;border:0}
+.plex-note{color:#aaa;font-size:13px;line-height:1.5}
+.plex-actions{display:flex;gap:8px;flex-wrap:wrap}
+.category-link{
+ display:block;
+ background:#242424;
+ color:white;
+ text-decoration:none;
+ border:1px solid #444;
+ border-radius:10px;
+ padding:15px;
+ margin:8px 0;
+ font-weight:bold;
+}
+.category-link:hover{border-color:#e50914;background:#39000a}
 
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
- gap:16px
+/* FLAPPY BIRD */
+#gameCanvas{
+ width:100%;
+ max-width:500px;
+ display:block;
+ margin:12px auto;
+ background:#80c9e9;
+ border-radius:12px;
+ touch-action:manipulation;
 }
-.card{
- background:#191919;border:1px solid #383838;
- border-radius:12px;overflow:hidden;
- transition:.2s
-}
-.card:hover{
- transform:translateY(-4px);
- border-color:#e50914
-}
-.poster{
- height:220px;display:flex;
- align-items:center;justify-content:center;
- text-align:center;padding:15px;
- font-size:22px;font-weight:1000;
- background:linear-gradient(145deg,#65000e,#171717);
- position:relative
-}
-.poster.purple{background:linear-gradient(145deg,#482075,#141020)}
-.poster.blue{background:linear-gradient(145deg,#07516b,#101820)}
-.poster.gold{background:linear-gradient(145deg,#80551a,#171717)}
-.poster.green{background:linear-gradient(145deg,#155b36,#111)}
-.poster.red{background:linear-gradient(145deg,#8b1822,#171717)}
-
-.tag{
- position:absolute;top:10px;left:10px;
- font-size:11px;padding:6px 9px;
- border-radius:5px;background:#137c43;color:white
-}
-.tag.paid{background:#7137a5}
-.info{padding:13px}
-.info h3{font-size:16px;margin:0 0 8px}
-.meta{font-size:12px;color:#aaa;margin-bottom:12px}
-.price{font-weight:bold;color:#80edac}
-.price.premium{color:#d6a4ff}
-.info button{width:100%;margin-top:12px}
-
-.empty{
- display:none;padding:30px;text-align:center;
- color:#aaa;background:#191919;border-radius:10px
-}
-.panel{
- background:#191919;border:1px solid #383838;
- border-radius:13px;padding:18px;margin:15px 0
-}
-
-/* ACCOUNT / AANKOPEN */
-.account{
- background:#171717;border:1px solid #e50914;
- border-radius:12px;padding:20px;margin-top:30px
-}
-.account p{color:#bbb;line-height:1.6}
-
-/* POPUP */
-#modal{
- display:none;position:fixed;inset:0;
- z-index:100;background:#000e;
- align-items:center;justify-content:center;
- padding:18px
-}
-.modal-box{
- width:100%;max-width:430px;
- background:#191919;border:1px solid #e50914;
- border-radius:15px;padding:25px;text-align:center
-}
-.modal-box p{color:#bbb;line-height:1.6}
-.modal-box button{margin:6px}
-
-/* FOOTER */
-footer{
- text-align:center;color:#888;
- padding:35px;background:#111;margin-top:40px
-}
-footer .logo{font-size:24px}
-
+.game-buttons{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
 @media(max-width:480px){
  header{padding:14px}
  .logo{font-size:27px}
- .poster{height:190px}
- .hero{padding:35px 15px}
-}
-
-/* ECHTE GEANIMEERDE INTRO */
-#intro{
- position:fixed;inset:0;z-index:9999;
- overflow:hidden;
- background:radial-gradient(ellipse at center,#4b0010 0%,#160006 42%,#000 100%);
- display:flex;align-items:center;justify-content:center;
- flex-direction:column;text-align:center;
- transition:opacity 1s,visibility 1s
-}
-#intro.hide{
- opacity:0;visibility:hidden;pointer-events:none
-}
-.intro-content{
- position:relative;z-index:2;padding:20px;width:100%
-}
-.intro-title{
- font-size:clamp(35px,9vw,65px);
- font-weight:1000;letter-spacing:2px;
- color:#ed1020;
- text-shadow:0 0 10px red,0 0 30px red,0 0 60px #ff0015;
- animation:dramaticZoom 2s cubic-bezier(.15,.8,.2,1) both,neonPulse 1.4s 2s infinite alternate
-}
-.intro-title span{color:white}
-.intro-line{
- width:0;max-width:420px;height:4px;
- margin:17px auto;background:#ff1525;
- box-shadow:0 0 12px red,0 0 30px red;
- animation:laser 1.1s 1.1s ease-out forwards
-}
-.intro-sub{
- opacity:0;letter-spacing:3px;font-size:12px;color:#eee;
- animation:rise 1s 2s forwards
-}
-#startButton{
- opacity:0;margin-top:32px;padding:15px 30px;
- letter-spacing:2px;box-shadow:0 0 15px #e50914;
- animation:rise .8s 2.6s forwards
-}
-.particle{
- position:absolute;width:4px;height:4px;
- background:#ff2938;border-radius:50%;
- box-shadow:0 0 12px red;
- animation:fly linear infinite
-}
-@keyframes dramaticZoom{
- 0%{opacity:0;transform:perspective(500px) translateZ(-500px) scale(.1) rotateX(35deg);filter:blur(15px)}
- 65%{opacity:1;transform:perspective(500px) translateZ(40px) scale(1.12);filter:blur(0)}
- 100%{transform:perspective(500px) translateZ(0) scale(1)}
-}
-@keyframes neonPulse{
- from{text-shadow:0 0 8px red,0 0 18px red}
- to{text-shadow:0 0 20px red,0 0 45px red,0 0 75px #e50914}
-}
-@keyframes laser{
- from{width:0;opacity:0}
- 20%{opacity:1}
- to{width:min(420px,85vw);opacity:1}
-}
-@keyframes rise{
- from{opacity:0;transform:translateY(20px)}
- to{opacity:1;transform:translateY(0)}
-}
-@keyframes fly{
- 0%{transform:translate(0,100vh) scale(.3);opacity:0}
- 15%{opacity:1}
- 100%{transform:translate(var(--drift),-110vh) scale(1.8);opacity:0}
-}
-@media(max-width:480px){
+ .search-row button{padding:12px 10px;font-size:12px}
  .intro-sub{letter-spacing:2px}
+ .plex-player{height:55vh;min-height:300px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- DE ORIGINELE STREAM WORLD INTRO -->
+<!-- GEANIMEERDE INTRO -->
 <div id="intro">
  <div id="particles"></div>
  <div class="intro-content">
@@ -250,92 +134,170 @@ footer .logo{font-size:24px}
  <div class="logo">STREAM <span>WORLD</span></div>
 
  <div class="search-area">
-  <div style="font-size:12px;color:#ff626a;font-weight:bold">
-   🔎 ZOEK IN STREAM WORLD
-  </div>
+  <div class="search-label" id="internalLabel">🔎 ZOEK IN STREAM WORLD</div>
   <div class="search-row">
-   <input id="search" placeholder="Zoek films, series, documentaires of anime...">
-   <button onclick="render()">ZOEK</button>
+   <input id="siteSearch" placeholder="Zoek films, Plex, games..." onkeydown="if(event.key==='Enter')searchSite()">
+   <button onclick="searchSite()">ZOEK</button>
   </div>
+  <div class="status" id="siteStatus"></div>
+
+  <div class="search-label" id="onlineLabel">🌍 ZOEK ONLINE</div>
+  <div class="search-row">
+   <input id="onlineSearch" placeholder="Wat wil je op internet zoeken?" onkeydown="if(event.key==='Enter')searchOnline()">
+   <button onclick="searchOnline()">ZOEK ONLINE</button>
+  </div>
+
+  <div class="search-label" id="languageLabel">🌐 TAAL KIEZEN</div>
+  <select id="language" onchange="changeLanguage()">
+   <option value="nl">🇳🇱 Nederlands</option>
+   <option value="en">🇬🇧 English</option>
+   <option value="de">🇩🇪 Deutsch</option>
+  </select>
  </div>
 
  <nav>
-  <button class="active" onclick="setFilter('Alles',this)">🏠 Alles</button>
-  <button onclick="setFilter('Film',this)">🎬 Films</button>
-  <button onclick="setFilter('Serie',this)">📺 Series</button>
-  <button onclick="setFilter('Documentaire',this)">🌍 Documentaires</button>
-  <button onclick="setFilter('Anime',this)">🎌 Anime</button>
-  <button onclick="setFilter('Gratis',this)">🟢 GRATIS</button>
-  <button onclick="setFilter('Premium',this)">💜 PREMIUM</button>
+  <a href="#streaming">📺 Kijken</a>
+  <a href="#plex">🎬 STREAM-BIBLIOTHEEK</a>
+  <a href="#games">🐤 Games</a>
  </nav>
 </header>
 
 <main>
 
- <section class="hero">
-  <h1>WELKOM BIJ STREAM WORLD 🌍</h1>
-  <p>Films, series, documentaires en anime.<br>
-  Alles op één plek. Voor een eerlijke prijs.</p>
-  <p><strong>MEER KIJKEN. MINDER BETALEN.</strong></p>
-  <button onclick="document.getElementById('catalogus').scrollIntoView({behavior:'smooth'})">
-   ONTDEK DE BIBLIOTHEEK ↓
-  </button>
+ <div class="hero">
+  <h1 id="welcome">Welkom bij STREAM WORLD! 🔴</h1>
+  <p id="tagline">Jouw plek voor kijken, ontdekken en entertainment.</p>
+ </div>
+
+ <!-- STREAMINGDIENSTEN -->
+ <section id="streaming">
+  <h2>📺 KIJKEN & STREAMEN</h2>
+  <p>Open jouw favoriete streamingdiensten.</p>
+
+  <a class="service" href="https://npo.nl/start" target="_blank" rel="noopener">
+   <span>📺 NPO START</span><span>OPEN ↗</span>
+  </a>
+
+  <a class="service" href="https://watch.plex.tv/" target="_blank" rel="noopener">
+   <span>🎬 PLEX</span><span>OPEN ↗</span>
+  </a>
+
+  <a class="service" href="https://www.youtube.com/" target="_blank" rel="noopener">
+   <span>▶️ YOUTUBE</span><span>OPEN ↗</span>
+  </a>
+
+  <a class="service" href="https://www.kijk.nl/" target="_blank" rel="noopener">
+   <span>📡 KIJK</span><span>OPEN ↗</span>
+  </a>
+
+  <a class="service" href="https://schooltv.nl/" target="_blank" rel="noopener">
+   <span>🎓 SCHOOLTV</span><span>OPEN ↗</span>
+  </a>
+
+  <a class="service" href="https://www.hetklokhuis.nl/" target="_blank" rel="noopener">
+   <span>🧪 HET KLOKHUIS</span><span>OPEN ↗</span>
+  </a>
  </section>
 
- <section id="catalogus">
-  <h2>🎬 DE STREAM WORLD BIBLIOTHEEK</h2>
-  <p class="intro-text">
-   Ontdek jouw volgende film, serie, documentaire of anime.
-  </p>
+ <!-- STREAM-BIBLIOTHEEK -->
+ <section id="plex">
 
-  <div class="filters">
-   <button class="active" onclick="setFilter('Alles',this)">Alles</button>
-   <button onclick="setFilter('Film',this)">Films</button>
-   <button onclick="setFilter('Serie',this)">Series</button>
-   <button onclick="setFilter('Documentaire',this)">Documentaires</button>
-   <button onclick="setFilter('Anime',this)">Anime</button>
+  <div class="library-banner">
+   <div class="library-title">🎬 STREAM-BIBLIOTHEEK</div>
+   <div class="library-subtitle">AANGEDREVEN DOOR PLEX</div>
+   <p>Ontdek gratis films, series, documentaires en anime.</p>
   </div>
 
-  <div class="filters">
-   <button onclick="setFilter('Gratis',this)">🟢 ALLES GRATIS</button>
-   <button onclick="setFilter('Premium',this)">💜 PREMIUM €3,75</button>
+  <div class="panel">
+   <h3>🍿 WELKOM IN DE STREAM-BIBLIOTHEEK</h3>
+   <p>
+    Ontdek het gratis kijkaanbod van Plex.
+    Je kunt de officiële Plex-catalogus openen vanuit STREAM WORLD.
+   </p>
+
+   <a class="category-link" href="https://watch.plex.tv/on-demand" target="_blank" rel="noopener">
+    🎬 GRATIS FILMS ONTDEKKEN ↗
+   </a>
+
+   <a class="category-link" href="https://watch.plex.tv/" target="_blank" rel="noopener">
+    📺 SERIES ONTDEKKEN ↗
+   </a>
+
+   <a class="category-link" href="https://watch.plex.tv/" target="_blank" rel="noopener">
+    🎥 DOCUMENTAIRES ONTDEKKEN ↗
+   </a>
+
+   <a class="category-link" href="https://watch.plex.tv/" target="_blank" rel="noopener">
+    🍥 ANIME & ANIMATIE ONTDEKKEN ↗
+   </a>
   </div>
 
-  <div class="grid" id="catalog"></div>
-  <div class="empty" id="empty">
-   Geen titels gevonden. Probeer een andere zoekopdracht.
+  <div class="panel">
+   <h3>🔎 ZOEK IN PLEX</h3>
+   <p>Zoek een film of serie in de officiële Plex-omgeving.</p>
+   <input id="plexSearch" placeholder="Typ een film of serie...">
+   <button onclick="searchPlex()">ZOEK IN PLEX ↗</button>
   </div>
+
+  <div class="panel">
+   <h3>▶️ STREAM-BIBLIOTHEEK KIJKOMGEVING</h3>
+   <p class="plex-note">
+    De officiële Plex-kijkomgeving wordt hieronder geopend.
+    Plex bepaalt zelf welke video's gratis beschikbaar zijn en of
+    afspelen in een externe website wordt toegestaan.
+   </p>
+
+   <div class="plex-player">
+    <iframe
+     id="plexFrame"
+     src="https://watch.plex.tv/on-demand"
+     title="STREAM-BIBLIOTHEEK - Plex"
+     loading="lazy"
+     allow="fullscreen; autoplay; picture-in-picture"
+     referrerpolicy="strict-origin-when-cross-origin">
+    </iframe>
+   </div>
+
+   <p class="plex-note">
+    Werkt de speler niet? Dan kan Plex externe insluiting blokkeren.
+    Open Plex rechtstreeks via de knop.
+   </p>
+
+   <button onclick="openPlex()">OPEN STREAM-BIBLIOTHEEK ↗</button>
+  </div>
+
+  <div class="panel">
+   <h3>ℹ️ OVER DE STREAM-BIBLIOTHEEK</h3>
+   <p>
+    STREAM WORLD is de toegangspoort tot het aanbod van Plex.
+    De films en series worden door Plex aangeboden en afgespeeld.
+    STREAM WORLD host of kopieert deze video's niet zelf.
+   </p>
+   <p class="plex-note">
+    Het aanbod kan verschillen per land en kan veranderen.
+    Voor sommige titels kunnen beperkingen of advertenties gelden.
+   </p>
+  </div>
+
  </section>
 
- <section class="account">
-  <h2>❤️ EERLIJK KIJKEN</h2>
-  <p>
-   Bij STREAM WORLD houden we entertainment betaalbaar.
-   Gratis titels zijn gratis. Premium-titels kosten
-   eenmalig €3,75.
-  </p>
-  <p>
-   Bij aankoop krijg je het recht om de complete titel
-   opnieuw te bekijken, zolang de overeengekomen
-   kijkrechten dat toestaan.
-  </p>
-  <h3>💜 PREMIUM: €3,75 EENMALIG</h3>
-  <p>Geen verplicht maandabonnement.</p>
- </section>
+ <!-- FLAPPY BIRD -->
+ <section id="games">
+  <h2>🐤 FLAPPY BIRD</h2>
 
- <section>
-  <h2>🌟 ONZE BELOFTE</h2>
   <div class="panel">
-   <h3>🟢 GRATIS IS GRATIS</h3>
-   <p>Geen betaling voor titels die als GRATIS zijn aangeduid.</p>
-  </div>
-  <div class="panel">
-   <h3>💜 ÉÉN EERLIJKE PRIJS</h3>
-   <p>€3,75 voor een complete film, serie, documentaire of anime.</p>
-  </div>
-  <div class="panel">
-   <h3>🎬 OPNIEUW KIJKEN</h3>
-   <p>Gekochte titels blijven beschikbaar volgens de geldende licentie- en aankoopvoorwaarden.</p>
+   <h3>🐤 FLAPPY BIRD – STREAM WORLD EDITION</h3>
+   <p>Tik op het scherm of druk op SPELEN om te vliegen!</p>
+
+   <canvas id="gameCanvas" width="400" height="500"></canvas>
+
+   <div class="game-buttons">
+    <button onclick="startGame()">SPELEN ▶</button>
+    <button onclick="toggleMusic()" id="musicButton">🎵 MUZIEK AAN</button>
+    <button onclick="toggleSound()" id="soundButton">🐔 GELUID AAN</button>
+   </div>
+
+   <div class="status" id="gameStatus">Tik op SPELEN om te beginnen!</div>
   </div>
  </section>
 
@@ -343,24 +305,13 @@ footer .logo{font-size:24px}
 
 <footer>
  <div class="logo">STREAM <span>WORLD</span></div>
- <p>JOUW WERELD. JOUW ENTERTAINMENT.</p>
- <p>MEER KIJKEN. MINDER BETALEN.</p>
+ <p>Jouw wereld. Jouw entertainment.</p>
  <p>© STREAM WORLD 2026</p>
 </footer>
 
-<!-- TITEL POPUP -->
-<div id="modal">
- <div class="modal-box">
-  <h2 id="modalTitle">STREAM WORLD</h2>
-  <p id="modalText"></p>
-  <div id="modalActions"></div>
-  <button onclick="closeModal()">SLUITEN</button>
- </div>
-</div>
-
 <script>
 
-// DE ORIGINELE INTRO-JAVASCRIPT
+/* INTRO */
 const intro=document.getElementById('intro');
 const particleBox=document.getElementById('particles');
 
@@ -378,194 +329,341 @@ function closeIntro(){
  intro.classList.add('hide');
 }
 
-document.getElementById('startButton')
-.addEventListener('click',closeIntro);
-
 setTimeout(closeIntro,9000);
 
 
-// STREAM WORLD BIBLIOTHEEK
-// Dit zijn voorbeeldtitels voor het ontwerp.
-// Voeg alleen content toe waarvoor STREAM WORLD kijkrechten heeft.
-
-const titles=[
- {
-  name:'Voorbeeldfilm 1',
-  type:'Film',
-  free:true,
-  color:'red',
-  description:'Voorbeeld van een gratis film.'
- },
- {
-  name:'Voorbeeldfilm 2',
-  type:'Film',
-  free:false,
-  color:'purple',
-  description:'Voorbeeld van een premiumfilm.'
- },
- {
-  name:'Voorbeeldserie',
-  type:'Serie',
-  free:false,
-  color:'blue',
-  description:'Complete serie met alle seizoenen en afleveringen.'
- },
- {
-  name:'Gratis serie',
-  type:'Serie',
-  free:true,
-  color:'green',
-  description:'Voorbeeld van een gratis serie.'
- },
- {
-  name:'De wereld van dieren',
-  type:'Documentaire',
-  free:true,
-  color:'green',
-  description:'Voorbeeld van een gratis documentaire.'
- },
- {
-  name:'Het universum',
-  type:'Documentaire',
-  free:false,
-  color:'gold',
-  description:'Voorbeeld van een premiumdocumentaire.'
- },
- {
-  name:'Anime Adventures',
-  type:'Anime',
-  free:true,
-  color:'purple',
-  description:'Voorbeeld van gratis anime.'
- },
- {
-  name:'Anime Legends',
-  type:'Anime',
-  free:false,
-  color:'red',
-  description:'Complete anime met alle afleveringen.'
- }
+/* INTERNE ZOEKFUNCTIE */
+const sections=[
+ ['streaming','streaming kijken npo plex youtube kijk schooltv klokhuis'],
+ ['plex','plex stream-bibliotheek films series documentaires anime film gratis stream'],
+ ['games','games flappy bird kip spel muziek']
 ];
 
-let filter='Alles';
+function searchSite(){
+ const q=document.getElementById('siteSearch').value.trim().toLowerCase();
+ const status=document.getElementById('siteStatus');
 
-function setFilter(value,button){
- filter=value;
-
- document.querySelectorAll('.filters button,nav button')
- .forEach(b=>b.classList.remove('active'));
-
- button.classList.add('active');
- render();
-}
-
-function render(){
- const query=document.getElementById('search')
- .value.trim().toLowerCase();
-
- const catalog=document.getElementById('catalog');
- const empty=document.getElementById('empty');
-
- catalog.innerHTML='';
-
- const results=titles.filter(t=>{
-  const searchMatch=
-   t.name.toLowerCase().includes(query)||
-   t.type.toLowerCase().includes(query);
-
-  const filterMatch=
-   filter==='Alles'||
-   filter===t.type||
-   (filter==='Gratis'&&t.free)||
-   (filter==='Premium'&&!t.free);
-
-  return searchMatch&&filterMatch;
- });
-
- empty.style.display=results.length?'none':'block';
-
- results.forEach(t=>{
-  const card=document.createElement('article');
-  card.className='card';
-
-  const poster=document.createElement('div');
-  poster.className='poster '+t.color;
-  poster.textContent=t.name;
-
-  const tag=document.createElement('div');
-  tag.className='tag '+(t.free?'':'paid');
-  tag.textContent=t.free?'GRATIS':'PREMIUM';
-
-  poster.appendChild(tag);
-
-  const info=document.createElement('div');
-  info.className='info';
-
-  const name=document.createElement('h3');
-  name.textContent=t.name;
-
-  const meta=document.createElement('div');
-  meta.className='meta';
-  meta.textContent=t.type;
-
-  const price=document.createElement('div');
-  price.className='price '+(t.free?'':'premium');
-  price.textContent=t.free?'GRATIS':'€3,75 eenmalig';
-
-  const btn=document.createElement('button');
-  btn.textContent=t.free?'KIJK GRATIS':'KOOP VOOR €3,75';
-  btn.onclick=()=>openTitle(t);
-
-  info.append(name,meta,price,btn);
-  card.append(poster,info);
-  catalog.appendChild(card);
- });
-}
-
-function openTitle(t){
- document.getElementById('modalTitle').textContent=t.name;
-
- document.getElementById('modalText').textContent=
- t.description;
-
- const actions=document.getElementById('modalActions');
- actions.innerHTML='';
-
- const btn=document.createElement('button');
-
- if(t.free){
-  btn.textContent='GRATIS BEKIJKEN';
-  btn.onclick=()=>{
-   showMessage(
-    'De gratis titel is geselecteerd. De officiële videostream moet nog worden aangesloten.'
-   );
-  };
- }else{
-  btn.textContent='KOOP VOOR €3,75';
-  btn.onclick=()=>{
-   showMessage(
-    'De aankoopprijs is €3,75. De betaalfunctie moet nog veilig worden aangesloten. Er wordt nu niets afgeschreven.'
-   );
-  };
+ if(!q){
+  status.textContent='Typ eerst iets om te zoeken.';
+  return;
  }
 
- actions.appendChild(btn);
- document.getElementById('modal').style.display='flex';
+ const words=q.split(/\s+/);
+ const match=sections.find(s=>
+  s[1].includes(q)||words.some(w=>w.length>1&&s[1].includes(w))
+ );
+
+ if(match){
+  status.textContent='Gevonden: '+match[0].toUpperCase();
+  document.getElementById(match[0]).scrollIntoView({behavior:'smooth'});
+ }else{
+  status.textContent='Niet gevonden. Probeer films, Plex, games of kijken.';
+ }
 }
 
-function showMessage(message){
- document.getElementById('modalText').textContent=message;
- document.getElementById('modalActions').innerHTML='';
+
+/* ONLINE ZOEKEN */
+function searchOnline(){
+ const q=document.getElementById('onlineSearch').value.trim();
+ if(!q)return;
+ window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank','noopener');
 }
 
-function closeModal(){
- document.getElementById('modal').style.display='none';
+
+/* PLEX */
+function openPlex(){
+ window.open('https://watch.plex.tv/on-demand','_blank','noopener');
 }
 
-document.getElementById('search')
-.addEventListener('input',render);
+function searchPlex(){
+ const q=document.getElementById('plexSearch').value.trim();
+ if(!q){
+  document.getElementById('plexSearch').focus();
+  return;
+ }
+ window.open('https://watch.plex.tv/','_blank','noopener');
+}
 
-render();
+
+/* TAALKEUZE */
+const translations={
+ nl:{
+  internal:'🔎 ZOEK IN STREAM WORLD',
+  online:'🌍 ZOEK ONLINE',
+  language:'🌐 TAAL KIEZEN',
+  welcome:'Welkom bij STREAM WORLD! 🔴',
+  tagline:'Jouw plek voor kijken, ontdekken en entertainment.'
+ },
+ en:{
+  internal:'🔎 SEARCH STREAM WORLD',
+  online:'🌍 SEARCH ONLINE',
+  language:'🌐 CHOOSE LANGUAGE',
+  welcome:'Welcome to STREAM WORLD! 🔴',
+  tagline:'Your place for watching, discovering and entertainment.'
+ },
+ de:{
+  internal:'🔎 STREAM WORLD DURCHSUCHEN',
+  online:'🌍 ONLINE SUCHEN',
+  language:'🌐 SPRACHE WÄHLEN',
+  welcome:'Willkommen bei STREAM WORLD! 🔴',
+  tagline:'Dein Ort zum Schauen, Entdecken und Entertainment.'
+ }
+};
+
+function changeLanguage(){
+ const lang=document.getElementById('language').value;
+ const t=translations[lang];
+
+ document.documentElement.lang=lang;
+ document.getElementById('internalLabel').textContent=t.internal;
+ document.getElementById('onlineLabel').textContent=t.online;
+ document.getElementById('languageLabel').textContent=t.language;
+ document.getElementById('welcome').textContent=t.welcome;
+ document.getElementById('tagline').textContent=t.tagline;
+}
+
+
+/* FLAPPY BIRD */
+const canvas=document.getElementById('gameCanvas');
+const ctx=canvas.getContext('2d');
+
+let bird={x:85,y:220,velocity:0};
+let pipes=[];
+let score=0;
+let gameRunning=false;
+let gameOver=false;
+let lastPipe=0;
+
+let soundOn=true;
+let musicOn=false;
+let audioContext=null;
+let musicInterval=null;
+let musicStep=0;
+
+function audio(){
+ if(!audioContext){
+  audioContext=new (window.AudioContext||window.webkitAudioContext)();
+ }
+ if(audioContext.state==='suspended')audioContext.resume();
+ return audioContext;
+}
+
+function tone(freq,duration=0.12,type='sine',volume=0.08){
+ const a=audio();
+ const osc=a.createOscillator();
+ const gain=a.createGain();
+ osc.type=type;
+ osc.frequency.value=freq;
+ gain.gain.setValueAtTime(volume,a.currentTime);
+ gain.gain.exponentialRampToValueAtTime(0.001,a.currentTime+duration);
+ osc.connect(gain);
+ gain.connect(a.destination);
+ osc.start();
+ osc.stop(a.currentTime+duration);
+}
+
+function chickenSound(){
+ if(!soundOn)return;
+ tone(850,0.09,'square',0.06);
+ setTimeout(()=>tone(1100,0.1,'square',0.06),100);
+}
+
+function flapSound(){
+ if(soundOn)tone(500,0.09,'triangle',0.07);
+}
+
+function toggleSound(){
+ soundOn=!soundOn;
+ document.getElementById('soundButton').textContent=
+  soundOn?'🐔 GELUID AAN':'🔇 GELUID UIT';
+}
+
+function toggleMusic(){
+ musicOn=!musicOn;
+ document.getElementById('musicButton').textContent=
+  musicOn?'🎵 MUZIEK UIT':'🎵 MUZIEK AAN';
+
+ if(musicOn){
+  audio();
+  playMusic();
+ }else{
+  clearInterval(musicInterval);
+ }
+}
+
+function playMusic(){
+ clearInterval(musicInterval);
+ const notes=[392,440,494,440,392,330,349,392];
+ musicStep=0;
+
+ musicInterval=setInterval(()=>{
+  if(musicOn){
+   tone(notes[musicStep%notes.length],0.18,'triangle',0.035);
+   musicStep++;
+  }
+ },240);
+}
+
+function drawBackground(){
+ ctx.fillStyle='#80c9e9';
+ ctx.fillRect(0,0,400,500);
+
+ ctx.fillStyle='#fff';
+ ctx.beginPath();
+ ctx.arc(75,80,25,0,Math.PI*2);
+ ctx.arc(105,80,32,0,Math.PI*2);
+ ctx.arc(135,80,23,0,Math.PI*2);
+ ctx.fill();
+
+ ctx.fillStyle='#75c54b';
+ ctx.fillRect(0,460,400,40);
+}
+
+function drawBird(){
+ ctx.save();
+ ctx.translate(bird.x,bird.y);
+
+ ctx.fillStyle='#ffe23b';
+ ctx.beginPath();
+ ctx.arc(0,0,17,0,Math.PI*2);
+ ctx.fill();
+
+ ctx.fillStyle='#fff';
+ ctx.beginPath();
+ ctx.arc(7,-6,7,0,Math.PI*2);
+ ctx.fill();
+
+ ctx.fillStyle='#111';
+ ctx.beginPath();
+ ctx.arc(10,-6,3,0,Math.PI*2);
+ ctx.fill();
+
+ ctx.fillStyle='#ff851b';
+ ctx.beginPath();
+ ctx.moveTo(12,2);
+ ctx.lineTo(30,7);
+ ctx.lineTo(12,12);
+ ctx.fill();
+
+ ctx.fillStyle='#ffab23';
+ ctx.beginPath();
+ ctx.ellipse(-7,5,9,5,-0.5,0,Math.PI*2);
+ ctx.fill();
+
+ ctx.restore();
+}
+
+function drawPipes(){
+ pipes.forEach(p=>{
+  ctx.fillStyle='#239b35';
+  ctx.fillRect(p.x,0,52,p.top);
+  ctx.fillRect(p.x,p.top-13,52,13);
+  ctx.fillRect(p.x,p.bottom,52,460-p.bottom);
+  ctx.fillRect(p.x,p.bottom,52,13);
+ });
+}
+
+function drawScore(){
+ ctx.fillStyle='white';
+ ctx.strokeStyle='#333';
+ ctx.lineWidth=3;
+ ctx.font='bold 30px Arial';
+ ctx.textAlign='center';
+ ctx.strokeText(score,200,45);
+ ctx.fillText(score,200,45);
+}
+
+function drawGame(){
+ drawBackground();
+ drawPipes();
+ drawBird();
+ drawScore();
+
+ if(!gameRunning){
+  ctx.fillStyle='rgba(0,0,0,.55)';
+  ctx.fillRect(20,170,360,110);
+  ctx.fillStyle='white';
+  ctx.textAlign='center';
+  ctx.font='bold 22px Arial';
+  ctx.fillText(gameOver?'GAME OVER!':'FLAPPY BIRD',200,215);
+  ctx.font='16px Arial';
+  ctx.fillText(gameOver?'Druk op SPELEN om opnieuw te beginnen':'Druk op SPELEN!',200,247);
+ }
+}
+
+function startGame(){
+ bird={x:85,y:220,velocity:0};
+ pipes=[];
+ score=0;
+ lastPipe=0;
+ gameOver=false;
+ gameRunning=true;
+ document.getElementById('gameStatus').textContent='Vlieg, kip, vlieg! 🐔';
+ flapSound();
+ requestAnimationFrame(gameLoop);
+}
+
+function flap(){
+ if(!gameRunning){
+  if(gameOver)startGame();
+  return;
+ }
+ bird.velocity=-6.2;
+ flapSound();
+}
+
+function gameLoop(timestamp){
+ if(!gameRunning){
+  drawGame();
+  return;
+ }
+
+ bird.velocity+=0.32;
+ bird.y+=bird.velocity;
+
+ if(timestamp-lastPipe>1450){
+  const top=70+Math.random()*190;
+  pipes.push({x:410,top:top,bottom:top+145,passed:false});
+  lastPipe=timestamp;
+ }
+
+ pipes.forEach(p=>{
+  p.x-=2.5;
+
+  if(!p.passed&&p.x+52<bird.x){
+   p.passed=true;
+   score++;
+   tone(750,0.1,'sine',0.08);
+  }
+
+  if(
+   bird.x+12>p.x&&bird.x-12<p.x+52&&
+   (bird.y-12<p.top||bird.y+12>p.bottom)
+  ){
+   endGame();
+  }
+ });
+
+ pipes=pipes.filter(p=>p.x>-60);
+
+ if(bird.y>450||bird.y<0)endGame();
+
+ drawGame();
+
+ if(gameRunning)requestAnimationFrame(gameLoop);
+}
+
+function endGame(){
+ if(!gameRunning)return;
+ gameRunning=false;
+ gameOver=true;
+ chickenSound();
+ document.getElementById('gameStatus').textContent='🐔 GAME OVER! Jouw score: '+score;
+ drawGame();
+}
+
+canvas.addEventListener('pointerdown',flap);
+drawGame();
 
 </script>
 </body>
