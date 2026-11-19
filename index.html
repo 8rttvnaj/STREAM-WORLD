@@ -9,402 +9,564 @@
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif}
-button,input,select{font:inherit}
-button{cursor:pointer}
-header{padding:22px 16px;text-align:center;background:#101010;border-bottom:1px solid #292929}
-.logo{font-size:clamp(30px,7vw,48px);font-weight:900;letter-spacing:3px}
-.logo span{color:#f01825;text-shadow:0 0 15px #f01825}
-main{max-width:1000px;margin:auto;padding:18px}
-.search-area{display:grid;gap:10px;margin:15px 0}
-input,select{width:100%;padding:14px;border:1px solid #444;border-radius:9px;background:#171717;color:white}
-button{padding:13px 17px;border:0;border-radius:9px;background:#e50920;color:white;font-weight:bold}
-.search-row{display:flex;gap:8px}
-.search-row input{flex:1;min-width:0}
-h2{font-size:21px;margin:28px 0 13px}
-.services{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.service{background:#171717;border:1px solid #333;border-radius:12px;padding:18px 10px;text-align:center;text-decoration:none;color:white;min-height:90px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold}
-.service:active{transform:scale(.97)}
-.service span{display:block}
-.npo{border-color:#e64a35}
-.plex{border-color:#e5a800}
-.youtube{border-color:#e50920}
-.kijk{border-color:#ef7d24}
-.school{border-color:#42a5f5}
-.klokhuis{border-color:#70b94c}
-.panel{background:#151515;border:1px solid #333;border-radius:12px;padding:16px;margin-top:14px}
-#results{display:grid;gap:8px}
-.result{display:block;color:white;background:#202020;padding:12px;border-radius:8px;text-decoration:none}
-#gameCanvas{display:block;width:100%;max-width:420px;height:auto;background:linear-gradient(#75c9e8,#d7f4ff);border-radius:10px;margin:12px auto}
-.game-buttons{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-footer{text-align:center;color:#777;padding:30px 10px}
+html{scroll-behavior:smooth}
+body{
+ margin:0;background:#080808;color:#fff;
+ font-family:Arial,sans-serif
+}
+button,input{font:inherit}
+button{
+ background:#e50914;color:white;border:0;
+ padding:12px 17px;border-radius:9px;
+ font-weight:bold;cursor:pointer
+}
+button:active{transform:scale(.97)}
 
-/* STREAM WORLD INTRO */
+/* HEADER */
+header{
+ background:#111;padding:18px;
+ border-bottom:2px solid #e50914;
+ position:sticky;top:0;z-index:10
+}
+.logo{
+ font-size:30px;font-weight:1000;
+ letter-spacing:2px;color:#ed1020
+}
+.logo span{color:white}
+
+.search-area{max-width:850px;margin:15px auto}
+.search-row{display:flex;gap:8px}
+input{
+ width:100%;min-width:0;background:#252525;
+ color:white;border:1px solid #555;
+ border-radius:9px;padding:14px;
+ margin:7px 0;font-size:15px
+}
+nav{
+ display:flex;gap:8px;overflow-x:auto;
+ margin-top:16px
+}
+nav button{white-space:nowrap;background:#292929}
+nav button.active{background:#e50914}
+
+/* HERO */
+.hero{
+ background:linear-gradient(120deg,#65000e,#19000a,#111);
+ padding:45px 22px;border-radius:14px;
+ margin:22px auto;max-width:1100px;
+ text-align:center
+}
+.hero h1{font-size:clamp(28px,6vw,48px);margin:0 0 12px}
+.hero p{color:#ddd;line-height:1.6}
+.hero button{margin-top:10px}
+
+/* CONTENT */
+main{max-width:1100px;margin:auto;padding:16px}
+h2{
+ border-left:4px solid #e50914;
+ padding-left:11px;margin-top:32px
+}
+.intro-text{color:#aaa;line-height:1.5}
+.filters{
+ display:flex;gap:9px;flex-wrap:wrap;
+ margin:20px 0
+}
+.filters button{background:#292929}
+.filters button.active{background:#e50914}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
+ gap:16px
+}
+.card{
+ background:#191919;border:1px solid #383838;
+ border-radius:12px;overflow:hidden;
+ transition:.2s
+}
+.card:hover{
+ transform:translateY(-4px);
+ border-color:#e50914
+}
+.poster{
+ height:220px;display:flex;
+ align-items:center;justify-content:center;
+ text-align:center;padding:15px;
+ font-size:22px;font-weight:1000;
+ background:linear-gradient(145deg,#65000e,#171717);
+ position:relative
+}
+.poster.purple{background:linear-gradient(145deg,#482075,#141020)}
+.poster.blue{background:linear-gradient(145deg,#07516b,#101820)}
+.poster.gold{background:linear-gradient(145deg,#80551a,#171717)}
+.poster.green{background:linear-gradient(145deg,#155b36,#111)}
+.poster.red{background:linear-gradient(145deg,#8b1822,#171717)}
+
+.tag{
+ position:absolute;top:10px;left:10px;
+ font-size:11px;padding:6px 9px;
+ border-radius:5px;background:#137c43;color:white
+}
+.tag.paid{background:#7137a5}
+.info{padding:13px}
+.info h3{font-size:16px;margin:0 0 8px}
+.meta{font-size:12px;color:#aaa;margin-bottom:12px}
+.price{font-weight:bold;color:#80edac}
+.price.premium{color:#d6a4ff}
+.info button{width:100%;margin-top:12px}
+
+.empty{
+ display:none;padding:30px;text-align:center;
+ color:#aaa;background:#191919;border-radius:10px
+}
+.panel{
+ background:#191919;border:1px solid #383838;
+ border-radius:13px;padding:18px;margin:15px 0
+}
+
+/* ACCOUNT / AANKOPEN */
+.account{
+ background:#171717;border:1px solid #e50914;
+ border-radius:12px;padding:20px;margin-top:30px
+}
+.account p{color:#bbb;line-height:1.6}
+
+/* POPUP */
+#modal{
+ display:none;position:fixed;inset:0;
+ z-index:100;background:#000e;
+ align-items:center;justify-content:center;
+ padding:18px
+}
+.modal-box{
+ width:100%;max-width:430px;
+ background:#191919;border:1px solid #e50914;
+ border-radius:15px;padding:25px;text-align:center
+}
+.modal-box p{color:#bbb;line-height:1.6}
+.modal-box button{margin:6px}
+
+/* FOOTER */
+footer{
+ text-align:center;color:#888;
+ padding:35px;background:#111;margin-top:40px
+}
+footer .logo{font-size:24px}
+
+@media(max-width:480px){
+ header{padding:14px}
+ .logo{font-size:27px}
+ .poster{height:190px}
+ .hero{padding:35px 15px}
+}
+
+/* ECHTE GEANIMEERDE INTRO */
 #intro{
- position:fixed;inset:0;z-index:9999;background:#020202;
+ position:fixed;inset:0;z-index:9999;
+ overflow:hidden;
+ background:radial-gradient(ellipse at center,#4b0010 0%,#160006 42%,#000 100%);
  display:flex;align-items:center;justify-content:center;
- overflow:hidden;perspective:1000px;
+ flex-direction:column;text-align:center;
+ transition:opacity 1s,visibility 1s
 }
-.intro-glow{
- position:absolute;width:65vw;height:65vw;max-width:600px;max-height:600px;
- border-radius:50%;background:radial-gradient(circle,rgba(220,0,15,.28),transparent 68%);
- animation:glowPulse 3s ease-in-out infinite;
-}
-#particles{position:absolute;inset:0;overflow:hidden}
-.particle{
- position:absolute;width:3px;height:3px;border-radius:50%;
- background:#ff2535;box-shadow:0 0 9px #ff1428;
- animation:particleMove var(--duration) linear infinite;
+#intro.hide{
+ opacity:0;visibility:hidden;pointer-events:none
 }
 .intro-content{
- position:relative;text-align:center;width:100%;padding:20px;
- animation:introZoom 2s cubic-bezier(.15,.8,.2,1) both;
+ position:relative;z-index:2;padding:20px;width:100%
 }
-.intro-logo{
- font-size:clamp(36px,10vw,82px);font-weight:1000;
- letter-spacing:clamp(2px,1vw,9px);
- color:white;white-space:nowrap;
- text-shadow:0 0 10px #ff172b,0 0 28px #e50920,0 0 65px #e50920;
- animation:neonPulse 1.5s ease-in-out infinite alternate;
+.intro-title{
+ font-size:clamp(35px,9vw,65px);
+ font-weight:1000;letter-spacing:2px;
+ color:#ed1020;
+ text-shadow:0 0 10px red,0 0 30px red,0 0 60px #ff0015;
+ animation:dramaticZoom 2s cubic-bezier(.15,.8,.2,1) both,neonPulse 1.4s 2s infinite alternate
 }
-.intro-logo span{color:#f01825}
-.intro-laser{
- height:3px;width:0;margin:22px auto;background:#ff1428;
- box-shadow:0 0 12px #ff1428,0 0 30px #ff1428;
- animation:laserMove 1.4s ease-out 1.4s forwards;
+.intro-title span{color:white}
+.intro-line{
+ width:0;max-width:420px;height:4px;
+ margin:17px auto;background:#ff1525;
+ box-shadow:0 0 12px red,0 0 30px red;
+ animation:laser 1.1s 1.1s ease-out forwards
 }
 .intro-sub{
- opacity:0;letter-spacing:3px;font-size:clamp(11px,3vw,16px);
- animation:subAppear 1s ease 2.6s forwards;
+ opacity:0;letter-spacing:3px;font-size:12px;color:#eee;
+ animation:rise 1s 2s forwards
 }
 #startButton{
- opacity:0;margin-top:30px;padding:14px 30px;border:1px solid #ff2637;
- background:#e50920;color:white;border-radius:7px;
- box-shadow:0 0 18px #e50920;
- animation:buttonAppear .8s ease 3.2s forwards;
+ opacity:0;margin-top:32px;padding:15px 30px;
+ letter-spacing:2px;box-shadow:0 0 15px #e50914;
+ animation:rise .8s 2.6s forwards
 }
-#intro.closing{animation:introOut .8s ease forwards;pointer-events:none}
-@keyframes introZoom{
- 0%{opacity:0;transform:translateZ(-700px) scale(.25) rotateX(20deg)}
- 65%{opacity:1;transform:translateZ(70px) scale(1.12)}
- 100%{opacity:1;transform:translateZ(0) scale(1)}
+.particle{
+ position:absolute;width:4px;height:4px;
+ background:#ff2938;border-radius:50%;
+ box-shadow:0 0 12px red;
+ animation:fly linear infinite
+}
+@keyframes dramaticZoom{
+ 0%{opacity:0;transform:perspective(500px) translateZ(-500px) scale(.1) rotateX(35deg);filter:blur(15px)}
+ 65%{opacity:1;transform:perspective(500px) translateZ(40px) scale(1.12);filter:blur(0)}
+ 100%{transform:perspective(500px) translateZ(0) scale(1)}
 }
 @keyframes neonPulse{
- from{text-shadow:0 0 8px #ff172b,0 0 20px #e50920}
- to{text-shadow:0 0 18px #ff172b,0 0 40px #e50920,0 0 75px #e50920}
+ from{text-shadow:0 0 8px red,0 0 18px red}
+ to{text-shadow:0 0 20px red,0 0 45px red,0 0 75px #e50914}
 }
-@keyframes laserMove{to{width:min(75%,650px)}}
-@keyframes subAppear{to{opacity:1;transform:translateY(0)}}
-@keyframes buttonAppear{to{opacity:1}}
-@keyframes glowPulse{50%{transform:scale(1.2);opacity:.65}}
-@keyframes particleMove{
- 0%{transform:translate3d(0,110vh,0) scale(.5);opacity:0}
+@keyframes laser{
+ from{width:0;opacity:0}
+ 20%{opacity:1}
+ to{width:min(420px,85vw);opacity:1}
+}
+@keyframes rise{
+ from{opacity:0;transform:translateY(20px)}
+ to{opacity:1;transform:translateY(0)}
+}
+@keyframes fly{
+ 0%{transform:translate(0,100vh) scale(.3);opacity:0}
  15%{opacity:1}
- 100%{transform:translate3d(var(--drift),-20vh,0) scale(1.4);opacity:0}
+ 100%{transform:translate(var(--drift),-110vh) scale(1.8);opacity:0}
 }
-@keyframes introOut{to{opacity:0;visibility:hidden}}
-@media(min-width:650px){.services{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:480px){
+ .intro-sub{letter-spacing:2px}
+}
 </style>
 </head>
 
 <body>
 
-<!-- GEANIMEERDE INTRO -->
+<!-- DE ORIGINELE STREAM WORLD INTRO -->
 <div id="intro">
- <div class="intro-glow"></div>
  <div id="particles"></div>
  <div class="intro-content">
-  <div class="intro-logo">STREAM <span>WORLD</span></div>
-  <div class="intro-laser"></div>
+  <div class="intro-title">STREAM <span>WORLD</span></div>
+  <div class="intro-line"></div>
   <div class="intro-sub">JOUW WERELD. JOUW ENTERTAINMENT.</div>
-  <button id="startButton">START NU ▶</button>
+  <button id="startButton" onclick="closeIntro()">START NU ▶</button>
  </div>
 </div>
 
 <header>
  <div class="logo">STREAM <span>WORLD</span></div>
+
+ <div class="search-area">
+  <div style="font-size:12px;color:#ff626a;font-weight:bold">
+   🔎 ZOEK IN STREAM WORLD
+  </div>
+  <div class="search-row">
+   <input id="search" placeholder="Zoek films, series, documentaires of anime...">
+   <button onclick="render()">ZOEK</button>
+  </div>
+ </div>
+
+ <nav>
+  <button class="active" onclick="setFilter('Alles',this)">🏠 Alles</button>
+  <button onclick="setFilter('Film',this)">🎬 Films</button>
+  <button onclick="setFilter('Serie',this)">📺 Series</button>
+  <button onclick="setFilter('Documentaire',this)">🌍 Documentaires</button>
+  <button onclick="setFilter('Anime',this)">🎌 Anime</button>
+  <button onclick="setFilter('Gratis',this)">🟢 GRATIS</button>
+  <button onclick="setFilter('Premium',this)">💜 PREMIUM</button>
+ </nav>
 </header>
 
 <main>
 
-<!-- ZOEKEN EN TAAL -->
-<div class="search-area">
- <form class="search-row" id="internalForm">
-  <input id="internalSearch" placeholder="Zoek op STREAM WORLD...">
-  <button type="submit">ZOEK</button>
- </form>
+ <section class="hero">
+  <h1>WELKOM BIJ STREAM WORLD 🌍</h1>
+  <p>Films, series, documentaires en anime.<br>
+  Alles op één plek. Voor een eerlijke prijs.</p>
+  <p><strong>MEER KIJKEN. MINDER BETALEN.</strong></p>
+  <button onclick="document.getElementById('catalogus').scrollIntoView({behavior:'smooth'})">
+   ONTDEK DE BIBLIOTHEEK ↓
+  </button>
+ </section>
 
- <form class="search-row" id="onlineForm">
-  <input id="onlineSearch" placeholder="Zoek online op internet...">
-  <button type="submit">ONLINE ZOEKEN</button>
- </form>
+ <section id="catalogus">
+  <h2>🎬 DE STREAM WORLD BIBLIOTHEEK</h2>
+  <p class="intro-text">
+   Ontdek jouw volgende film, serie, documentaire of anime.
+  </p>
 
- <select id="language" aria-label="Taalkeuze">
-  <option value="nl">🇳🇱 Nederlands</option>
-  <option value="en">🇬🇧 English</option>
-  <option value="de">🇩🇪 Deutsch</option>
- </select>
-</div>
+  <div class="filters">
+   <button class="active" onclick="setFilter('Alles',this)">Alles</button>
+   <button onclick="setFilter('Film',this)">Films</button>
+   <button onclick="setFilter('Serie',this)">Series</button>
+   <button onclick="setFilter('Documentaire',this)">Documentaires</button>
+   <button onclick="setFilter('Anime',this)">Anime</button>
+  </div>
 
-<div id="results"></div>
+  <div class="filters">
+   <button onclick="setFilter('Gratis',this)">🟢 ALLES GRATIS</button>
+   <button onclick="setFilter('Premium',this)">💜 PREMIUM €3,75</button>
+  </div>
 
-<!-- STREAMINGDIENSTEN -->
-<h2>📺 STREAMING & KIJKEN</h2>
-<div class="services" id="serviceList">
- <a class="service npo" href="https://npo.nl/start" target="_blank" rel="noopener">NPO START</a>
- <a class="service plex" href="https://watch.plex.tv/" target="_blank" rel="noopener">PLEX</a>
- <a class="service youtube" href="https://www.youtube.com/" target="_blank" rel="noopener">▶ YOUTUBE</a>
- <a class="service kijk" href="https://www.kijk.nl/" target="_blank" rel="noopener">KIJK</a>
- <a class="service school" href="https://schooltv.nl/" target="_blank" rel="noopener">SCHOOLTV</a>
- <a class="service klokhuis" href="https://www.hetklokhuis.nl/" target="_blank" rel="noopener">HET KLOKHUIS</a>
-</div>
+  <div class="grid" id="catalog"></div>
+  <div class="empty" id="empty">
+   Geen titels gevonden. Probeer een andere zoekopdracht.
+  </div>
+ </section>
 
-<!-- FLAPPY BIRD -->
-<h2>🐤 FLAPPY BIRD</h2>
-<div class="panel">
- <p style="text-align:center">Tik op het scherm of druk op de knop om te vliegen!</p>
- <canvas id="gameCanvas" width="420" height="520"></canvas>
- <div class="game-buttons">
-  <button id="flyButton">🐤 VLIEG!</button>
-  <button id="restartButton">OPNIEUW</button>
- </div>
- <p id="score" style="text-align:center">Score: 0</p>
-</div>
+ <section class="account">
+  <h2>❤️ EERLIJK KIJKEN</h2>
+  <p>
+   Bij STREAM WORLD houden we entertainment betaalbaar.
+   Gratis titels zijn gratis. Premium-titels kosten
+   eenmalig €3,75.
+  </p>
+  <p>
+   Bij aankoop krijg je het recht om de complete titel
+   opnieuw te bekijken, zolang de overeengekomen
+   kijkrechten dat toestaan.
+  </p>
+  <h3>💜 PREMIUM: €3,75 EENMALIG</h3>
+  <p>Geen verplicht maandabonnement.</p>
+ </section>
 
-<!-- MUZIEK ZOEKEN -->
-<h2>🎵 MUZIEK ZOEKEN</h2>
-<div class="panel">
- <form class="search-row" id="musicForm">
-  <input id="musicSearch" placeholder="Zoek een liedje of artiest...">
-  <button type="submit">ZOEK MUZIEK</button>
- </form>
-</div>
+ <section>
+  <h2>🌟 ONZE BELOFTE</h2>
+  <div class="panel">
+   <h3>🟢 GRATIS IS GRATIS</h3>
+   <p>Geen betaling voor titels die als GRATIS zijn aangeduid.</p>
+  </div>
+  <div class="panel">
+   <h3>💜 ÉÉN EERLIJKE PRIJS</h3>
+   <p>€3,75 voor een complete film, serie, documentaire of anime.</p>
+  </div>
+  <div class="panel">
+   <h3>🎬 OPNIEUW KIJKEN</h3>
+   <p>Gekochte titels blijven beschikbaar volgens de geldende licentie- en aankoopvoorwaarden.</p>
+  </div>
+ </section>
 
 </main>
 
-<footer>STREAM WORLD ©</footer>
+<footer>
+ <div class="logo">STREAM <span>WORLD</span></div>
+ <p>JOUW WERELD. JOUW ENTERTAINMENT.</p>
+ <p>MEER KIJKEN. MINDER BETALEN.</p>
+ <p>© STREAM WORLD 2026</p>
+</footer>
+
+<!-- TITEL POPUP -->
+<div id="modal">
+ <div class="modal-box">
+  <h2 id="modalTitle">STREAM WORLD</h2>
+  <p id="modalText"></p>
+  <div id="modalActions"></div>
+  <button onclick="closeModal()">SLUITEN</button>
+ </div>
+</div>
 
 <script>
-// INTRO: rode bewegende deeltjes, zonder introgeluid
-const intro=document.getElementById("intro");
-const particleArea=document.getElementById("particles");
 
-for(let i=0;i<55;i++){
- const p=document.createElement("i");
- p.className="particle";
- p.style.left=Math.random()*100+"%";
- p.style.top=Math.random()*100+"%";
- p.style.setProperty("--duration",(4+Math.random()*7)+"s");
- p.style.setProperty("--drift",(Math.random()*180-90)+"px");
- p.style.animationDelay=(-Math.random()*9)+"s";
- particleArea.appendChild(p);
+// DE ORIGINELE INTRO-JAVASCRIPT
+const intro=document.getElementById('intro');
+const particleBox=document.getElementById('particles');
+
+for(let i=0;i<35;i++){
+ const p=document.createElement('i');
+ p.className='particle';
+ p.style.left=Math.random()*100+'%';
+ p.style.animationDuration=(3+Math.random()*5)+'s';
+ p.style.animationDelay=(-Math.random()*7)+'s';
+ p.style.setProperty('--drift',(Math.random()*160-80)+'px');
+ particleBox.appendChild(p);
 }
 
 function closeIntro(){
- if(intro.classList.contains("closing"))return;
- intro.classList.add("closing");
- setTimeout(()=>intro.remove(),850);
+ intro.classList.add('hide');
 }
-document.getElementById("startButton").addEventListener("click",closeIntro);
+
+document.getElementById('startButton')
+.addEventListener('click',closeIntro);
+
 setTimeout(closeIntro,9000);
 
-// ONLINE ZOEKEN
-document.getElementById("onlineForm").addEventListener("submit",e=>{
- e.preventDefault();
- const q=document.getElementById("onlineSearch").value.trim();
- if(q)window.open("https://www.google.com/search?q="+encodeURIComponent(q),"_blank");
-});
 
-// INTERNE ZOEKEN
-const internalForm=document.getElementById("internalForm");
-const internalInput=document.getElementById("internalSearch");
-const results=document.getElementById("results");
+// STREAM WORLD BIBLIOTHEEK
+// Dit zijn voorbeeldtitels voor het ontwerp.
+// Voeg alleen content toe waarvoor STREAM WORLD kijkrechten heeft.
 
-internalForm.addEventListener("submit",e=>{
- e.preventDefault();
- const q=internalInput.value.trim().toLowerCase();
- results.innerHTML="";
- if(!q)return;
- const services=[...document.querySelectorAll("#serviceList a")];
- const matches=services.filter(a=>a.textContent.toLowerCase().includes(q));
- if(matches.length){
-  matches.forEach(a=>{
-   const link=document.createElement("a");
-   link.className="result";
-   link.href=a.href;
-   link.target="_blank";
-   link.rel="noopener";
-   link.textContent=a.textContent+" ↗";
-   results.appendChild(link);
-  });
+const titles=[
+ {
+  name:'Voorbeeldfilm 1',
+  type:'Film',
+  free:true,
+  color:'red',
+  description:'Voorbeeld van een gratis film.'
+ },
+ {
+  name:'Voorbeeldfilm 2',
+  type:'Film',
+  free:false,
+  color:'purple',
+  description:'Voorbeeld van een premiumfilm.'
+ },
+ {
+  name:'Voorbeeldserie',
+  type:'Serie',
+  free:false,
+  color:'blue',
+  description:'Complete serie met alle seizoenen en afleveringen.'
+ },
+ {
+  name:'Gratis serie',
+  type:'Serie',
+  free:true,
+  color:'green',
+  description:'Voorbeeld van een gratis serie.'
+ },
+ {
+  name:'De wereld van dieren',
+  type:'Documentaire',
+  free:true,
+  color:'green',
+  description:'Voorbeeld van een gratis documentaire.'
+ },
+ {
+  name:'Het universum',
+  type:'Documentaire',
+  free:false,
+  color:'gold',
+  description:'Voorbeeld van een premiumdocumentaire.'
+ },
+ {
+  name:'Anime Adventures',
+  type:'Anime',
+  free:true,
+  color:'purple',
+  description:'Voorbeeld van gratis anime.'
+ },
+ {
+  name:'Anime Legends',
+  type:'Anime',
+  free:false,
+  color:'red',
+  description:'Complete anime met alle afleveringen.'
+ }
+];
+
+let filter='Alles';
+
+function setFilter(value,button){
+ filter=value;
+
+ document.querySelectorAll('.filters button,nav button')
+ .forEach(b=>b.classList.remove('active'));
+
+ button.classList.add('active');
+ render();
+}
+
+function render(){
+ const query=document.getElementById('search')
+ .value.trim().toLowerCase();
+
+ const catalog=document.getElementById('catalog');
+ const empty=document.getElementById('empty');
+
+ catalog.innerHTML='';
+
+ const results=titles.filter(t=>{
+  const searchMatch=
+   t.name.toLowerCase().includes(query)||
+   t.type.toLowerCase().includes(query);
+
+  const filterMatch=
+   filter==='Alles'||
+   filter===t.type||
+   (filter==='Gratis'&&t.free)||
+   (filter==='Premium'&&!t.free);
+
+  return searchMatch&&filterMatch;
+ });
+
+ empty.style.display=results.length?'none':'block';
+
+ results.forEach(t=>{
+  const card=document.createElement('article');
+  card.className='card';
+
+  const poster=document.createElement('div');
+  poster.className='poster '+t.color;
+  poster.textContent=t.name;
+
+  const tag=document.createElement('div');
+  tag.className='tag '+(t.free?'':'paid');
+  tag.textContent=t.free?'GRATIS':'PREMIUM';
+
+  poster.appendChild(tag);
+
+  const info=document.createElement('div');
+  info.className='info';
+
+  const name=document.createElement('h3');
+  name.textContent=t.name;
+
+  const meta=document.createElement('div');
+  meta.className='meta';
+  meta.textContent=t.type;
+
+  const price=document.createElement('div');
+  price.className='price '+(t.free?'':'premium');
+  price.textContent=t.free?'GRATIS':'€3,75 eenmalig';
+
+  const btn=document.createElement('button');
+  btn.textContent=t.free?'KIJK GRATIS':'KOOP VOOR €3,75';
+  btn.onclick=()=>openTitle(t);
+
+  info.append(name,meta,price,btn);
+  card.append(poster,info);
+  catalog.appendChild(card);
+ });
+}
+
+function openTitle(t){
+ document.getElementById('modalTitle').textContent=t.name;
+
+ document.getElementById('modalText').textContent=
+ t.description;
+
+ const actions=document.getElementById('modalActions');
+ actions.innerHTML='';
+
+ const btn=document.createElement('button');
+
+ if(t.free){
+  btn.textContent='GRATIS BEKIJKEN';
+  btn.onclick=()=>{
+   showMessage(
+    'De gratis titel is geselecteerd. De officiële videostream moet nog worden aangesloten.'
+   );
+  };
  }else{
-  results.textContent="Geen resultaten gevonden op STREAM WORLD.";
- }
-});
-
-// TAALKEUZE
-const translations={
- nl:{internal:"Zoek op STREAM WORLD...",online:"Zoek online op internet...",search:"ZOEK",onlineButton:"ONLINE ZOEKEN"},
- en:{internal:"Search STREAM WORLD...",online:"Search the internet...",search:"SEARCH",onlineButton:"SEARCH ONLINE"},
- de:{internal:"STREAM WORLD durchsuchen...",online:"Im Internet suchen...",search:"SUCHEN",onlineButton:"ONLINE SUCHEN"}
-};
-document.getElementById("language").addEventListener("change",e=>{
- const t=translations[e.target.value];
- document.getElementById("internalSearch").placeholder=t.internal;
- document.getElementById("onlineSearch").placeholder=t.online;
- internalForm.querySelector("button").textContent=t.search;
- document.querySelector("#onlineForm button").textContent=t.onlineButton;
-});
-
-// MUZIEK ZOEKEN
-document.getElementById("musicForm").addEventListener("submit",e=>{
- e.preventDefault();
- const q=document.getElementById("musicSearch").value.trim();
- if(q)window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(q)," _blank".trim());
-});
-
-// FLAPPY BIRD
-const canvas=document.getElementById("gameCanvas");
-const ctx=canvas.getContext("2d");
-const scoreText=document.getElementById("score");
-let bird,pipes,score,playing,frame;
-let audioContext=null;
-
-function chickenSound(){
- try{
-  audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();
-  if(audioContext.state==="suspended")audioContext.resume();
-  const osc=audioContext.createOscillator();
-  const gain=audioContext.createGain();
-  osc.type="triangle";
-  osc.frequency.setValueAtTime(650,audioContext.currentTime);
-  osc.frequency.exponentialRampToValueAtTime(260,audioContext.currentTime+.12);
-  osc.frequency.exponentialRampToValueAtTime(480,audioContext.currentTime+.2);
-  gain.gain.setValueAtTime(.16,audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+.22);
-  osc.connect(gain);
-  gain.connect(audioContext.destination);
-  osc.start();
-  osc.stop(audioContext.currentTime+.23);
- }catch(err){}
-}
-
-function resetGame(){
- bird={x:95,y:230,velocity:0};
- pipes=[];
- score=0;
- frame=0;
- playing=true;
- scoreText.textContent="Score: 0";
-}
-
-function flap(){
- if(!playing){resetGame();return;}
- bird.velocity=-6.5;
- chickenSound();
-}
-
-function drawBird(){
- ctx.save();
- ctx.translate(bird.x,bird.y);
- ctx.fillStyle="#ffdc24";
- ctx.beginPath();
- ctx.arc(0,0,15,0,Math.PI*2);
- ctx.fill();
- ctx.fillStyle="white";
- ctx.beginPath();
- ctx.arc(7,-5,5,0,Math.PI*2);
- ctx.fill();
- ctx.fillStyle="#111";
- ctx.beginPath();
- ctx.arc(9,-5,2,0,Math.PI*2);
- ctx.fill();
- ctx.fillStyle="#f47b20";
- ctx.beginPath();
- ctx.moveTo(13,1);
- ctx.lineTo(25,5);
- ctx.lineTo(13,9);
- ctx.fill();
- ctx.fillStyle="#e43b35";
- ctx.beginPath();
- ctx.arc(-3,-15,5,0,Math.PI*2);
- ctx.fill();
- ctx.restore();
-}
-
-function endGame(){
- playing=false;
- scoreText.textContent="Game over! Score: "+score+" — druk op OPNIEUW.";
-}
-
-function loop(){
- ctx.clearRect(0,0,canvas.width,canvas.height);
- ctx.fillStyle="#b9e9f7";
- ctx.fillRect(0,0,420,520);
-
- ctx.fillStyle="#70bd45";
- ctx.fillRect(0,490,420,30);
-
- if(playing){
-  frame++;
-  bird.velocity+=.32;
-  bird.y+=bird.velocity;
-
-  if(frame%95===0){
-   const gap=145;
-   const top=60+Math.random()*210;
-   pipes.push({x:430,top:top,gap:gap,passed:false});
-  }
-
-  pipes.forEach(p=>{
-   p.x-=2.5;
-   ctx.fillStyle="#329c42";
-   ctx.fillRect(p.x,0,55,p.top);
-   ctx.fillRect(p.x,p.top+p.gap,55,520-p.top-p.gap-30);
-   ctx.fillStyle="#267d35";
-   ctx.fillRect(p.x-4,p.top-12,63,12);
-   ctx.fillRect(p.x-4,p.top+p.gap,63,12);
-
-   if(!p.passed&&p.x+55<bird.x){
-    p.passed=true;
-    score++;
-    scoreText.textContent="Score: "+score;
-   }
-
-   if(bird.x+12>p.x&&bird.x-12<p.x+55&&
-      (bird.y-12<p.top||bird.y+12>p.top+p.gap))endGame();
-  });
-  pipes=pipes.filter(p=>p.x>-70);
-
-  if(bird.y>478||bird.y<0)endGame();
+  btn.textContent='KOOP VOOR €3,75';
+  btn.onclick=()=>{
+   showMessage(
+    'De aankoopprijs is €3,75. De betaalfunctie moet nog veilig worden aangesloten. Er wordt nu niets afgeschreven.'
+   );
+  };
  }
 
- drawBird();
-
- if(!playing){
-  ctx.fillStyle="rgba(0,0,0,.5)";
-  ctx.fillRect(0,0,420,520);
-  ctx.fillStyle="white";
-  ctx.textAlign="center";
-  ctx.font="bold 25px Arial";
-  ctx.fillText("FLAPPY BIRD",210,235);
-  ctx.font="16px Arial";
-  ctx.fillText("Druk op OPNIEUW om te spelen",210,270);
- }
- requestAnimationFrame(loop);
+ actions.appendChild(btn);
+ document.getElementById('modal').style.display='flex';
 }
 
-document.getElementById("flyButton").addEventListener("click",flap);
-document.getElementById("restartButton").addEventListener("click",resetGame);
-canvas.addEventListener("pointerdown",flap);
-document.addEventListener("keydown",e=>{
- if(e.code==="Space"&&document.activeElement.tagName!=="INPUT"){
-  e.preventDefault();
-  flap();
- }
-});
-resetGame();
-loop();
+function showMessage(message){
+ document.getElementById('modalText').textContent=message;
+ document.getElementById('modalActions').innerHTML='';
+}
+
+function closeModal(){
+ document.getElementById('modal').style.display='none';
+}
+
+document.getElementById('search')
+.addEventListener('input',render);
+
+render();
+
 </script>
 </body>
 </html>
