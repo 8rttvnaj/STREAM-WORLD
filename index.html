@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050505">
-<title>STREAM WORLD</title>
+<title>STREAMWORLD x Plex</title>
 
 <style>
 *{box-sizing:border-box}
@@ -17,6 +17,7 @@ button:active{transform:scale(.97)}
 header{background:#111;padding:18px;border-bottom:2px solid #e50914}
 .logo{font-size:30px;font-weight:1000;letter-spacing:2px;color:#ed1020}
 .logo span{color:white}
+.brand-x{color:#ed1020!important;margin:0 7px}
 .search-area{max-width:850px;margin:15px auto}
 .search-label{font-size:12px;letter-spacing:1px;color:#ff626a;font-weight:bold}
 .search-row{display:flex;gap:7px}
@@ -27,17 +28,16 @@ main{max-width:1050px;margin:auto;padding:16px}
 h2{border-left:4px solid #e50914;padding-left:11px;margin-top:32px}
 .panel{background:#191919;border:1px solid #383838;border-radius:13px;padding:17px;margin:13px 0}
 .hero{background:linear-gradient(120deg,#56000c,#171717);padding:23px;border-radius:14px;margin:18px 0}
-.service{display:flex;justify-content:space-between;align-items:center;background:#222;color:white;text-decoration:none;padding:16px;border:1px solid #383838;border-radius:10px;margin:9px 0;font-weight:bold}
-.service:hover{background:#420910;border-color:#ed1020}
 .status{color:#ff777e;font-size:13px;min-height:18px}
 footer{text-align:center;color:#888;padding:30px}
 
-/* ORIGINELE GEANIMEERDE INTRO */
+/* GEANIMEERDE INTRO */
 #intro{position:fixed;inset:0;z-index:9999;overflow:hidden;background:radial-gradient(ellipse at center,#4b0010 0%,#160006 42%,#000 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;transition:opacity 1s,visibility 1s}
 #intro.hide{opacity:0;visibility:hidden;pointer-events:none}
 .intro-content{position:relative;z-index:2;padding:20px;width:100%}
 .intro-title{font-size:clamp(35px,9vw,65px);font-weight:1000;letter-spacing:2px;color:#ed1020;text-shadow:0 0 10px red,0 0 30px red,0 0 60px #ff0015;animation:dramaticZoom 2s cubic-bezier(.15,.8,.2,1) both,neonPulse 1.4s 2s infinite alternate}
 .intro-title span{color:white}
+.intro-title .brand-x{color:#ed1020!important}
 .intro-line{width:0;max-width:420px;height:4px;margin:17px auto;background:#ff1525;box-shadow:0 0 12px red,0 0 30px red;animation:laser 1.1s 1.1s ease-out forwards}
 .intro-sub{opacity:0;letter-spacing:3px;font-size:12px;color:#eee;animation:rise 1s 2s forwards}
 #startButton{opacity:0;margin-top:32px;padding:15px 30px;letter-spacing:2px;box-shadow:0 0 15px #e50914;animation:rise .8s 2.6s forwards}
@@ -82,7 +82,6 @@ footer{text-align:center;color:#888;padding:30px}
 }
 .plex-player iframe{width:100%;height:100%;border:0}
 .plex-note{color:#aaa;font-size:13px;line-height:1.5}
-.plex-actions{display:flex;gap:8px;flex-wrap:wrap}
 .category-link{
  display:block;
  background:#242424;
@@ -123,7 +122,7 @@ footer{text-align:center;color:#888;padding:30px}
 <div id="intro">
  <div id="particles"></div>
  <div class="intro-content">
-  <div class="intro-title">STREAM <span>WORLD</span></div>
+  <div class="intro-title">STREAMWORLD <span class="brand-x">x</span> <span>Plex</span></div>
   <div class="intro-line"></div>
   <div class="intro-sub">JOUW WERELD. JOUW ENTERTAINMENT.</div>
   <button id="startButton" onclick="closeIntro()">START NU ▶</button>
@@ -131,10 +130,10 @@ footer{text-align:center;color:#888;padding:30px}
 </div>
 
 <header>
- <div class="logo">STREAM <span>WORLD</span></div>
+ <div class="logo">STREAMWORLD <span class="brand-x">x</span> <span>Plex</span></div>
 
  <div class="search-area">
-  <div class="search-label" id="internalLabel">🔎 ZOEK IN STREAM WORLD</div>
+  <div class="search-label" id="internalLabel">🔎 ZOEK IN STREAMWORLD</div>
   <div class="search-row">
    <input id="siteSearch" placeholder="Zoek films, Plex, games..." onkeydown="if(event.key==='Enter')searchSite()">
    <button onclick="searchSite()">ZOEK</button>
@@ -156,7 +155,6 @@ footer{text-align:center;color:#888;padding:30px}
  </div>
 
  <nav>
-  <a href="#streaming">📺 Kijken</a>
   <a href="#plex">🎬 STREAM-BIBLIOTHEEK</a>
   <a href="#games">🐤 Games</a>
  </nav>
@@ -165,46 +163,16 @@ footer{text-align:center;color:#888;padding:30px}
 <main>
 
  <div class="hero">
-  <h1 id="welcome">Welkom bij STREAM WORLD! 🔴</h1>
+  <h1 id="welcome">Welkom bij STREAMWORLD x Plex! 🔴</h1>
   <p id="tagline">Jouw plek voor kijken, ontdekken en entertainment.</p>
  </div>
-
- <!-- STREAMINGDIENSTEN -->
- <section id="streaming">
-  <h2>📺 KIJKEN & STREAMEN</h2>
-  <p>Open jouw favoriete streamingdiensten.</p>
-
-  <a class="service" href="https://npo.nl/start" target="_blank" rel="noopener">
-   <span>📺 NPO START</span><span>OPEN ↗</span>
-  </a>
-
-  <a class="service" href="https://watch.plex.tv/" target="_blank" rel="noopener">
-   <span>🎬 PLEX</span><span>OPEN ↗</span>
-  </a>
-
-  <a class="service" href="https://www.youtube.com/" target="_blank" rel="noopener">
-   <span>▶️ YOUTUBE</span><span>OPEN ↗</span>
-  </a>
-
-  <a class="service" href="https://www.kijk.nl/" target="_blank" rel="noopener">
-   <span>📡 KIJK</span><span>OPEN ↗</span>
-  </a>
-
-  <a class="service" href="https://schooltv.nl/" target="_blank" rel="noopener">
-   <span>🎓 SCHOOLTV</span><span>OPEN ↗</span>
-  </a>
-
-  <a class="service" href="https://www.hetklokhuis.nl/" target="_blank" rel="noopener">
-   <span>🧪 HET KLOKHUIS</span><span>OPEN ↗</span>
-  </a>
- </section>
 
  <!-- STREAM-BIBLIOTHEEK -->
  <section id="plex">
 
   <div class="library-banner">
    <div class="library-title">🎬 STREAM-BIBLIOTHEEK</div>
-   <div class="library-subtitle">AANGEDREVEN DOOR PLEX</div>
+   <div class="library-subtitle">STREAMWORLD x PLEX</div>
    <p>Ontdek gratis films, series, documentaires en anime.</p>
   </div>
 
@@ -212,7 +180,7 @@ footer{text-align:center;color:#888;padding:30px}
    <h3>🍿 WELKOM IN DE STREAM-BIBLIOTHEEK</h3>
    <p>
     Ontdek het gratis kijkaanbod van Plex.
-    Je kunt de officiële Plex-catalogus openen vanuit STREAM WORLD.
+    Je kunt de officiële Plex-catalogus openen vanuit STREAMWORLD x Plex.
    </p>
 
    <a class="category-link" href="https://watch.plex.tv/on-demand" target="_blank" rel="noopener">
@@ -269,9 +237,9 @@ footer{text-align:center;color:#888;padding:30px}
   <div class="panel">
    <h3>ℹ️ OVER DE STREAM-BIBLIOTHEEK</h3>
    <p>
-    STREAM WORLD is de toegangspoort tot het aanbod van Plex.
+    STREAMWORLD x Plex is de toegangspoort tot het aanbod van Plex.
     De films en series worden door Plex aangeboden en afgespeeld.
-    STREAM WORLD host of kopieert deze video's niet zelf.
+    STREAMWORLD x Plex host of kopieert deze video's niet zelf.
    </p>
    <p class="plex-note">
     Het aanbod kan verschillen per land en kan veranderen.
@@ -286,7 +254,7 @@ footer{text-align:center;color:#888;padding:30px}
   <h2>🐤 FLAPPY BIRD</h2>
 
   <div class="panel">
-   <h3>🐤 FLAPPY BIRD – STREAM WORLD EDITION</h3>
+   <h3>🐤 FLAPPY BIRD – STREAMWORLD x Plex EDITION</h3>
    <p>Tik op het scherm of druk op SPELEN om te vliegen!</p>
 
    <canvas id="gameCanvas" width="400" height="500"></canvas>
@@ -304,9 +272,9 @@ footer{text-align:center;color:#888;padding:30px}
 </main>
 
 <footer>
- <div class="logo">STREAM <span>WORLD</span></div>
+ <div class="logo">STREAMWORLD <span class="brand-x">x</span> <span>Plex</span></div>
  <p>Jouw wereld. Jouw entertainment.</p>
- <p>© STREAM WORLD 2026</p>
+ <p>© STREAMWORLD x Plex 2026</p>
 </footer>
 
 <script>
@@ -331,10 +299,8 @@ function closeIntro(){
 
 setTimeout(closeIntro,9000);
 
-
 /* INTERNE ZOEKFUNCTIE */
 const sections=[
- ['streaming','streaming kijken npo plex youtube kijk schooltv klokhuis'],
  ['plex','plex stream-bibliotheek films series documentaires anime film gratis stream'],
  ['games','games flappy bird kip spel muziek']
 ];
@@ -357,10 +323,9 @@ function searchSite(){
   status.textContent='Gevonden: '+match[0].toUpperCase();
   document.getElementById(match[0]).scrollIntoView({behavior:'smooth'});
  }else{
-  status.textContent='Niet gevonden. Probeer films, Plex, games of kijken.';
+  status.textContent='Niet gevonden. Probeer Plex, films, anime of games.';
  }
 }
-
 
 /* ONLINE ZOEKEN */
 function searchOnline(){
@@ -368,7 +333,6 @@ function searchOnline(){
  if(!q)return;
  window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank','noopener');
 }
-
 
 /* PLEX */
 function openPlex(){
@@ -384,28 +348,27 @@ function searchPlex(){
  window.open('https://watch.plex.tv/','_blank','noopener');
 }
 
-
 /* TAALKEUZE */
 const translations={
  nl:{
-  internal:'🔎 ZOEK IN STREAM WORLD',
+  internal:'🔎 ZOEK IN STREAMWORLD',
   online:'🌍 ZOEK ONLINE',
   language:'🌐 TAAL KIEZEN',
-  welcome:'Welkom bij STREAM WORLD! 🔴',
+  welcome:'Welkom bij STREAMWORLD x Plex! 🔴',
   tagline:'Jouw plek voor kijken, ontdekken en entertainment.'
  },
  en:{
-  internal:'🔎 SEARCH STREAM WORLD',
+  internal:'🔎 SEARCH STREAMWORLD',
   online:'🌍 SEARCH ONLINE',
   language:'🌐 CHOOSE LANGUAGE',
-  welcome:'Welcome to STREAM WORLD! 🔴',
+  welcome:'Welcome to STREAMWORLD x Plex! 🔴',
   tagline:'Your place for watching, discovering and entertainment.'
  },
  de:{
-  internal:'🔎 STREAM WORLD DURCHSUCHEN',
+  internal:'🔎 STREAMWORLD DURCHSUCHEN',
   online:'🌍 ONLINE SUCHEN',
   language:'🌐 SPRACHE WÄHLEN',
-  welcome:'Willkommen bei STREAM WORLD! 🔴',
+  welcome:'Willkommen bei STREAMWORLD x Plex! 🔴',
   tagline:'Dein Ort zum Schauen, Entdecken und Entertainment.'
  }
 };
@@ -421,7 +384,6 @@ function changeLanguage(){
  document.getElementById('welcome').textContent=t.welcome;
  document.getElementById('tagline').textContent=t.tagline;
 }
-
 
 /* FLAPPY BIRD */
 const canvas=document.getElementById('gameCanvas');
